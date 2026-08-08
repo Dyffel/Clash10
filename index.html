@@ -28,7 +28,7 @@ button{
   width:100%;
   max-width:480px;
   margin:auto;
-  padding:20px 14px 40px;
+  padding:20px 14px 45px;
 }
 
 .logo{
@@ -43,6 +43,8 @@ button{
 .logo span{
   color:#ffc928;
 }
+
+/* PLAYERS */
 
 .player{
   background:rgba(10,14,19,.95);
@@ -93,6 +95,8 @@ button{
   margin-top:12px;
 }
 
+/* OPPONENT CARDS */
+
 .card-backs{
   display:grid;
   grid-template-columns:repeat(8,1fr);
@@ -112,6 +116,8 @@ button{
   font-size:19px;
   font-weight:900;
 }
+
+/* ARENA */
 
 .arena{
   margin:14px 0;
@@ -169,6 +175,28 @@ button{
   text-align:center;
 }
 
+/* TRAP WARNING */
+
+.trap-warning{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:11px;
+  border:1px solid #b14cff;
+  background:rgba(87,24,120,.20);
+  color:#e295ff;
+  font-size:13px;
+  text-align:center;
+  font-weight:900;
+  box-shadow:0 0 20px rgba(180,70,255,.12);
+}
+
+.trap-warning.active{
+  display:block;
+}
+
+/* NUMBER CARDS */
+
 .hand{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -204,6 +232,8 @@ button{
   opacity:.22;
 }
 
+/* DISCARD */
+
 .discard{
   display:flex;
   flex-wrap:wrap;
@@ -220,6 +250,15 @@ button{
   font-weight:bold;
 }
 
+.recovery-info{
+  margin-top:10px;
+  color:#ffc934;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* SPECIALS */
+
 .specials{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -228,15 +267,41 @@ button{
 }
 
 .special{
-  padding:11px 4px;
+  padding:12px 4px;
   border-radius:9px;
   background:#10151b;
-  color:#68717c;
-  border:1px solid #303943;
   font-weight:900;
   font-size:11px;
-  opacity:.55;
 }
+
+.trap-button{
+  border:1px solid #b34cff;
+  color:#e295ff;
+}
+
+.trap-button:disabled{
+  border-color:#303943;
+  color:#4f5660;
+  opacity:.45;
+}
+
+.disarm-button{
+  border:1px solid #ffb429;
+  color:#ffc657;
+  display:none;
+}
+
+.disarm-button.active{
+  display:block;
+}
+
+.locked{
+  color:#565e68;
+  border:1px solid #303943;
+  opacity:.45;
+}
+
+/* ACTIONS */
 
 .actions{
   display:grid;
@@ -267,16 +332,10 @@ button{
   color:#aeb7c1;
 }
 
-.recovery-info{
-  margin-top:10px;
-  color:#ffc934;
-  font-size:12px;
-  font-weight:bold;
-}
+/* OVERLAYS */
 
-/* FULL SCREEN TURN OVERLAY */
-
-.overlay{
+.overlay,
+.modal{
   position:fixed;
   inset:0;
   z-index:50;
@@ -284,35 +343,44 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:25px;
+  padding:20px;
 }
 
-.overlay.hidden{
-  display:none;
+.modal{
+  z-index:60;
 }
 
-.overlay-box{
+.hidden{
+  display:none !important;
+}
+
+.overlay-box,
+.modal-box{
   width:100%;
-  max-width:380px;
+  max-width:390px;
   text-align:center;
-  border:1px solid #34404d;
-  background:#0b1016;
+  border:1px solid #3a4653;
+  background:#0b1118;
   border-radius:22px;
-  padding:28px 20px;
+  padding:25px 20px;
 }
 
-.overlay-title{
-  font-size:29px;
+.overlay-title,
+.modal-title{
+  font-size:27px;
   font-weight:900;
 }
 
-.overlay-text{
-  color:#9aa5b0;
-  margin:13px 0 22px;
+.overlay-text,
+.modal-desc{
+  color:#9ba6b1;
+  margin:13px 0 20px;
   line-height:1.5;
+  font-size:14px;
 }
 
-.ready{
+.ready,
+.confirm{
   width:100%;
   padding:15px;
   border:0;
@@ -323,50 +391,46 @@ button{
   font-size:16px;
 }
 
-/* RECOVERY MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:60;
-  background:rgba(0,0,0,.92);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+.confirm{
+  background:#238f3e;
+  margin-top:15px;
 }
 
-.modal.hidden{
-  display:none;
+.confirm:disabled{
+  background:#252c33;
+  color:#5b636b;
 }
 
-.modal-box{
-  width:100%;
-  max-width:390px;
-  padding:22px;
-  background:#0c1117;
-  border:1px solid #3a4653;
-  border-radius:20px;
-  text-align:center;
-}
+/* CHOICE CARDS */
 
-.modal-title{
-  font-size:24px;
-  font-weight:900;
-  color:#ffd138;
-}
-
-.modal-desc{
-  color:#9ba6b1;
-  font-size:13px;
-  margin:10px 0 17px;
-}
-
-.recovery-cards{
+.choice-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px;
+  gap:9px;
 }
+
+.choice-card{
+  height:67px;
+  border-radius:10px;
+  background:#171e26;
+  border:1px solid #596674;
+  color:white;
+  font-size:25px;
+  font-weight:900;
+}
+
+.choice-card.selected{
+  border:2px solid #b653ff;
+  background:#321342;
+  box-shadow:0 0 18px rgba(188,77,255,.25);
+}
+
+.disarm-choice.selected{
+  border:2px solid #ffbd31;
+  background:#3b2c0e;
+}
+
+/* RECOVERY */
 
 .recover-card{
   height:62px;
@@ -383,20 +447,16 @@ button{
   background:#17351f;
 }
 
-.confirm{
-  margin-top:15px;
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:#238f3e;
-  color:white;
-  font-weight:900;
+/* EVENT */
+
+.event-icon{
+  font-size:55px;
+  margin-bottom:12px;
 }
 
-.confirm:disabled{
-  background:#252c33;
-  color:#5b636b;
+.event-title{
+  font-size:29px;
+  font-weight:900;
 }
 
 .win{
@@ -412,7 +472,11 @@ button{
 
 <div class="game">
 
-  <div class="logo">CLASH <span>10</span></div>
+  <div class="logo">
+    CLASH <span>10</span>
+  </div>
+
+  <!-- OPPONENT -->
 
   <div class="player opponent">
 
@@ -426,6 +490,8 @@ button{
     <div class="card-backs" id="opponentCards"></div>
 
   </div>
+
+  <!-- ARENA -->
 
   <div class="arena">
 
@@ -445,11 +511,18 @@ button{
 
     <div class="turn" id="turnText">YOUR TURN</div>
 
+    <div class="trap-warning" id="trapWarning">
+      💀 ACTIVE TRAP<br>
+      One of your number cards is trapped.
+    </div>
+
     <div class="message" id="message">
       Choose a number card.
     </div>
 
   </div>
+
+  <!-- CURRENT PLAYER -->
 
   <div class="player current">
 
@@ -468,25 +541,61 @@ button{
 
     <div class="recovery-info" id="recoveryInfo"></div>
 
-    <div class="mini">SPECIAL CARDS — UNLOCKING IN v0.3 😈</div>
+    <div class="mini">SPECIAL CARDS</div>
 
     <div class="specials">
-      <button class="special">💀 TRAP 🔒</button>
-      <button class="special">🐱 STEAL 🔒</button>
-      <button class="special">🛑 SKIP 🔒</button>
-      <button class="special">🛡️ SHIELD 🔒</button>
-      <button class="special">🔄 SWAP 🔒</button>
-      <button class="special">🔒 LOCK 🔒</button>
+
+      <button
+        class="special trap-button"
+        id="trapButton"
+        onclick="openTrapModal()">
+        💀 TRAP
+      </button>
+
+      <button
+        class="special disarm-button"
+        id="disarmButton"
+        onclick="openDisarmModal()">
+        🔎 DISARM
+      </button>
+
+      <button class="special locked">
+        🐱 STEAL 🔒
+      </button>
+
+      <button class="special locked">
+        🛑 SKIP 🔒
+      </button>
+
+      <button class="special locked">
+        🛡️ SHIELD 🔒
+      </button>
+
+      <button class="special locked">
+        🔄 SWAP 🔒
+      </button>
+
+      <button class="special locked">
+        🔒 LOCK 🔒
+      </button>
+
     </div>
 
     <div class="actions">
-      <button class="action pass" id="passButton" onclick="passTurn()">
+
+      <button
+        class="action pass"
+        id="passButton"
+        onclick="passTurn()">
         PASS
       </button>
 
-      <button class="action reset" onclick="resetGame()">
+      <button
+        class="action reset"
+        onclick="resetGame()">
         RESET GAME
       </button>
+
     </div>
 
   </div>
@@ -515,6 +624,65 @@ button{
 
 </div>
 
+<!-- TRAP SELECTION -->
+
+<div class="modal hidden" id="trapModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title" style="color:#dc83ff;">
+      💀 PLACE TRAP
+    </div>
+
+    <div class="modal-desc">
+      Secretly choose ONE of your opponent's currently available number cards.
+    </div>
+
+    <div class="choice-grid" id="trapChoices"></div>
+
+    <button
+      class="confirm"
+      id="confirmTrap"
+      onclick="confirmTrap()"
+      disabled>
+      PLACE TRAP
+    </button>
+
+  </div>
+
+</div>
+
+<!-- DISARM -->
+
+<div class="modal hidden" id="disarmModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title" style="color:#ffc33e;">
+      🔎 DISARM
+    </div>
+
+    <div class="modal-desc">
+      Guess which number your opponent trapped.<br><br>
+      Correct = trap destroyed.<br>
+      Wrong = trap stays.<br><br>
+      Your turn is sacrificed either way.
+    </div>
+
+    <div class="choice-grid" id="disarmChoices"></div>
+
+    <button
+      class="confirm"
+      id="confirmDisarm"
+      onclick="confirmDisarm()"
+      disabled>
+      CONFIRM GUESS
+    </button>
+
+  </div>
+
+</div>
+
 <!-- RECOVERY -->
 
 <div class="modal hidden" id="recoveryModal">
@@ -529,10 +697,38 @@ button{
       Choose cards to recover.
     </div>
 
-    <div class="recovery-cards" id="recoveryCards"></div>
+    <div class="choice-grid" id="recoveryCards"></div>
 
-    <button class="confirm" id="confirmRecovery" onclick="confirmRecovery()" disabled>
+    <button
+      class="confirm"
+      id="confirmRecovery"
+      onclick="confirmRecovery()"
+      disabled>
       CONFIRM
+    </button>
+
+  </div>
+
+</div>
+
+<!-- EVENT SCREEN -->
+
+<div class="modal hidden" id="eventModal">
+
+  <div class="modal-box">
+
+    <div class="event-icon" id="eventIcon">
+      💀
+    </div>
+
+    <div class="event-title" id="eventTitle">
+      TRAP ACTIVATED!
+    </div>
+
+    <div class="modal-desc" id="eventText"></div>
+
+    <button class="ready" onclick="continueEvent()">
+      CONTINUE
     </button>
 
   </div>
@@ -545,10 +741,12 @@ button{
 
   <div class="modal-box">
 
-    <div class="win" id="winTitle">🏆 YOU WIN!</div>
+    <div class="win" id="winTitle">
+      🏆 YOU WIN!
+    </div>
 
     <div class="modal-desc">
-      First to 5 Crowns.
+      First player to earn 5 Crowns wins CLASH 10.
     </div>
 
     <button class="confirm" onclick="resetGame()">
@@ -561,60 +759,55 @@ button{
 
 <script>
 
+/* -------------------------
+   CORE STATE
+------------------------- */
+
 const targets = [10,12,15,18,21];
 
 function freshPlayer(){
+
   return {
     hand:[1,2,3,4,5,6,7,8],
     discard:[],
     crowns:0,
-    sinceRecovery:0
+    sinceRecovery:0,
+    trapUsed:false
   };
 }
 
 let players;
+
 let current;
 let roundStarter;
+
 let targetIndex;
 let total;
+
 let consecutivePasses;
+
+let statusMessage = "";
+
+let traps;
+/*
+traps.you = number trapped BY YOU against FRIEND
+traps.friend = number trapped BY FRIEND against YOU
+*/
+
+let selectedTrap = null;
+let selectedDisarm = null;
 
 let recoveryType = null;
 let recoveryPlayer = null;
 let recoveryAmount = 0;
 let recoverySelected = [];
 let crownRecoveryQueue = [];
-let pendingTurnSwitch = false;
 
-function resetGame(){
+let eventCallback = null;
 
-  players = {
-    you:freshPlayer(),
-    friend:freshPlayer()
-  };
-
-  current = "you";
-  roundStarter = "you";
-
-  targetIndex = 0;
-  total = 0;
-  consecutivePasses = 0;
-
-  recoveryType = null;
-  recoverySelected = [];
-  crownRecoveryQueue = [];
-  pendingTurnSwitch = false;
-
-  document.getElementById("winModal").classList.add("hidden");
-  document.getElementById("recoveryModal").classList.add("hidden");
-
-  updateScreen();
-
-  showTurnOverlay(
-    "⚔️ YOU START",
-    "Make sure only YOU can see the screen."
-  );
-}
+/* -------------------------
+   HELPERS
+------------------------- */
 
 function otherPlayer(player){
   return player === "you" ? "friend" : "you";
@@ -626,22 +819,99 @@ function displayName(player){
 
 function crownString(amount){
 
-  let text = "";
+  let result = "";
 
   for(let i=0;i<5;i++){
-    text += i < amount ? "👑" : "☆";
+    result += i < amount ? "👑" : "☆";
   }
 
-  return text;
+  return result;
 }
+
+function getLegalCards(player){
+
+  return players[player].hand.filter(number =>
+    total + number <= targets[targetIndex]
+  );
+}
+
+function trapAgainst(player){
+
+  const enemy = otherPlayer(player);
+
+  return traps[enemy];
+}
+
+function hasTrapAgainst(player){
+
+  return trapAgainst(player) !== null;
+}
+
+/* -------------------------
+   RESET
+------------------------- */
+
+function resetGame(){
+
+  players = {
+    you:freshPlayer(),
+    friend:freshPlayer()
+  };
+
+  traps = {
+    you:null,
+    friend:null
+  };
+
+  current = "you";
+  roundStarter = "you";
+
+  targetIndex = 0;
+  total = 0;
+
+  consecutivePasses = 0;
+
+  statusMessage = "Choose a number card.";
+
+  selectedTrap = null;
+  selectedDisarm = null;
+
+  recoveryType = null;
+  recoveryPlayer = null;
+  recoveryAmount = 0;
+  recoverySelected = [];
+  crownRecoveryQueue = [];
+
+  eventCallback = null;
+
+  document.getElementById("winModal").classList.add("hidden");
+  document.getElementById("trapModal").classList.add("hidden");
+  document.getElementById("disarmModal").classList.add("hidden");
+  document.getElementById("recoveryModal").classList.add("hidden");
+  document.getElementById("eventModal").classList.add("hidden");
+
+  updateScreen();
+
+  showTurnOverlay(
+    "⚔️ YOU START",
+    "Make sure only YOU can see the screen."
+  );
+}
+
+/* -------------------------
+   UI UPDATE
+------------------------- */
 
 function updateScreen(){
 
   const me = players[current];
-  const opponent = players[otherPlayer(current)];
+  const enemy = players[otherPlayer(current)];
 
-  document.getElementById("target").innerText = targets[targetIndex];
-  document.getElementById("total").innerText = total;
+  document.getElementById("target").innerText =
+    targets[targetIndex];
+
+  document.getElementById("total").innerText =
+    total;
 
   document.getElementById("currentName").innerText =
     displayName(current);
@@ -653,53 +923,56 @@ function updateScreen(){
     crownString(me.crowns);
 
   document.getElementById("opponentCrowns").innerText =
-    crownString(opponent.crowns);
+    crownString(enemy.crowns);
 
   document.getElementById("turnText").innerText =
     displayName(current) + "'S TURN";
 
-  renderHand();
-  renderOpponent();
-  renderDiscard();
+  document.getElementById("message").innerText =
+    statusMessage;
 
   document.getElementById("recoveryInfo").innerText =
     "♻️ Recovery meter: " +
     me.sinceRecovery +
     " / 4 number cards";
 
-  const legal = getLegalCards(current);
-
-  const passButton = document.getElementById("passButton");
-
-  passButton.disabled = legal.length > 0;
-
-  if(legal.length === 0){
-
-    document.getElementById("message").innerText =
-      "⚠️ No legal number card. You may PASS.";
-  }
+  renderHand();
+  renderOpponent();
+  renderDiscard();
+  updateTrapControls();
+  updatePassButton();
 }
+
+/* -------------------------
+   HAND
+------------------------- */
 
 function renderHand(){
 
-  const hand = document.getElementById("hand");
-  hand.innerHTML = "";
+  const container =
+    document.getElementById("hand");
 
-  const player = players[current];
+  container.innerHTML = "";
+
+  const player =
+    players[current];
 
   for(let number=1;number<=8;number++){
 
-    const button = document.createElement("button");
+    const button =
+      document.createElement("button");
 
     button.className = "card";
     button.innerText = number;
 
-    if(!player.hand.includes(number)){
+    const owned =
+      player.hand.includes(number);
 
-      button.classList.add("invalid");
-      button.disabled = true;
+    const legal =
+      owned &&
+      total + number <= targets[targetIndex];
 
-    }else if(total + number > targets[targetIndex]){
+    if(!legal){
 
       button.classList.add("invalid");
       button.disabled = true;
@@ -712,9 +985,13 @@ function renderHand(){
 
     }
 
-    hand.appendChild(button);
+    container.appendChild(button);
   }
 }
+
+/* -------------------------
+   OPPONENT CARDS
+------------------------- */
 
 function renderOpponent(){
 
@@ -728,20 +1005,25 @@ function renderOpponent(){
 
   for(let i=0;i<8;i++){
 
-    const back = document.createElement("div");
+    const card =
+      document.createElement("div");
 
-    back.className = "back";
+    card.className = "back";
 
     if(i < count){
-      back.innerText = "?";
+      card.innerText = "?";
     }else{
-      back.innerText = "×";
-      back.style.opacity = ".2";
+      card.innerText = "×";
+      card.style.opacity = ".2";
     }
 
-    container.appendChild(back);
+    container.appendChild(card);
   }
 }
+
+/* -------------------------
+   DISCARD
+------------------------- */
 
 function renderDiscard(){
 
@@ -750,61 +1032,194 @@ function renderDiscard(){
 
   container.innerHTML = "";
 
-  const discarded =
-    [...players[current].discard].sort((a,b)=>a-b);
+  const cards =
+    [...players[current].discard]
+      .sort((a,b)=>a-b);
 
-  if(discarded.length === 0){
+  if(cards.length === 0){
 
-    const span = document.createElement("span");
+    const empty =
+      document.createElement("span");
 
-    span.className = "discard-chip";
-    span.innerText = "EMPTY";
+    empty.className = "discard-chip";
+    empty.innerText = "EMPTY";
 
-    container.appendChild(span);
+    container.appendChild(empty);
 
     return;
   }
 
-  discarded.forEach(number=>{
+  cards.forEach(number=>{
 
-    const chip = document.createElement("span");
+    const chip =
+      document.createElement("span");
 
     chip.className = "discard-chip";
     chip.innerText = number;
 
     container.appendChild(chip);
-
   });
 }
 
-function getLegalCards(player){
+/* -------------------------
+   TRAP UI
+------------------------- */
 
-  return players[player].hand.filter(number =>
-    total + number <= targets[targetIndex]
-  );
+function updateTrapControls(){
+
+  const trapButton =
+    document.getElementById("trapButton");
+
+  const disarmButton =
+    document.getElementById("disarmButton");
+
+  const warning =
+    document.getElementById("trapWarning");
+
+  const me =
+    players[current];
+
+  const enemy =
+    players[otherPlayer(current)];
+
+  const canPlaceTrap =
+    !me.trapUsed &&
+    traps[current] === null &&
+    enemy.hand.length > 0;
+
+  trapButton.disabled =
+    !canPlaceTrap;
+
+  if(me.trapUsed){
+
+    trapButton.innerText =
+      "💀 TRAP ❌";
+
+  }else{
+
+    trapButton.innerText =
+      "💀 TRAP";
+  }
+
+  if(hasTrapAgainst(current)){
+
+    warning.classList.add("active");
+    disarmButton.classList.add("active");
+
+  }else{
+
+    warning.classList.remove("active");
+    disarmButton.classList.remove("active");
+  }
 }
+
+/* -------------------------
+   PASS
+------------------------- */
+
+function updatePassButton(){
+
+  const button =
+    document.getElementById("passButton");
+
+  const legal =
+    getLegalCards(current);
+
+  button.disabled =
+    legal.length > 0;
+}
+
+/* -------------------------
+   PLAY NUMBER
+------------------------- */
 
 function playCard(number){
 
-  const player = players[current];
+  const player =
+    players[current];
 
-  if(!player.hand.includes(number)) return;
+  if(!player.hand.includes(number)){
+    return;
+  }
 
-  if(total + number > targets[targetIndex]) return;
+  if(total + number > targets[targetIndex]){
+    return;
+  }
+
+  const playerWhoPlayed =
+    current;
 
   player.hand =
-    player.hand.filter(card => card !== number);
+    player.hand.filter(card =>
+      card !== number
+    );
 
   player.discard.push(number);
 
   player.sinceRecovery++;
 
-  total += number;
-
   consecutivePasses = 0;
 
-  document.getElementById("message").innerText =
-    displayName(current) +
+  /* CHECK TRAP */
+
+  const enemy =
+    otherPlayer(playerWhoPlayed);
+
+  const trappedNumber =
+    traps[enemy];
+
+  if(
+    trappedNumber !== null &&
+    trappedNumber === number
+  ){
+
+    traps[enemy] = null;
+
+    statusMessage =
+      "💀 " +
+      displayName(playerWhoPlayed) +
+      " triggered the Trap.";
+
+    updateScreen();
+
+    showEvent(
+      "💀",
+      "TRAP ACTIVATED!",
+      displayName(playerWhoPlayed) +
+      " played the trapped " +
+      number +
+      ".\n\nThe card is discarded, TOTAL stays at " +
+      total +
+      ", and the turn is lost.",
+      function(){
+
+        if(
+          player.sinceRecovery >= 4 &&
+          player.discard.length >= 2
+        ){
+
+          openRecovery(
+            playerWhoPlayed,
+            2,
+            "normal"
+          );
+
+        }else{
+
+          switchTurn();
+        }
+      }
+    );
+
+    return;
+  }
+
+  /* NORMAL NUMBER */
+
+  total += number;
+
+  statusMessage =
+    displayName(playerWhoPlayed) +
     " played " +
     number +
     ". Total = " +
@@ -813,21 +1228,23 @@ function playCard(number){
 
   updateScreen();
 
+  /* CROWN */
+
   if(total === targets[targetIndex]){
 
-    scoreCrown(current);
+    scoreCrown(playerWhoPlayed);
     return;
   }
+
+  /* RECOVERY */
 
   if(
     player.sinceRecovery >= 4 &&
     player.discard.length >= 2
   ){
 
-    pendingTurnSwitch = true;
-
     openRecovery(
-      current,
+      playerWhoPlayed,
       2,
       "normal"
     );
@@ -838,27 +1255,38 @@ function playCard(number){
   switchTurn();
 }
 
+/* -------------------------
+   PASS TURN
+------------------------- */
+
 function passTurn(){
 
-  if(getLegalCards(current).length > 0) return;
+  if(getLegalCards(current).length > 0){
+    return;
+  }
 
-  const passer = current;
+  const passer =
+    current;
 
   consecutivePasses++;
 
-  document.getElementById("message").innerText =
-    displayName(passer) + " passed.";
+  statusMessage =
+    displayName(passer) +
+    " passed.";
 
   if(consecutivePasses >= 2){
 
-    const scorer = otherPlayer(passer);
+    const scorer =
+      otherPlayer(passer);
 
     consecutivePasses = 0;
 
-    document.getElementById("message").innerText =
+    statusMessage =
       "⚠️ Two consecutive passes. " +
       displayName(scorer) +
       " earns the Crown.";
+
+    updateScreen();
 
     scoreCrown(scorer);
 
@@ -868,9 +1296,33 @@ function passTurn(){
   switchTurn();
 }
 
+/* -------------------------
+   SWITCH TURN
+------------------------- */
+
 function switchTurn(){
 
-  current = otherPlayer(current);
+  current =
+    otherPlayer(current);
+
+  const legal =
+    getLegalCards(current);
+
+  if(legal.length === 0){
+
+    statusMessage =
+      "⚠️ No legal number card. You may PASS.";
+
+  }else if(hasTrapAgainst(current)){
+
+    statusMessage =
+      "💀 A Trap is active. Play carefully or try to DISARM it.";
+
+  }else{
+
+    statusMessage =
+      "Choose a number card.";
+  }
 
   updateScreen();
 
@@ -881,10 +1333,17 @@ function switchTurn(){
   );
 }
 
+/* -------------------------
+   TURN OVERLAY
+------------------------- */
+
 function showTurnOverlay(title,text){
 
-  document.getElementById("overlayTitle").innerText = title;
-  document.getElementById("overlayText").innerText = text;
+  document.getElementById("overlayTitle").innerText =
+    title;
+
+  document.getElementById("overlayText").innerText =
+    text;
 
   document
     .getElementById("turnOverlay")
@@ -900,21 +1359,343 @@ function closeTurnOverlay(){
   updateScreen();
 }
 
-/* ----------------------
-   NORMAL RECOVERY
----------------------- */
+/* ===================================================
+   💀 TRAP
+=================================================== */
+
+function openTrapModal(){
+
+  const me =
+    players[current];
+
+  if(me.trapUsed){
+    return;
+  }
+
+  if(traps[current] !== null){
+    return;
+  }
+
+  const opponent =
+    players[otherPlayer(current)];
+
+  if(opponent.hand.length === 0){
+    return;
+  }
+
+  selectedTrap = null;
+
+  const container =
+    document.getElementById("trapChoices");
+
+  container.innerHTML = "";
+
+  [...opponent.hand]
+    .sort((a,b)=>a-b)
+    .forEach(number=>{
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "choice-card";
+
+      button.innerText =
+        number;
+
+      button.onclick = function(){
+
+        selectedTrap =
+          number;
+
+        renderTrapChoices();
+      };
+
+      container.appendChild(button);
+    });
+
+  document.getElementById("confirmTrap").disabled =
+    true;
+
+  document
+    .getElementById("trapModal")
+    .classList.remove("hidden");
+}
+
+function renderTrapChoices(){
+
+  const buttons =
+    document
+      .getElementById("trapChoices")
+      .querySelectorAll(".choice-card");
+
+  buttons.forEach(button=>{
+
+    const number =
+      Number(button.innerText);
+
+    if(number === selectedTrap){
+
+      button.classList.add("selected");
+
+    }else{
+
+      button.classList.remove("selected");
+    }
+  });
+
+  document.getElementById("confirmTrap").disabled =
+    selectedTrap === null;
+}
+
+function confirmTrap(){
+
+  if(selectedTrap === null){
+    return;
+  }
+
+  const owner =
+    current;
+
+  const victim =
+    otherPlayer(owner);
+
+  traps[owner] =
+    selectedTrap;
+
+  players[owner].trapUsed =
+    true;
+
+  document
+    .getElementById("trapModal")
+    .classList.add("hidden");
+
+  statusMessage =
+    "💀 " +
+    displayName(owner) +
+    " placed a Trap.";
+
+  selectedTrap = null;
+
+  current = victim;
+
+  if(hasTrapAgainst(current)){
+
+    statusMessage =
+      "💀 ACTIVE TRAP — one of your number cards is trapped.";
+  }
+
+  updateScreen();
+
+  showTurnOverlay(
+    "💀 TRAP PLACED",
+    "Pass the phone to " +
+    displayName(victim) +
+    ".\n\nDo NOT reveal which number was trapped."
+  );
+}
+
+/* ===================================================
+   🔎 DISARM
+=================================================== */
+
+function openDisarmModal(){
+
+  if(!hasTrapAgainst(current)){
+    return;
+  }
+
+  selectedDisarm = null;
+
+  const container =
+    document.getElementById("disarmChoices");
+
+  container.innerHTML = "";
+
+  for(let number=1;number<=8;number++){
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "choice-card disarm-choice";
+
+    button.innerText =
+      number;
+
+    button.onclick = function(){
+
+      selectedDisarm =
+        number;
+
+      renderDisarmChoices();
+    };
+
+    container.appendChild(button);
+  }
+
+  document.getElementById("confirmDisarm").disabled =
+    true;
+
+  document
+    .getElementById("disarmModal")
+    .classList.remove("hidden");
+}
+
+function renderDisarmChoices(){
+
+  const buttons =
+    document
+      .getElementById("disarmChoices")
+      .querySelectorAll(".choice-card");
+
+  buttons.forEach(button=>{
+
+    const number =
+      Number(button.innerText);
+
+    if(number === selectedDisarm){
+
+      button.classList.add("selected");
+
+    }else{
+
+      button.classList.remove("selected");
+    }
+  });
+
+  document.getElementById("confirmDisarm").disabled =
+    selectedDisarm === null;
+}
+
+function confirmDisarm(){
+
+  if(selectedDisarm === null){
+    return;
+  }
+
+  const guesser =
+    current;
+
+  const trapOwner =
+    otherPlayer(guesser);
+
+  const actual =
+    traps[trapOwner];
+
+  const guess =
+    selectedDisarm;
+
+  document
+    .getElementById("disarmModal")
+    .classList.add("hidden");
+
+  selectedDisarm = null;
+
+  if(guess === actual){
+
+    traps[trapOwner] =
+      null;
+
+    statusMessage =
+      "✅ Trap successfully disarmed.";
+
+    updateScreen();
+
+    showEvent(
+      "✅",
+      "DISARM SUCCESSFUL!",
+      displayName(guesser) +
+      " correctly guessed " +
+      guess +
+      ".\n\nThe Trap is destroyed.\nThe DISARM used the whole turn.",
+      function(){
+        switchTurn();
+      }
+    );
+
+  }else{
+
+    statusMessage =
+      "❌ Wrong Disarm guess. Trap remains active.";
+
+    updateScreen();
+
+    showEvent(
+      "❌",
+      "WRONG GUESS!",
+      displayName(guesser) +
+      " guessed " +
+      guess +
+      ".\n\nThat was NOT the trapped number.\nThe Trap remains active and the turn is lost.",
+      function(){
+        switchTurn();
+      }
+    );
+  }
+}
+
+/* ===================================================
+   EVENT MODAL
+=================================================== */
+
+function showEvent(icon,title,text,callback){
+
+  document.getElementById("eventIcon").innerText =
+    icon;
+
+  document.getElementById("eventTitle").innerText =
+    title;
+
+  document.getElementById("eventText").innerText =
+    text;
+
+  eventCallback =
+    callback;
+
+  document
+    .getElementById("eventModal")
+    .classList.remove("hidden");
+}
+
+function continueEvent(){
+
+  document
+    .getElementById("eventModal")
+    .classList.add("hidden");
+
+  const callback =
+    eventCallback;
+
+  eventCallback =
+    null;
+
+  if(callback){
+    callback();
+  }
+}
+
+/* ===================================================
+   ♻️ RECOVERY
+=================================================== */
 
 function openRecovery(player,amount,type){
 
-  recoveryPlayer = player;
-  recoveryAmount = amount;
-  recoveryType = type;
-  recoverySelected = [];
+  recoveryPlayer =
+    player;
 
-  const modal =
-    document.getElementById("recoveryModal");
+  recoveryAmount =
+    amount;
 
-  modal.classList.remove("hidden");
+  recoveryType =
+    type;
+
+  recoverySelected =
+    [];
+
+  document
+    .getElementById("recoveryModal")
+    .classList.remove("hidden");
 
   document.getElementById("recoveryTitle").innerText =
     type === "normal"
@@ -948,26 +1729,39 @@ function renderRecoveryCards(){
     const button =
       document.createElement("button");
 
-    button.className = "recover-card";
-    button.innerText = number;
+    button.className =
+      "recover-card";
 
-    if(recoverySelected.includes(number)){
+    button.innerText =
+      number;
+
+    if(
+      recoverySelected.includes(number)
+    ){
+
       button.classList.add("selected");
     }
 
     button.onclick = function(){
 
-      if(recoverySelected.includes(number)){
+      if(
+        recoverySelected.includes(number)
+      ){
 
         recoverySelected =
-          recoverySelected.filter(x => x !== number);
+          recoverySelected.filter(x =>
+            x !== number
+          );
 
       }else{
 
-        if(recoverySelected.length < recoveryAmount){
+        if(
+          recoverySelected.length <
+          recoveryAmount
+        ){
+
           recoverySelected.push(number);
         }
-
       }
 
       renderRecoveryCards();
@@ -982,7 +1776,12 @@ function renderRecoveryCards(){
 
 function confirmRecovery(){
 
-  if(recoverySelected.length !== recoveryAmount) return;
+  if(
+    recoverySelected.length !==
+    recoveryAmount
+  ){
+    return;
+  }
 
   const player =
     players[recoveryPlayer];
@@ -990,12 +1789,14 @@ function confirmRecovery(){
   recoverySelected.forEach(number=>{
 
     player.discard =
-      player.discard.filter(card => card !== number);
+      player.discard.filter(card =>
+        card !== number
+      );
 
     if(!player.hand.includes(number)){
+
       player.hand.push(number);
     }
-
   });
 
   player.hand.sort((a,b)=>a-b);
@@ -1008,7 +1809,13 @@ function confirmRecovery(){
 
     player.sinceRecovery = 0;
 
-    pendingTurnSwitch = false;
+    statusMessage =
+      displayName(player) +
+      " recovered " +
+      recoverySelected.join(" and ") +
+      ".";
+
+    recoverySelected = [];
 
     updateScreen();
 
@@ -1019,24 +1826,35 @@ function confirmRecovery(){
 
   if(recoveryType === "crown"){
 
+    recoverySelected = [];
+
     processNextCrownRecovery();
   }
 }
 
-/* ----------------------
-   CROWNS
----------------------- */
+/* ===================================================
+   👑 CROWNS
+=================================================== */
 
 function scoreCrown(scorer){
 
   players[scorer].crowns++;
 
+  statusMessage =
+    "👑 " +
+    displayName(scorer) +
+    " HIT THE TARGET!";
+
   updateScreen();
 
-  if(players[scorer].crowns >= 5){
+  if(
+    players[scorer].crowns >= 5
+  ){
 
     document.getElementById("winTitle").innerText =
-      "🏆 " + displayName(scorer) + " WINS!";
+      "🏆 " +
+      displayName(scorer) +
+      " WINS!";
 
     document
       .getElementById("winModal")
@@ -1045,29 +1863,32 @@ function scoreCrown(scorer){
     return;
   }
 
-  document.getElementById("message").innerText =
-    "👑 " +
-    displayName(scorer) +
-    " HIT THE TARGET!";
-
-  setTimeout(startCrownRecovery,650);
+  setTimeout(
+    startCrownRecovery,
+    500
+  );
 }
 
 function startCrownRecovery(){
 
-  crownRecoveryQueue = ["you","friend"];
+  crownRecoveryQueue =
+    ["you","friend"];
 
   processNextCrownRecovery();
 }
 
 function processNextCrownRecovery(){
 
-  while(crownRecoveryQueue.length > 0){
+  while(
+    crownRecoveryQueue.length > 0
+  ){
 
     const player =
       crownRecoveryQueue.shift();
 
-    if(players[player].discard.length > 0){
+    if(
+      players[player].discard.length > 0
+    ){
 
       openRecovery(
         player,
@@ -1082,13 +1903,20 @@ function processNextCrownRecovery(){
   startNextRound();
 }
 
+/* -------------------------
+   NEXT ROUND
+------------------------- */
+
 function startNextRound(){
 
   total = 0;
 
   targetIndex++;
 
-  if(targetIndex >= targets.length){
+  if(
+    targetIndex >=
+    targets.length
+  ){
     targetIndex = 0;
   }
 
@@ -1097,24 +1925,47 @@ function startNextRound(){
   roundStarter =
     otherPlayer(roundStarter);
 
-  current = roundStarter;
+  current =
+    roundStarter;
+
+  if(hasTrapAgainst(current)){
+
+    statusMessage =
+      "💀 The Trap survived the Crown round. It is STILL ACTIVE.";
+
+  }else{
+
+    statusMessage =
+      "🔥 New round. Target = " +
+      targets[targetIndex] +
+      ".";
+  }
 
   updateScreen();
 
-  document.getElementById("message").innerText =
-    "🔥 New round. Target = " +
-    targets[targetIndex] +
-    ".";
+  let extraTrapText = "";
+
+  if(hasTrapAgainst(current)){
+
+    extraTrapText =
+      "\n\n💀 WARNING: Your opponent still has an ACTIVE TRAP against you.";
+  }
 
   showTurnOverlay(
-    "🔥 NEW ROUND — " + displayName(current),
+    "🔥 NEW ROUND — " +
+    displayName(current),
     "Target " +
     targets[targetIndex] +
     ". " +
     displayName(current) +
-    " starts this round."
+    " starts this round." +
+    extraTrapText
   );
 }
+
+/* -------------------------
+   START
+------------------------- */
 
 resetGame();
 
