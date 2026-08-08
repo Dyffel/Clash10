@@ -1,729 +1,1124 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
 <title>CLASH 10</title>
 
 <style>
-
-* {
-
-  box-sizing: border-box;
-
-  -webkit-tap-highlight-color: transparent;
-
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-
-  margin: 0;
-
+body{
+  margin:0;
+  min-height:100vh;
   background:
-
-    radial-gradient(circle at top, #18202a 0%, #080b0f 45%, #000 100%);
-
-  color: white;
-
-  font-family: Arial, Helvetica, sans-serif;
-
-  min-height: 100vh;
-
+    radial-gradient(circle at top,#14202c 0%,#070b10 45%,#000 100%);
+  color:white;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-.game {
-
-  width: 100%;
-
-  max-width: 480px;
-
-  margin: auto;
-
-  padding: 18px 14px 35px;
-
+button{
+  font-family:inherit;
 }
 
-/* HEADER */
-
-.logo {
-
-  text-align: center;
-
-  font-size: 34px;
-
-  font-weight: 900;
-
-  font-style: italic;
-
-  letter-spacing: -2px;
-
-  margin-bottom: 18px;
-
+.game{
+  width:100%;
+  max-width:480px;
+  margin:auto;
+  padding:20px 14px 40px;
 }
 
-.logo span {
-
-  color: #ffc928;
-
+.logo{
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-2px;
+  margin-bottom:18px;
 }
 
-/* PLAYERS */
-
-.player {
-
-  border: 1px solid #2d3743;
-
-  background: rgba(13,17,22,.92);
-
-  border-radius: 18px;
-
-  padding: 14px;
-
+.logo span{
+  color:#ffc928;
 }
 
-.player.enemy {
-
-  border-color: #e23c3c;
-
+.player{
+  background:rgba(10,14,19,.95);
+  border:1px solid #34404c;
+  border-radius:18px;
+  padding:14px;
 }
 
-.player.you {
-
-  border-color: #168fff;
-
+.player.opponent{
+  border-color:#e64040;
 }
 
-.player-top {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
+.player.current{
+  border-color:#168fff;
+  margin-top:14px;
 }
 
-.name {
-
-  font-weight: 900;
-
-  font-size: 18px;
-
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
 }
 
-.enemy .name {
-
-  color: #ff5555;
-
+.name{
+  font-size:19px;
+  font-weight:900;
 }
 
-.you .name {
-
-  color: #43a8ff;
-
+.opponent .name{
+  color:#ff5252;
 }
 
-.crowns {
-
-  font-size: 21px;
-
-  letter-spacing: 2px;
-
+.current .name{
+  color:#45adff;
 }
 
-.small {
-
-  color: #7e8792;
-
-  font-size: 12px;
-
-  margin-top: 8px;
-
+.crowns{
+  font-size:19px;
+  letter-spacing:1px;
 }
 
-/* OPPONENT CARDS */
-
-.hidden-cards {
-
-  display: flex;
-
-  gap: 5px;
-
-  margin-top: 12px;
-
+.mini{
+  color:#828c97;
+  font-size:11px;
+  letter-spacing:1px;
+  font-weight:800;
+  margin-top:12px;
 }
 
-.hidden {
-
-  flex: 1;
-
-  height: 48px;
-
-  border-radius: 7px;
-
-  border: 1px solid #3c4652;
-
-  background: #171c22;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: #5f6872;
-
-  font-size: 23px;
-
-  font-weight: bold;
-
+.card-backs{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:5px;
+  margin-top:8px;
 }
 
-/* CENTER */
-
-.arena {
-
-  margin: 14px 0;
-
-  border-radius: 18px;
-
-  border: 1px solid #29313a;
-
-  background: rgba(10,13,17,.95);
-
-  padding: 17px;
-
+.back{
+  height:42px;
+  border-radius:7px;
+  border:1px solid #3b4652;
+  background:#151b22;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#59636e;
+  font-size:19px;
+  font-weight:900;
 }
 
-.numbers {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-around;
-
+.arena{
+  margin:14px 0;
+  padding:16px;
+  border:1px solid #29333d;
+  border-radius:18px;
+  background:rgba(8,12,17,.96);
 }
 
-.stat {
-
-  text-align: center;
-
+.scoreboard{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
 }
 
-.label {
-
-  color: #929aa4;
-
-  font-size: 12px;
-
-  letter-spacing: 1px;
-
-  font-weight: bold;
-
+.stat{
+  text-align:center;
 }
 
-.target-number {
-
-  color: #ff5353;
-
-  font-size: 42px;
-
-  font-weight: 900;
-
-  margin-top: 4px;
-
+.label{
+  color:#8d96a1;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1px;
 }
 
-.total-number {
-
-  font-size: 58px;
-
-  font-weight: 900;
-
-  margin-top: 2px;
-
+.target{
+  color:#ff4c4c;
+  font-size:44px;
+  font-weight:900;
+  margin-top:3px;
 }
 
-.turn {
-
-  text-align: center;
-
-  color: #42e66c;
-
-  font-size: 14px;
-
-  font-weight: 900;
-
-  margin-top: 8px;
-
+.total{
+  font-size:60px;
+  font-weight:900;
 }
 
-.message {
-
-  margin-top: 14px;
-
-  min-height: 38px;
-
-  background: #11161c;
-
-  border-radius: 9px;
-
-  padding: 10px;
-
-  text-align: center;
-
-  color: #aab3bd;
-
-  font-size: 13px;
-
+.turn{
+  text-align:center;
+  color:#43e96f;
+  font-size:14px;
+  font-weight:900;
+  margin-top:7px;
 }
 
-/* CARDS */
-
-.section-title {
-
-  color: #89939e;
-
-  font-size: 11px;
-
-  font-weight: bold;
-
-  letter-spacing: 1px;
-
-  margin: 14px 0 8px;
-
+.message{
+  margin-top:12px;
+  padding:11px;
+  min-height:42px;
+  border-radius:10px;
+  background:#111820;
+  color:#aeb7c1;
+  font-size:13px;
+  text-align:center;
 }
 
-.hand {
-
-  display: grid;
-
-  grid-template-columns: repeat(8, 1fr);
-
-  gap: 5px;
-
+.hand{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:9px;
 }
 
-.card {
-
-  height: 66px;
-
-  border: 1px solid #53606d;
-
-  background: linear-gradient(145deg,#1e252d,#0b0e12);
-
-  border-radius: 8px;
-
-  color: white;
-
-  font-size: 25px;
-
-  font-weight: 900;
-
-  cursor: pointer;
-
-  box-shadow: 0 5px 10px rgba(0,0,0,.35);
-
+.card{
+  height:76px;
+  border-radius:10px;
+  background:linear-gradient(145deg,#202833,#090c10);
+  color:white;
+  font-size:29px;
+  font-weight:900;
+  border:1px solid #586573;
+  box-shadow:0 5px 12px rgba(0,0,0,.4);
 }
 
-.card:active {
-
-  transform: scale(.92);
-
+.card:active{
+  transform:scale(.94);
 }
 
-.card.used {
+.card:nth-child(1){border-color:#aaa;}
+.card:nth-child(2){border-color:#1c99ff;}
+.card:nth-child(3){border-color:#ff4848;}
+.card:nth-child(4){border-color:#ffd32f;}
+.card:nth-child(5){border-color:#3fe36b;}
+.card:nth-child(6){border-color:#3fe36b;}
+.card:nth-child(7){border-color:#ffac2e;}
+.card:nth-child(8){border-color:#ad55ff;}
 
-  opacity: .15;
-
-  pointer-events: none;
-
+.card.invalid{
+  opacity:.22;
 }
 
-.card:nth-child(1) { border-color:#aaa; }
-
-.card:nth-child(2) { border-color:#168fff; }
-
-.card:nth-child(3) { border-color:#ff4848; }
-
-.card:nth-child(4) { border-color:#ffd02e; }
-
-.card:nth-child(5) { border-color:#42dc68; }
-
-.card:nth-child(6) { border-color:#42dc68; }
-
-.card:nth-child(7) { border-color:#ffb52b; }
-
-.card:nth-child(8) { border-color:#b653ff; }
-
-/* SPECIALS */
-
-.specials {
-
-  display: grid;
-
-  grid-template-columns: repeat(3,1fr);
-
-  gap: 7px;
-
-  margin-top: 8px;
-
+.discard{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
 }
 
-.special {
-
-  border-radius: 9px;
-
-  padding: 10px 3px;
-
-  background: #11161c;
-
-  color: white;
-
-  font-weight: bold;
-
-  font-size: 12px;
-
-  border: 1px solid #333;
-
+.discard-chip{
+  padding:6px 9px;
+  background:#11171e;
+  border:1px solid #343f4a;
+  border-radius:7px;
+  color:#7f8994;
+  font-weight:bold;
 }
 
-.trap { border-color:#b34cff; color:#df91ff; }
-
-.steal { border-color:#ffc62e; color:#ffd35c; }
-
-.skip { border-color:#ff4747; color:#ff7373; }
-
-.shield { border-color:#309cff; color:#71bdff; }
-
-.swap { border-color:#2edbc8; color:#5cf1df; }
-
-.lock { border-color:#ff9d32; color:#ffbb6f; }
-
-/* RESET */
-
-.reset {
-
-  width: 100%;
-
-  border: 0;
-
-  margin-top: 18px;
-
-  border-radius: 10px;
-
-  padding: 13px;
-
-  background: #202832;
-
-  color: #aab3bd;
-
-  font-weight: bold;
-
+.specials{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:8px;
 }
 
-.flash {
-
-  animation: flash .35s;
-
+.special{
+  padding:11px 4px;
+  border-radius:9px;
+  background:#10151b;
+  color:#68717c;
+  border:1px solid #303943;
+  font-weight:900;
+  font-size:11px;
+  opacity:.55;
 }
 
-@keyframes flash {
-
-  50% {
-
-    transform: scale(1.18);
-
-    color: #ffd72f;
-
-  }
-
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:13px;
 }
 
+.action{
+  border:0;
+  padding:13px;
+  border-radius:10px;
+  font-weight:900;
+}
+
+.pass{
+  background:#5a2727;
+  color:#ffb2b2;
+}
+
+.pass:disabled{
+  background:#1b2026;
+  color:#555e67;
+}
+
+.reset{
+  background:#202832;
+  color:#aeb7c1;
+}
+
+.recovery-info{
+  margin-top:10px;
+  color:#ffc934;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* FULL SCREEN TURN OVERLAY */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:rgba(0,0,0,.94);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+}
+
+.overlay.hidden{
+  display:none;
+}
+
+.overlay-box{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+  border:1px solid #34404d;
+  background:#0b1016;
+  border-radius:22px;
+  padding:28px 20px;
+}
+
+.overlay-title{
+  font-size:29px;
+  font-weight:900;
+}
+
+.overlay-text{
+  color:#9aa5b0;
+  margin:13px 0 22px;
+  line-height:1.5;
+}
+
+.ready{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:11px;
+  background:#168fff;
+  color:white;
+  font-weight:900;
+  font-size:16px;
+}
+
+/* RECOVERY MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  background:rgba(0,0,0,.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.hidden{
+  display:none;
+}
+
+.modal-box{
+  width:100%;
+  max-width:390px;
+  padding:22px;
+  background:#0c1117;
+  border:1px solid #3a4653;
+  border-radius:20px;
+  text-align:center;
+}
+
+.modal-title{
+  font-size:24px;
+  font-weight:900;
+  color:#ffd138;
+}
+
+.modal-desc{
+  color:#9ba6b1;
+  font-size:13px;
+  margin:10px 0 17px;
+}
+
+.recovery-cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.recover-card{
+  height:62px;
+  border-radius:9px;
+  background:#171e26;
+  border:1px solid #56616d;
+  color:white;
+  font-size:24px;
+  font-weight:900;
+}
+
+.recover-card.selected{
+  border:2px solid #44e76c;
+  background:#17351f;
+}
+
+.confirm{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#238f3e;
+  color:white;
+  font-weight:900;
+}
+
+.confirm:disabled{
+  background:#252c33;
+  color:#5b636b;
+}
+
+.win{
+  color:#ffd22f;
+  font-size:37px;
+  font-weight:900;
+  margin-bottom:10px;
+}
 </style>
-
 </head>
 
 <body>
 
 <div class="game">
 
-  <div class="logo">
+  <div class="logo">CLASH <span>10</span></div>
 
-    CLASH <span>10</span>
+  <div class="player opponent">
 
-  </div>
-
-  <!-- FRIEND -->
-
-  <div class="player enemy">
-
-    <div class="player-top">
-
-      <div class="name">FRIEND</div>
-
-      <div class="crowns" id="enemyCrowns">☆☆☆☆☆</div>
-
+    <div class="row">
+      <div class="name" id="opponentName">FRIEND</div>
+      <div class="crowns" id="opponentCrowns">☆☆☆☆☆</div>
     </div>
 
-    <div class="small">AVAILABLE CARDS</div>
+    <div class="mini">AVAILABLE CARDS</div>
 
-    <div class="hidden-cards">
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-      <div class="hidden">?</div>
-
-    </div>
+    <div class="card-backs" id="opponentCards"></div>
 
   </div>
-
-  <!-- ARENA -->
 
   <div class="arena">
 
-    <div class="numbers">
+    <div class="scoreboard">
 
       <div class="stat">
-
         <div class="label">TARGET</div>
-
-        <div class="target-number" id="target">10</div>
-
+        <div class="target" id="target">10</div>
       </div>
 
       <div class="stat">
-
         <div class="label">TOTAL</div>
-
-        <div class="total-number" id="total">0</div>
-
+        <div class="total" id="total">0</div>
       </div>
 
     </div>
 
-    <div class="turn">YOUR TURN</div>
+    <div class="turn" id="turnText">YOUR TURN</div>
 
     <div class="message" id="message">
-
       Choose a number card.
-
     </div>
 
   </div>
 
-  <!-- YOU -->
+  <div class="player current">
 
-  <div class="player you">
-
-    <div class="player-top">
-
-      <div class="name">YOU</div>
-
-      <div class="crowns" id="yourCrowns">☆☆☆☆☆</div>
-
+    <div class="row">
+      <div class="name" id="currentName">YOU</div>
+      <div class="crowns" id="currentCrowns">☆☆☆☆☆</div>
     </div>
 
-    <div class="section-title">NUMBER CARDS</div>
+    <div class="mini">NUMBER CARDS</div>
 
-    <div class="hand" id="hand">
+    <div class="hand" id="hand"></div>
 
-      <button class="card" onclick="playCard(1,this)">1</button>
+    <div class="mini">DISCARD</div>
 
-      <button class="card" onclick="playCard(2,this)">2</button>
+    <div class="discard" id="discard"></div>
 
-      <button class="card" onclick="playCard(3,this)">3</button>
+    <div class="recovery-info" id="recoveryInfo"></div>
 
-      <button class="card" onclick="playCard(4,this)">4</button>
-
-      <button class="card" onclick="playCard(5,this)">5</button>
-
-      <button class="card" onclick="playCard(6,this)">6</button>
-
-      <button class="card" onclick="playCard(7,this)">7</button>
-
-      <button class="card" onclick="playCard(8,this)">8</button>
-
-    </div>
-
-    <div class="section-title">SPECIAL CARDS — COMING NEXT 😈</div>
+    <div class="mini">SPECIAL CARDS — UNLOCKING IN v0.3 😈</div>
 
     <div class="specials">
+      <button class="special">💀 TRAP 🔒</button>
+      <button class="special">🐱 STEAL 🔒</button>
+      <button class="special">🛑 SKIP 🔒</button>
+      <button class="special">🛡️ SHIELD 🔒</button>
+      <button class="special">🔄 SWAP 🔒</button>
+      <button class="special">🔒 LOCK 🔒</button>
+    </div>
 
-      <button class="special trap">💀 TRAP</button>
+    <div class="actions">
+      <button class="action pass" id="passButton" onclick="passTurn()">
+        PASS
+      </button>
 
-      <button class="special steal">🐱 STEAL</button>
-
-      <button class="special skip">🛑 SKIP</button>
-
-      <button class="special shield">🛡️ SHIELD</button>
-
-      <button class="special swap">🔄 SWAP</button>
-
-      <button class="special lock">🔒 LOCK</button>
-
+      <button class="action reset" onclick="resetGame()">
+        RESET GAME
+      </button>
     </div>
 
   </div>
 
-  <button class="reset" onclick="resetGame()">
+</div>
 
-    RESET TEST GAME
+<!-- TURN HANDOFF -->
 
-  </button>
+<div class="overlay" id="turnOverlay">
+
+  <div class="overlay-box">
+
+    <div class="overlay-title" id="overlayTitle">
+      ⚔️ YOU START
+    </div>
+
+    <div class="overlay-text" id="overlayText">
+      Make sure only YOU can see the screen.
+    </div>
+
+    <button class="ready" onclick="closeTurnOverlay()">
+      I'M READY
+    </button>
+
+  </div>
+
+</div>
+
+<!-- RECOVERY -->
+
+<div class="modal hidden" id="recoveryModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title" id="recoveryTitle">
+      ♻️ RECOVERY
+    </div>
+
+    <div class="modal-desc" id="recoveryDesc">
+      Choose cards to recover.
+    </div>
+
+    <div class="recovery-cards" id="recoveryCards"></div>
+
+    <button class="confirm" id="confirmRecovery" onclick="confirmRecovery()" disabled>
+      CONFIRM
+    </button>
+
+  </div>
+
+</div>
+
+<!-- WIN -->
+
+<div class="modal hidden" id="winModal">
+
+  <div class="modal-box">
+
+    <div class="win" id="winTitle">🏆 YOU WIN!</div>
+
+    <div class="modal-desc">
+      First to 5 Crowns.
+    </div>
+
+    <button class="confirm" onclick="resetGame()">
+      REMATCH
+    </button>
+
+  </div>
 
 </div>
 
 <script>
 
-let total = 0;
-
-let targetIndex = 0;
-
-let crowns = 0;
-
 const targets = [10,12,15,18,21];
 
-function playCard(number, element) {
+function freshPlayer(){
+  return {
+    hand:[1,2,3,4,5,6,7,8],
+    discard:[],
+    crowns:0,
+    sinceRecovery:0
+  };
+}
 
-  if (element.classList.contains("used")) return;
+let players;
+let current;
+let roundStarter;
+let targetIndex;
+let total;
+let consecutivePasses;
 
-  if (total + number > targets[targetIndex]) {
+let recoveryType = null;
+let recoveryPlayer = null;
+let recoveryAmount = 0;
+let recoverySelected = [];
+let crownRecoveryQueue = [];
+let pendingTurnSwitch = false;
 
-    document.getElementById("message").innerText =
+function resetGame(){
 
-      "❌ " + number + " would exceed the target.";
+  players = {
+    you:freshPlayer(),
+    friend:freshPlayer()
+  };
 
-    return;
+  current = "you";
+  roundStarter = "you";
 
-  }
+  targetIndex = 0;
+  total = 0;
+  consecutivePasses = 0;
 
-  total += number;
+  recoveryType = null;
+  recoverySelected = [];
+  crownRecoveryQueue = [];
+  pendingTurnSwitch = false;
 
-  element.classList.add("used");
+  document.getElementById("winModal").classList.add("hidden");
+  document.getElementById("recoveryModal").classList.add("hidden");
 
   updateScreen();
 
-  if (total === targets[targetIndex]) {
-
-    crowns++;
-
-    document.getElementById("message").innerText =
-
-      "👑 CROWN! Exact target hit!";
-
-    document.getElementById("total").classList.add("flash");
-
-    setTimeout(nextRound, 900);
-
-  } else {
-
-    document.getElementById("message").innerText =
-
-      "You played " + number + ". Total is now " + total + ".";
-
-  }
-
+  showTurnOverlay(
+    "⚔️ YOU START",
+    "Make sure only YOU can see the screen."
+  );
 }
 
-function nextRound() {
+function otherPlayer(player){
+  return player === "you" ? "friend" : "you";
+}
+
+function displayName(player){
+  return player === "you" ? "YOU" : "FRIEND";
+}
+
+function crownString(amount){
+
+  let text = "";
+
+  for(let i=0;i<5;i++){
+    text += i < amount ? "👑" : "☆";
+  }
+
+  return text;
+}
+
+function updateScreen(){
+
+  const me = players[current];
+  const opponent = players[otherPlayer(current)];
+
+  document.getElementById("target").innerText = targets[targetIndex];
+  document.getElementById("total").innerText = total;
+
+  document.getElementById("currentName").innerText =
+    displayName(current);
+
+  document.getElementById("opponentName").innerText =
+    displayName(otherPlayer(current));
+
+  document.getElementById("currentCrowns").innerText =
+    crownString(me.crowns);
+
+  document.getElementById("opponentCrowns").innerText =
+    crownString(opponent.crowns);
+
+  document.getElementById("turnText").innerText =
+    displayName(current) + "'S TURN";
+
+  renderHand();
+  renderOpponent();
+  renderDiscard();
+
+  document.getElementById("recoveryInfo").innerText =
+    "♻️ Recovery meter: " +
+    me.sinceRecovery +
+    " / 4 number cards";
+
+  const legal = getLegalCards(current);
+
+  const passButton = document.getElementById("passButton");
+
+  passButton.disabled = legal.length > 0;
+
+  if(legal.length === 0){
+
+    document.getElementById("message").innerText =
+      "⚠️ No legal number card. You may PASS.";
+  }
+}
+
+function renderHand(){
+
+  const hand = document.getElementById("hand");
+  hand.innerHTML = "";
+
+  const player = players[current];
+
+  for(let number=1;number<=8;number++){
+
+    const button = document.createElement("button");
+
+    button.className = "card";
+    button.innerText = number;
+
+    if(!player.hand.includes(number)){
+
+      button.classList.add("invalid");
+      button.disabled = true;
+
+    }else if(total + number > targets[targetIndex]){
+
+      button.classList.add("invalid");
+      button.disabled = true;
+
+    }else{
+
+      button.onclick = function(){
+        playCard(number);
+      };
+
+    }
+
+    hand.appendChild(button);
+  }
+}
+
+function renderOpponent(){
+
+  const container =
+    document.getElementById("opponentCards");
+
+  container.innerHTML = "";
+
+  const count =
+    players[otherPlayer(current)].hand.length;
+
+  for(let i=0;i<8;i++){
+
+    const back = document.createElement("div");
+
+    back.className = "back";
+
+    if(i < count){
+      back.innerText = "?";
+    }else{
+      back.innerText = "×";
+      back.style.opacity = ".2";
+    }
+
+    container.appendChild(back);
+  }
+}
+
+function renderDiscard(){
+
+  const container =
+    document.getElementById("discard");
+
+  container.innerHTML = "";
+
+  const discarded =
+    [...players[current].discard].sort((a,b)=>a-b);
+
+  if(discarded.length === 0){
+
+    const span = document.createElement("span");
+
+    span.className = "discard-chip";
+    span.innerText = "EMPTY";
+
+    container.appendChild(span);
+
+    return;
+  }
+
+  discarded.forEach(number=>{
+
+    const chip = document.createElement("span");
+
+    chip.className = "discard-chip";
+    chip.innerText = number;
+
+    container.appendChild(chip);
+
+  });
+}
+
+function getLegalCards(player){
+
+  return players[player].hand.filter(number =>
+    total + number <= targets[targetIndex]
+  );
+}
+
+function playCard(number){
+
+  const player = players[current];
+
+  if(!player.hand.includes(number)) return;
+
+  if(total + number > targets[targetIndex]) return;
+
+  player.hand =
+    player.hand.filter(card => card !== number);
+
+  player.discard.push(number);
+
+  player.sinceRecovery++;
+
+  total += number;
+
+  consecutivePasses = 0;
+
+  document.getElementById("message").innerText =
+    displayName(current) +
+    " played " +
+    number +
+    ". Total = " +
+    total +
+    ".";
+
+  updateScreen();
+
+  if(total === targets[targetIndex]){
+
+    scoreCrown(current);
+    return;
+  }
+
+  if(
+    player.sinceRecovery >= 4 &&
+    player.discard.length >= 2
+  ){
+
+    pendingTurnSwitch = true;
+
+    openRecovery(
+      current,
+      2,
+      "normal"
+    );
+
+    return;
+  }
+
+  switchTurn();
+}
+
+function passTurn(){
+
+  if(getLegalCards(current).length > 0) return;
+
+  const passer = current;
+
+  consecutivePasses++;
+
+  document.getElementById("message").innerText =
+    displayName(passer) + " passed.";
+
+  if(consecutivePasses >= 2){
+
+    const scorer = otherPlayer(passer);
+
+    consecutivePasses = 0;
+
+    document.getElementById("message").innerText =
+      "⚠️ Two consecutive passes. " +
+      displayName(scorer) +
+      " earns the Crown.";
+
+    scoreCrown(scorer);
+
+    return;
+  }
+
+  switchTurn();
+}
+
+function switchTurn(){
+
+  current = otherPlayer(current);
+
+  updateScreen();
+
+  showTurnOverlay(
+    "📱 PASS TO " + displayName(current),
+    displayName(current) +
+    ", tap ready when the other player cannot see your cards."
+  );
+}
+
+function showTurnOverlay(title,text){
+
+  document.getElementById("overlayTitle").innerText = title;
+  document.getElementById("overlayText").innerText = text;
+
+  document
+    .getElementById("turnOverlay")
+    .classList.remove("hidden");
+}
+
+function closeTurnOverlay(){
+
+  document
+    .getElementById("turnOverlay")
+    .classList.add("hidden");
+
+  updateScreen();
+}
+
+/* ----------------------
+   NORMAL RECOVERY
+---------------------- */
+
+function openRecovery(player,amount,type){
+
+  recoveryPlayer = player;
+  recoveryAmount = amount;
+  recoveryType = type;
+  recoverySelected = [];
+
+  const modal =
+    document.getElementById("recoveryModal");
+
+  modal.classList.remove("hidden");
+
+  document.getElementById("recoveryTitle").innerText =
+    type === "normal"
+    ? "♻️ RECOVERY"
+    : "👑 CROWN RECOVERY";
+
+  document.getElementById("recoveryDesc").innerText =
+    displayName(player) +
+    ": choose " +
+    amount +
+    " discarded card" +
+    (amount > 1 ? "s" : "") +
+    " to recover.";
+
+  renderRecoveryCards();
+}
+
+function renderRecoveryCards(){
+
+  const container =
+    document.getElementById("recoveryCards");
+
+  container.innerHTML = "";
+
+  const cards =
+    [...players[recoveryPlayer].discard]
+      .sort((a,b)=>a-b);
+
+  cards.forEach(number=>{
+
+    const button =
+      document.createElement("button");
+
+    button.className = "recover-card";
+    button.innerText = number;
+
+    if(recoverySelected.includes(number)){
+      button.classList.add("selected");
+    }
+
+    button.onclick = function(){
+
+      if(recoverySelected.includes(number)){
+
+        recoverySelected =
+          recoverySelected.filter(x => x !== number);
+
+      }else{
+
+        if(recoverySelected.length < recoveryAmount){
+          recoverySelected.push(number);
+        }
+
+      }
+
+      renderRecoveryCards();
+    };
+
+    container.appendChild(button);
+  });
+
+  document.getElementById("confirmRecovery").disabled =
+    recoverySelected.length !== recoveryAmount;
+}
+
+function confirmRecovery(){
+
+  if(recoverySelected.length !== recoveryAmount) return;
+
+  const player =
+    players[recoveryPlayer];
+
+  recoverySelected.forEach(number=>{
+
+    player.discard =
+      player.discard.filter(card => card !== number);
+
+    if(!player.hand.includes(number)){
+      player.hand.push(number);
+    }
+
+  });
+
+  player.hand.sort((a,b)=>a-b);
+
+  document
+    .getElementById("recoveryModal")
+    .classList.add("hidden");
+
+  if(recoveryType === "normal"){
+
+    player.sinceRecovery = 0;
+
+    pendingTurnSwitch = false;
+
+    updateScreen();
+
+    switchTurn();
+
+    return;
+  }
+
+  if(recoveryType === "crown"){
+
+    processNextCrownRecovery();
+  }
+}
+
+/* ----------------------
+   CROWNS
+---------------------- */
+
+function scoreCrown(scorer){
+
+  players[scorer].crowns++;
+
+  updateScreen();
+
+  if(players[scorer].crowns >= 5){
+
+    document.getElementById("winTitle").innerText =
+      "🏆 " + displayName(scorer) + " WINS!";
+
+    document
+      .getElementById("winModal")
+      .classList.remove("hidden");
+
+    return;
+  }
+
+  document.getElementById("message").innerText =
+    "👑 " +
+    displayName(scorer) +
+    " HIT THE TARGET!";
+
+  setTimeout(startCrownRecovery,650);
+}
+
+function startCrownRecovery(){
+
+  crownRecoveryQueue = ["you","friend"];
+
+  processNextCrownRecovery();
+}
+
+function processNextCrownRecovery(){
+
+  while(crownRecoveryQueue.length > 0){
+
+    const player =
+      crownRecoveryQueue.shift();
+
+    if(players[player].discard.length > 0){
+
+      openRecovery(
+        player,
+        1,
+        "crown"
+      );
+
+      return;
+    }
+  }
+
+  startNextRound();
+}
+
+function startNextRound(){
 
   total = 0;
 
   targetIndex++;
 
-  if (targetIndex >= targets.length) {
-
+  if(targetIndex >= targets.length){
     targetIndex = 0;
-
   }
 
-  document.getElementById("total").classList.remove("flash");
+  consecutivePasses = 0;
 
-  if (crowns >= 5) {
+  roundStarter =
+    otherPlayer(roundStarter);
 
-    document.getElementById("message").innerText =
-
-      "🏆 YOU WIN CLASH 10!";
-
-    return;
-
-  }
-
-  document.getElementById("message").innerText =
-
-    "🔥 New target: " + targets[targetIndex];
+  current = roundStarter;
 
   updateScreen();
 
-}
-
-function updateScreen() {
-
-  document.getElementById("total").innerText = total;
-
-  document.getElementById("target").innerText =
-
-    targets[targetIndex];
-
-  let crownText = "";
-
-  for (let i = 0; i < 5; i++) {
-
-    crownText += i < crowns ? "👑" : "☆";
-
-  }
-
-  document.getElementById("yourCrowns").innerText =
-
-    crownText;
-
-}
-
-function resetGame() {
-
-  total = 0;
-
-  targetIndex = 0;
-
-  crowns = 0;
-
-  document.querySelectorAll(".card").forEach(card => {
-
-    card.classList.remove("used");
-
-  });
-
   document.getElementById("message").innerText =
+    "🔥 New round. Target = " +
+    targets[targetIndex] +
+    ".";
 
-    "Choose a number card.";
-
-  updateScreen();
-
+  showTurnOverlay(
+    "🔥 NEW ROUND — " + displayName(current),
+    "Target " +
+    targets[targetIndex] +
+    ". " +
+    displayName(current) +
+    " starts this round."
+  );
 }
 
-updateScreen();
+resetGame();
 
 </script>
 
 </body>
-
 </html>
