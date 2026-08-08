@@ -48,6 +48,7 @@ button{font-family:inherit;}
 }
 
 .player.opponent{border-color:#e64040;}
+
 .player.current{
   border-color:#168fff;
   margin-top:14px;
@@ -187,6 +188,7 @@ button{font-family:inherit;}
   font-weight:900;
   border:1px solid #586573;
   box-shadow:0 5px 12px rgba(0,0,0,.4);
+  position:relative;
 }
 
 .card:active{transform:scale(.94);}
@@ -200,6 +202,19 @@ button{font-family:inherit;}
 .card:nth-child(8){border-color:#ad55ff;}
 
 .card.invalid{opacity:.22;}
+
+.card.stolen{
+  border:2px solid #ffc72d;
+  box-shadow:0 0 18px rgba(255,199,45,.24);
+}
+
+.card.stolen::after{
+  content:"ð±";
+  position:absolute;
+  top:5px;
+  right:7px;
+  font-size:15px;
+}
 
 .discard{
   display:flex;
@@ -244,7 +259,13 @@ button{font-family:inherit;}
   color:#e295ff;
 }
 
-.trap-button:disabled{
+.steal-button{
+  border:1px solid #ffc72d;
+  color:#ffd45d;
+}
+
+.trap-button:disabled,
+.steal-button:disabled{
   border-color:#303943;
   color:#4f5660;
   opacity:.45;
@@ -328,6 +349,7 @@ button{font-family:inherit;}
   margin:13px 0 20px;
   line-height:1.5;
   font-size:14px;
+  white-space:pre-line;
 }
 
 .ready,.confirm{
@@ -383,6 +405,11 @@ button{font-family:inherit;}
   background:#421616;
 }
 
+.steal-choice.selected{
+  border:2px solid #ffc72d;
+  background:#3c310e;
+}
+
 .recover-card.selected{
   border:2px solid #44e76c;
   background:#17351f;
@@ -416,7 +443,7 @@ button{font-family:inherit;}
   <div class="player opponent">
     <div class="row">
       <div class="name" id="opponentName">FRIEND</div>
-      <div class="crowns" id="opponentCrowns">☆☆☆☆☆</div>
+      <div class="crowns" id="opponentCrowns">âââââ</div>
     </div>
 
     <div class="mini">AVAILABLE CARDS</div>
@@ -441,8 +468,9 @@ button{font-family:inherit;}
     <div class="turn" id="turnText">YOUR TURN</div>
 
     <div class="trap-warning" id="trapWarning">
-      💀 ACTIVE TRAP<br>
-      One of your number cards is trapped.
+      ð ACTIVE TRAP<br>
+      One of your ORIGINAL number cards is trapped.<br>
+      You have one DISARM attempt against this Trap.
     </div>
 
     <div class="message" id="message">Choose a number card.</div>
@@ -452,7 +480,7 @@ button{font-family:inherit;}
 
     <div class="row">
       <div class="name" id="currentName">YOU</div>
-      <div class="crowns" id="currentCrowns">☆☆☆☆☆</div>
+      <div class="crowns" id="currentCrowns">âââââ</div>
     </div>
 
     <div class="mini">NUMBER CARDS</div>
@@ -468,16 +496,18 @@ button{font-family:inherit;}
     <div class="specials">
 
       <button class="special trap-button" id="trapButton"
-        onclick="openTrapModal()">💀 TRAP</button>
+        onclick="openTrapModal()">ð TRAP</button>
 
       <button class="special disarm-button" id="disarmButton"
-        onclick="openDisarmModal()">🔎 DISARM</button>
+        onclick="openDisarmModal()">ð DISARM</button>
 
-      <button class="special locked">🐱 STEAL 🔒</button>
-      <button class="special locked">🛑 SKIP 🔒</button>
-      <button class="special locked">🛡️ SHIELD 🔒</button>
-      <button class="special locked">🔄 SWAP 🔒</button>
-      <button class="special locked">🔒 LOCK 🔒</button>
+      <button class="special steal-button" id="stealButton"
+        onclick="openStealModal()">ð± STEAL</button>
+
+      <button class="special locked">ð SKIP ð</button>
+      <button class="special locked">ð¡ï¸ SHIELD ð</button>
+      <button class="special locked">ð SWAP ð</button>
+      <button class="special locked">ð LOCK ð</button>
 
     </div>
 
@@ -495,7 +525,7 @@ button{font-family:inherit;}
 <!-- TURN -->
 <div class="overlay" id="turnOverlay">
   <div class="overlay-box">
-    <div class="overlay-title" id="overlayTitle">⚔️ YOU START</div>
+    <div class="overlay-title" id="overlayTitle">âï¸ YOU START</div>
     <div class="overlay-text" id="overlayText"></div>
     <button class="ready" onclick="closeTurnOverlay()">I'M READY</button>
   </div>
@@ -504,9 +534,9 @@ button{font-family:inherit;}
 <!-- TRAP TARGET -->
 <div class="modal hidden" id="trapModal">
   <div class="modal-box">
-    <div class="modal-title" style="color:#dc83ff;">💀 PLACE TRAP</div>
+    <div class="modal-title" style="color:#dc83ff;">ð PLACE TRAP</div>
     <div class="modal-desc">
-      Secretly choose ONE currently available opponent number.
+      Secretly choose ONE currently available ORIGINAL opponent number.
     </div>
     <div class="choice-grid" id="trapChoices"></div>
     <button class="confirm" id="confirmTrap"
@@ -517,10 +547,11 @@ button{font-family:inherit;}
 <!-- TRAP SACRIFICE -->
 <div class="modal hidden" id="sacrificeModal">
   <div class="modal-box">
-    <div class="modal-title" style="color:#ff6666;">🔥 PAY THE PRICE</div>
+    <div class="modal-title" style="color:#ff6666;">ð¥ PAY THE PRICE</div>
     <div class="modal-desc">
-      Sacrifice ONE of your own available number cards.<br><br>
-      It goes to your discard pile.<br>
+      Sacrifice ONE of your own available ORIGINAL number cards.
+
+      It goes to your discard pile.
       This does NOT count toward your Recovery meter.
     </div>
     <div class="choice-grid" id="sacrificeChoices"></div>
@@ -534,11 +565,13 @@ button{font-family:inherit;}
 <!-- DISARM -->
 <div class="modal hidden" id="disarmModal">
   <div class="modal-box">
-    <div class="modal-title" style="color:#ffc33e;">🔎 DISARM</div>
+    <div class="modal-title" style="color:#ffc33e;">ð DISARM</div>
     <div class="modal-desc">
-      Guess the trapped number.<br><br>
-      Correct → Trap destroyed.<br>
-      Wrong → Trap remains.<br><br>
+      You get ONE guess against this Trap.
+
+      Correct â Trap destroyed.
+      Wrong â Trap remains and you cannot DISARM this Trap again.
+
       Your whole turn is used either way.
     </div>
     <div class="choice-grid" id="disarmChoices"></div>
@@ -547,10 +580,28 @@ button{font-family:inherit;}
   </div>
 </div>
 
+<!-- STEAL -->
+<div class="modal hidden" id="stealModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:#ffd24d;">ð± STEAL</div>
+    <div class="modal-desc">
+      Choose ONE number from your opponent's discard pile.
+
+      You temporarily take it into your hand.
+      Using STEAL costs your whole turn.
+
+      The stolen card returns to its owner after you play it, or when the round ends.
+    </div>
+    <div class="choice-grid" id="stealChoices"></div>
+    <button class="confirm" id="confirmSteal"
+      onclick="confirmSteal()" disabled>STEAL CARD</button>
+  </div>
+</div>
+
 <!-- RECOVERY -->
 <div class="modal hidden" id="recoveryModal">
   <div class="modal-box">
-    <div class="modal-title" id="recoveryTitle">♻️ RECOVERY</div>
+    <div class="modal-title" id="recoveryTitle">â»ï¸ RECOVERY</div>
     <div class="modal-desc" id="recoveryDesc"></div>
     <div class="choice-grid" id="recoveryCards"></div>
     <button class="confirm" id="confirmRecovery"
@@ -561,7 +612,7 @@ button{font-family:inherit;}
 <!-- EVENT -->
 <div class="modal hidden" id="eventModal">
   <div class="modal-box">
-    <div class="event-icon" id="eventIcon">💀</div>
+    <div class="event-icon" id="eventIcon">ð</div>
     <div class="event-title" id="eventTitle"></div>
     <div class="modal-desc" id="eventText"></div>
     <button class="ready" onclick="continueEvent()">CONTINUE</button>
@@ -571,7 +622,7 @@ button{font-family:inherit;}
 <!-- WIN -->
 <div class="modal hidden" id="winModal">
   <div class="modal-box">
-    <div class="win" id="winTitle">🏆 YOU WIN!</div>
+    <div class="win" id="winTitle">ð YOU WIN!</div>
     <div class="modal-desc">First player to earn 5 Crowns wins CLASH 10.</div>
     <button class="confirm" onclick="resetGame()">REMATCH</button>
   </div>
@@ -579,11 +630,7 @@ button{font-family:inherit;}
 
 <script>
 
-/* =========================
-   CORE
-========================= */
-
-const targets = [18,21,24,27,30];
+const targets=[18,21,24,27,30];
 
 function freshPlayer(){
   return {
@@ -591,7 +638,9 @@ function freshPlayer(){
     discard:[],
     crowns:0,
     sinceRecovery:0,
-    trapUsed:false
+    trapUsed:false,
+    stealUsed:false,
+    stolenCard:null
   };
 }
 
@@ -604,50 +653,96 @@ let consecutivePasses;
 let statusMessage;
 
 let traps;
+/*
+traps.you = {number, victim, disarmAvailable}
+means YOU placed this trap against FRIEND.
+*/
 
-let selectedTrap = null;
-let selectedSacrifice = null;
-let selectedDisarm = null;
+let selectedTrap=null;
+let selectedSacrifice=null;
+let selectedDisarm=null;
+let selectedSteal=null;
 
-let recoveryType = null;
-let recoveryPlayer = null;
-let recoveryAmount = 0;
-let recoverySelected = [];
-let crownRecoveryQueue = [];
+let recoveryType=null;
+let recoveryPlayer=null;
+let recoveryAmount=0;
+let recoverySelected=[];
+let recoveryAfterTrapOwner=null;
+let crownRecoveryQueue=[];
+let deadlockRecoveryQueue=[];
 
-let eventCallback = null;
+let eventCallback=null;
+let pendingTrapReward=false;
 
 function otherPlayer(p){
-  return p === "you" ? "friend" : "you";
+  return p==="you" ? "friend" : "you";
 }
 
 function displayName(p){
-  return p === "you" ? "YOU" : "FRIEND";
+  return p==="you" ? "YOU" : "FRIEND";
 }
 
 function crownString(n){
   let s="";
-  for(let i=0;i<5;i++) s += i<n ? "👑" : "☆";
+  for(let i=0;i<5;i++) s+=i<n ? "ð" : "â";
   return s;
 }
 
-function getLegalCards(player){
-  return players[player].hand.filter(n =>
-    total+n <= targets[targetIndex]
+function getOwnedNumbers(player){
+  return [...players[player].hand];
+}
+
+function getPlayableEntries(player){
+  const p=players[player];
+
+  const entries=p.hand.map(n=>({
+    number:n,
+    type:"own"
+  }));
+
+  if(p.stolenCard!==null){
+    entries.push({
+      number:p.stolenCard.number,
+      type:"stolen"
+    });
+  }
+
+  return entries.filter(entry=>
+    total+entry.number<=targets[targetIndex]
   );
 }
 
 function trapAgainst(player){
-  return traps[otherPlayer(player)];
+  const owner=otherPlayer(player);
+  const trap=traps[owner];
+
+  if(!trap || trap.victim!==player) return null;
+  return trap;
 }
 
 function hasTrapAgainst(player){
-  return trapAgainst(player) !== null;
+  return trapAgainst(player)!==null;
 }
 
-/* =========================
-   RESET
-========================= */
+function returnStolenCard(holder){
+  const stolen=players[holder].stolenCard;
+  if(!stolen) return;
+
+  const owner=stolen.owner;
+  const n=stolen.number;
+
+  if(!players[owner].discard.includes(n) &&
+     !players[owner].hand.includes(n)){
+    players[owner].discard.push(n);
+  }
+
+  players[holder].stolenCard=null;
+}
+
+function returnAllStolenCards(){
+  returnStolenCard("you");
+  returnStolenCard("friend");
+}
 
 function resetGame(){
 
@@ -672,29 +767,28 @@ function resetGame(){
   selectedTrap=null;
   selectedSacrifice=null;
   selectedDisarm=null;
+  selectedSteal=null;
 
   recoverySelected=[];
   crownRecoveryQueue=[];
+  deadlockRecoveryQueue=[];
   eventCallback=null;
+  pendingTrapReward=false;
 
   [
-    "winModal","trapModal","sacrificeModal",
-    "disarmModal","recoveryModal","eventModal"
-  ].forEach(id =>
+    "winModal","trapModal","sacrificeModal","disarmModal",
+    "stealModal","recoveryModal","eventModal"
+  ].forEach(id=>
     document.getElementById(id).classList.add("hidden")
   );
 
   updateScreen();
 
   showTurnOverlay(
-    "⚔️ YOU START",
-    "Target 18. No Crown can be won in only two number plays.\n\nMake sure only YOU can see the screen."
+    "âï¸ YOU START",
+    "Target 18.\n\nMake sure only YOU can see the screen."
   );
 }
-
-/* =========================
-   UI
-========================= */
 
 function updateScreen(){
 
@@ -716,12 +810,12 @@ function updateScreen(){
   document.getElementById("message").innerText=statusMessage;
 
   document.getElementById("recoveryInfo").innerText=
-    "♻️ Recovery meter: "+me.sinceRecovery+" / 4 number cards";
+    "â»ï¸ Recovery meter: "+me.sinceRecovery+" / 4 number cards";
 
   renderHand();
   renderOpponent();
   renderDiscard();
-  updateTrapControls();
+  updateSpecialControls();
   updatePassButton();
 }
 
@@ -736,15 +830,32 @@ function renderHand(){
     b.className="card";
     b.innerText=n;
 
-    const legal=
-      players[current].hand.includes(n) &&
-      total+n <= targets[targetIndex];
+    const own=players[current].hand.includes(n);
+    const playable=own && total+n<=targets[targetIndex];
 
-    if(!legal){
+    if(!playable){
       b.classList.add("invalid");
       b.disabled=true;
     }else{
-      b.onclick=()=>playCard(n);
+      b.onclick=()=>playCard(n,"own");
+    }
+
+    c.appendChild(b);
+  }
+
+  const stolen=players[current].stolenCard;
+
+  if(stolen){
+
+    const b=document.createElement("button");
+    b.className="card stolen";
+    b.innerText=stolen.number;
+
+    if(total+stolen.number>targets[targetIndex]){
+      b.classList.add("invalid");
+      b.disabled=true;
+    }else{
+      b.onclick=()=>playCard(stolen.number,"stolen");
     }
 
     c.appendChild(b);
@@ -756,12 +867,13 @@ function renderOpponent(){
   const c=document.getElementById("opponentCards");
   c.innerHTML="";
 
-  const count=players[otherPlayer(current)].hand.length;
+  const enemy=players[otherPlayer(current)];
+  const count=enemy.hand.length+(enemy.stolenCard ? 1 : 0);
 
   for(let i=0;i<8;i++){
     const x=document.createElement("div");
     x.className="back";
-    x.innerText=i<count ? "?" : "×";
+    x.innerText=i<count ? "?" : "Ã";
     if(i>=count) x.style.opacity=".2";
     c.appendChild(x);
   }
@@ -792,16 +904,17 @@ function renderDiscard(){
 
 function updatePassButton(){
   document.getElementById("passButton").disabled=
-    getLegalCards(current).length>0;
+    getPlayableEntries(current).length>0;
 }
 
-function updateTrapControls(){
+function updateSpecialControls(){
 
   const me=players[current];
   const enemy=players[otherPlayer(current)];
 
-  const trap=document.getElementById("trapButton");
-  const disarm=document.getElementById("disarmButton");
+  const trapButton=document.getElementById("trapButton");
+  const disarmButton=document.getElementById("disarmButton");
+  const stealButton=document.getElementById("stealButton");
   const warning=document.getElementById("trapWarning");
 
   const canTrap=
@@ -810,89 +923,122 @@ function updateTrapControls(){
     enemy.hand.length>0 &&
     me.hand.length>0;
 
-  trap.disabled=!canTrap;
-  trap.innerText=me.trapUsed ? "💀 TRAP ❌" : "💀 TRAP";
+  trapButton.disabled=!canTrap;
+  trapButton.innerText=me.trapUsed ? "ð TRAP â" : "ð TRAP";
 
-  if(hasTrapAgainst(current)){
+  const trap=trapAgainst(current);
+
+  if(trap){
     warning.classList.add("active");
-    disarm.classList.add("active");
+
+    if(trap.disarmAvailable){
+      disarmButton.classList.add("active");
+      disarmButton.disabled=false;
+      disarmButton.innerText="ð DISARM";
+    }else{
+      disarmButton.classList.add("active");
+      disarmButton.disabled=true;
+      disarmButton.innerText="ð DISARM â";
+    }
+
   }else{
     warning.classList.remove("active");
-    disarm.classList.remove("active");
+    disarmButton.classList.remove("active");
   }
+
+  const canSteal=
+    !me.stealUsed &&
+    me.stolenCard===null &&
+    enemy.discard.length>0;
+
+  stealButton.disabled=!canSteal;
+  stealButton.innerText=me.stealUsed ? "ð± STEAL â" : "ð± STEAL";
 }
 
-/* =========================
-   NUMBER PLAY
-========================= */
+function playCard(number,type){
 
-function playCard(number){
+  const player=current;
+  const p=players[player];
 
-  const victim=current;
-  const p=players[victim];
-
-  if(!p.hand.includes(number)) return;
   if(total+number>targets[targetIndex]) return;
 
-  p.hand=p.hand.filter(x=>x!==number);
-  p.discard.push(number);
-  p.sinceRecovery++;
+  if(type==="own"){
 
-  consecutivePasses=0;
+    if(!p.hand.includes(number)) return;
 
-  const trapOwner=otherPlayer(victim);
-  const trapped=traps[trapOwner];
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+    p.sinceRecovery++;
 
-  if(trapped!==null && trapped===number){
+    const trap=trapAgainst(player);
 
-    traps[trapOwner]=null;
+    if(trap && trap.number===number){
 
-    statusMessage=
-      "💀 "+displayName(victim)+" triggered the Trap.";
+      const trapOwner=otherPlayer(player);
+      traps[trapOwner]=null;
+      consecutivePasses=0;
 
-    updateScreen();
+      statusMessage=
+        "ð "+displayName(player)+" triggered the Trap.";
 
-    showEvent(
-      "💀",
-      "TRAP ACTIVATED!",
-      displayName(victim)+
-      " played the trapped "+number+
-      ".\n\nThe card is discarded.\nTOTAL stays at "+total+
-      ".\nThe turn is lost.\n\n"+
-      displayName(trapOwner)+
-      " earns a TRAP REWARD: recover 1 discarded card.",
-      ()=>{
-        resolveTrapVictimRecovery(victim,trapOwner);
-      }
-    );
+      updateScreen();
 
-    return;
+      showEvent(
+        "ð",
+        "TRAP ACTIVATED!",
+        displayName(player)+" played the trapped "+number+
+        ".\n\nThe card is discarded.\nTOTAL stays at "+total+
+        ".\nThe turn is lost.\n\n"+
+        displayName(trapOwner)+
+        " earns a TRAP REWARD: recover 1 discarded card.",
+        ()=>resolveTrapVictimRecovery(player,trapOwner)
+      );
+
+      return;
+    }
+
+  }else if(type==="stolen"){
+
+    if(!p.stolenCard || p.stolenCard.number!==number) return;
+
+    const owner=p.stolenCard.owner;
+
+    p.stolenCard=null;
+
+    if(!players[owner].discard.includes(number)){
+      players[owner].discard.push(number);
+    }
+
+    /* stolen cards are safe from previously placed traps
+       and do not increase the holder's recovery meter */
   }
 
+  consecutivePasses=0;
   total+=number;
 
   statusMessage=
-    displayName(victim)+" played "+number+
-    ". Total = "+total+".";
+    displayName(player)+" played "+
+    (type==="stolen" ? "stolen " : "")+
+    number+". Total = "+total+".";
 
   updateScreen();
 
   if(total===targets[targetIndex]){
-    scoreCrown(victim);
+    scoreCrown(player);
     return;
   }
 
-  if(p.sinceRecovery>=4 && p.discard.length>=2){
-    openRecovery(victim,2,"normal");
+  if(
+    type==="own" &&
+    p.sinceRecovery>=4 &&
+    p.discard.length>=2
+  ){
+    openRecovery(player,2,"normal");
     return;
   }
 
   switchTurn();
 }
-
-/* =========================
-   TRAP HIT SEQUENCE
-========================= */
 
 function resolveTrapVictimRecovery(victim,trapOwner){
 
@@ -915,46 +1061,29 @@ function beginTrapReward(trapOwner){
   if(players[trapOwner].discard.length===0){
 
     statusMessage=
-      "💀 Trap hit, but no discarded card was available to recover.";
+      "ð Trap hit, but no discarded card was available to recover.";
 
     updateScreen();
 
     showTurnOverlay(
-      "💀 TRAP REWARD — "+displayName(trapOwner),
+      "ð TRAP REWARD â "+displayName(trapOwner),
       "No recovery card was available.\n\nIt is now your normal turn."
     );
 
     return;
   }
 
+  pendingTrapReward=true;
+
   showTurnOverlay(
-    "💀 TRAP REWARD — "+displayName(trapOwner),
+    "ð TRAP REWARD â "+displayName(trapOwner),
     "You successfully predicted your opponent.\n\nTap ready to secretly choose 1 discarded card to recover."
   );
-
-  window.pendingTrapReward=true;
 }
-
-function closeTurnOverlay(){
-
-  document.getElementById("turnOverlay").classList.add("hidden");
-
-  if(window.pendingTrapReward){
-    window.pendingTrapReward=false;
-    openRecovery(current,1,"trapReward");
-    return;
-  }
-
-  updateScreen();
-}
-
-/* =========================
-   PASS
-========================= */
 
 function passTurn(){
 
-  if(getLegalCards(current).length>0) return;
+  if(getPlayableEntries(current).length>0) return;
 
   const passer=current;
   consecutivePasses++;
@@ -963,36 +1092,63 @@ function passTurn(){
 
   if(consecutivePasses>=2){
 
-    const scorer=otherPlayer(passer);
     consecutivePasses=0;
-
-    statusMessage=
-      "⚠️ Two consecutive passes. "+
-      displayName(scorer)+" earns the Crown.";
-
-    updateScreen();
-    scoreCrown(scorer);
+    startDeadlock();
     return;
   }
 
   switchTurn();
 }
 
-/* =========================
-   TURN
-========================= */
+function startDeadlock(){
+
+  returnAllStolenCards();
+
+  statusMessage="ð¥ DEADLOCK â nobody earns a Crown.";
+  updateScreen();
+
+  showEvent(
+    "ð¥",
+    "DEADLOCK!",
+    "Both players had no legal number to play.\n\nNobody earns a Crown.\nEach player may recover 1 discarded card, then the next Target begins.",
+    startDeadlockRecovery
+  );
+}
+
+function startDeadlockRecovery(){
+  deadlockRecoveryQueue=["you","friend"];
+  processNextDeadlockRecovery();
+}
+
+function processNextDeadlockRecovery(){
+
+  while(deadlockRecoveryQueue.length>0){
+
+    const p=deadlockRecoveryQueue.shift();
+
+    if(players[p].discard.length>0){
+      openRecovery(p,1,"deadlock");
+      return;
+    }
+  }
+
+  startNextRound();
+}
 
 function switchTurn(){
 
   current=otherPlayer(current);
 
-  const legal=getLegalCards(current);
+  const playable=getPlayableEntries(current);
 
-  if(legal.length===0){
-    statusMessage="⚠️ No legal number card. You may PASS.";
+  if(playable.length===0){
+    statusMessage="â ï¸ No legal number card. You may PASS.";
   }else if(hasTrapAgainst(current)){
-    statusMessage=
-      "💀 A Trap is active. Play carefully or try to DISARM it.";
+    const trap=trapAgainst(current);
+
+    statusMessage=trap.disarmAvailable
+      ? "ð A Trap is active. Play carefully or use your ONE DISARM attempt."
+      : "ð A Trap is active. Your DISARM attempt is already gone.";
   }else{
     statusMessage="Choose a number card.";
   }
@@ -1000,7 +1156,7 @@ function switchTurn(){
   updateScreen();
 
   showTurnOverlay(
-    "📱 PASS TO "+displayName(current),
+    "ð± PASS TO "+displayName(current),
     displayName(current)+
     ", tap ready when the other player cannot see your cards."
   );
@@ -1012,8 +1168,21 @@ function showTurnOverlay(title,text){
   document.getElementById("turnOverlay").classList.remove("hidden");
 }
 
+function closeTurnOverlay(){
+
+  document.getElementById("turnOverlay").classList.add("hidden");
+
+  if(pendingTrapReward){
+    pendingTrapReward=false;
+    openRecovery(current,1,"trapReward");
+    return;
+  }
+
+  updateScreen();
+}
+
 /* =========================
-   TRAP TARGET
+   TRAP
 ========================= */
 
 function openTrapModal(){
@@ -1065,7 +1234,6 @@ function goToTrapSacrifice(){
   document.getElementById("trapModal").classList.add("hidden");
 
   selectedSacrifice=null;
-
   renderSacrificeChoices();
 
   document.getElementById("confirmSacrifice").disabled=true;
@@ -1103,20 +1271,20 @@ function confirmTrapAndSacrifice(){
 
   const owner=current;
   const victim=otherPlayer(owner);
-
   const p=players[owner];
 
   p.hand=p.hand.filter(n=>n!==selectedSacrifice);
   p.discard.push(selectedSacrifice);
 
-  /* sacrifice DOES NOT increase Recovery meter */
+  traps[owner]={
+    number:selectedTrap,
+    victim:victim,
+    disarmAvailable:true
+  };
 
-  traps[owner]=selectedTrap;
   p.trapUsed=true;
 
   document.getElementById("sacrificeModal").classList.add("hidden");
-
-  const sacrificed=selectedSacrifice;
 
   selectedTrap=null;
   selectedSacrifice=null;
@@ -1124,12 +1292,12 @@ function confirmTrapAndSacrifice(){
   current=victim;
 
   statusMessage=
-    "💀 ACTIVE TRAP — one of your number cards is trapped.";
+    "ð ACTIVE TRAP â one of your ORIGINAL number cards is trapped.";
 
   updateScreen();
 
   showTurnOverlay(
-    "💀 TRAP PLACED",
+    "ð TRAP PLACED",
     displayName(owner)+
     " sacrificed one of their own cards to place the Trap.\n\n"+
     "Pass to "+displayName(victim)+
@@ -1138,12 +1306,14 @@ function confirmTrapAndSacrifice(){
 }
 
 /* =========================
-   DISARM
+   DISARM â ONE ATTEMPT
 ========================= */
 
 function openDisarmModal(){
 
-  if(!hasTrapAgainst(current)) return;
+  const trap=trapAgainst(current);
+
+  if(!trap || !trap.disarmAvailable) return;
 
   selectedDisarm=null;
 
@@ -1180,22 +1350,27 @@ function confirmDisarm(){
 
   const guesser=current;
   const trapOwner=otherPlayer(guesser);
-  const actual=traps[trapOwner];
+  const trap=traps[trapOwner];
+
+  if(!trap || !trap.disarmAvailable) return;
+
   const guess=selectedDisarm;
+  const actual=trap.number;
+
+  trap.disarmAvailable=false;
 
   document.getElementById("disarmModal").classList.add("hidden");
-
   selectedDisarm=null;
 
   if(guess===actual){
 
     traps[trapOwner]=null;
 
-    statusMessage="✅ Trap successfully disarmed.";
+    statusMessage="â Trap successfully disarmed.";
     updateScreen();
 
     showEvent(
-      "✅",
+      "â",
       "DISARM SUCCESSFUL!",
       displayName(guesser)+
       " correctly guessed "+guess+
@@ -1205,18 +1380,104 @@ function confirmDisarm(){
 
   }else{
 
-    statusMessage="❌ Wrong guess. Trap remains active.";
+    statusMessage=
+      "â Wrong guess. Trap remains active. DISARM is now unavailable.";
+
     updateScreen();
 
     showEvent(
-      "❌",
+      "â",
       "WRONG GUESS!",
       displayName(guesser)+
       " guessed "+guess+
-      ".\n\nThe Trap remains active and the whole turn is lost.",
+      ".\n\nThe Trap remains active.\nYou cannot DISARM this Trap again.\nThe whole turn is lost.",
       ()=>switchTurn()
     );
   }
+}
+
+/* =========================
+   STEAL
+========================= */
+
+function openStealModal(){
+
+  const me=players[current];
+  const enemy=players[otherPlayer(current)];
+
+  if(me.stealUsed || me.stolenCard!==null) return;
+  if(enemy.discard.length===0) return;
+
+  selectedSteal=null;
+
+  renderStealChoices();
+
+  document.getElementById("confirmSteal").disabled=true;
+  document.getElementById("stealModal").classList.remove("hidden");
+}
+
+function renderStealChoices(){
+
+  const c=document.getElementById("stealChoices");
+  c.innerHTML="";
+
+  [...players[otherPlayer(current)].discard]
+    .sort((a,b)=>a-b)
+    .forEach(n=>{
+
+      const b=document.createElement("button");
+      b.className="choice-card steal-choice";
+      b.innerText=n;
+
+      if(n===selectedSteal) b.classList.add("selected");
+
+      b.onclick=()=>{
+        selectedSteal=n;
+        renderStealChoices();
+        document.getElementById("confirmSteal").disabled=false;
+      };
+
+      c.appendChild(b);
+    });
+}
+
+function confirmSteal(){
+
+  if(selectedSteal===null) return;
+
+  const thief=current;
+  const owner=otherPlayer(thief);
+  const n=selectedSteal;
+
+  if(!players[owner].discard.includes(n)) return;
+
+  players[owner].discard=
+    players[owner].discard.filter(x=>x!==n);
+
+  players[thief].stolenCard={
+    number:n,
+    owner:owner
+  };
+
+  players[thief].stealUsed=true;
+
+  document.getElementById("stealModal").classList.add("hidden");
+
+  selectedSteal=null;
+
+  statusMessage=
+    "ð± "+displayName(thief)+" stole "+n+
+    " from "+displayName(owner)+"'s discard pile.";
+
+  updateScreen();
+
+  showEvent(
+    "ð±",
+    "CARD STOLEN!",
+    displayName(thief)+" stole "+n+
+    " from "+displayName(owner)+".\n\nThe stolen card can be played on a later turn.\nAfter it is played, it returns to the original owner's discard.\nSTEAL used the whole turn.",
+    ()=>switchTurn()
+  );
 }
 
 /* =========================
@@ -1248,8 +1509,6 @@ function continueEvent(){
    RECOVERY
 ========================= */
 
-let recoveryAfterTrapOwner=null;
-
 function openRecovery(player,amount,type,afterTrapOwner=null){
 
   recoveryPlayer=player;
@@ -1260,10 +1519,11 @@ function openRecovery(player,amount,type,afterTrapOwner=null){
 
   document.getElementById("recoveryModal").classList.remove("hidden");
 
-  let title="♻️ RECOVERY";
+  let title="â»ï¸ RECOVERY";
 
-  if(type==="crown") title="👑 CROWN RECOVERY";
-  if(type==="trapReward") title="💀 TRAP REWARD";
+  if(type==="crown") title="ð CROWN RECOVERY";
+  if(type==="trapReward") title="ð TRAP REWARD";
+  if(type==="deadlock") title="ð¥ DEADLOCK RECOVERY";
 
   document.getElementById("recoveryTitle").innerText=title;
 
@@ -1271,6 +1531,10 @@ function openRecovery(player,amount,type,afterTrapOwner=null){
     document.getElementById("recoveryDesc").innerText=
       displayName(player)+
       ": Trap successful! Choose 1 discarded number to recover.";
+  }else if(type==="deadlock"){
+    document.getElementById("recoveryDesc").innerText=
+      displayName(player)+
+      ": Deadlock. Choose 1 discarded card to recover.";
   }else{
     document.getElementById("recoveryDesc").innerText=
       displayName(player)+
@@ -1361,15 +1625,14 @@ function confirmRecovery(){
   if(recoveryType==="trapReward"){
 
     statusMessage=
-      "💀 "+displayName(recoveryPlayer)+
+      "ð "+displayName(recoveryPlayer)+
       " recovered "+recovered[0]+
       " from the successful Trap.";
 
     recoverySelected=[];
-
     updateScreen();
 
-    /* trap owner now takes their normal turn */
+    /* trap owner keeps their normal turn */
     return;
   }
 
@@ -1377,6 +1640,13 @@ function confirmRecovery(){
 
     recoverySelected=[];
     processNextCrownRecovery();
+    return;
+  }
+
+  if(recoveryType==="deadlock"){
+
+    recoverySelected=[];
+    processNextDeadlockRecovery();
   }
 }
 
@@ -1388,15 +1658,17 @@ function scoreCrown(scorer){
 
   players[scorer].crowns++;
 
+  returnAllStolenCards();
+
   statusMessage=
-    "👑 "+displayName(scorer)+" HIT THE TARGET!";
+    "ð "+displayName(scorer)+" HIT THE TARGET!";
 
   updateScreen();
 
   if(players[scorer].crowns>=5){
 
     document.getElementById("winTitle").innerText=
-      "🏆 "+displayName(scorer)+" WINS!";
+      "ð "+displayName(scorer)+" WINS!";
 
     document.getElementById("winModal").classList.remove("hidden");
     return;
@@ -1406,7 +1678,6 @@ function scoreCrown(scorer){
 }
 
 function startCrownRecovery(){
-
   crownRecoveryQueue=["you","friend"];
   processNextCrownRecovery();
 }
@@ -1427,13 +1698,14 @@ function processNextCrownRecovery(){
 }
 
 /* =========================
-   NEW ROUND
+   NEXT ROUND
 ========================= */
 
 function startNextRound(){
 
-  total=0;
+  returnAllStolenCards();
 
+  total=0;
   targetIndex++;
 
   if(targetIndex>=targets.length){
@@ -1447,8 +1719,8 @@ function startNextRound(){
 
   statusMessage=
     hasTrapAgainst(current)
-    ? "💀 An ACTIVE TRAP survived into the new round."
-    : "🔥 New round. Choose a number card.";
+    ? "ð An ACTIVE TRAP survived into the new round."
+    : "ð¥ New round. Choose a number card.";
 
   updateScreen();
 
@@ -1456,22 +1728,17 @@ function startNextRound(){
 
   if(hasTrapAgainst(current)){
     warning=
-      "\n\n💀 WARNING: an opponent Trap is STILL ACTIVE.";
+      "\n\nð WARNING: an opponent Trap is STILL ACTIVE.";
   }
 
   showTurnOverlay(
-    "🔥 NEW ROUND — "+displayName(current),
+    "ð¥ NEW ROUND â "+displayName(current),
     "Target "+targets[targetIndex]+
     ". TOTAL resets to 0.\n"+
     displayName(current)+" starts."+warning
   );
 }
 
-/* =========================
-   START
-========================= */
-
-window.pendingTrapReward=false;
 resetGame();
 
 </script>
