@@ -264,8 +264,14 @@ button{font-family:inherit;}
   color:#ffd45d;
 }
 
+.lock-button{
+  border:1px solid #ff9d32;
+  color:#ffbd74;
+}
+
 .trap-button:disabled,
-.steal-button:disabled{
+.steal-button:disabled,
+.lock-button:disabled{
   border-color:#303943;
   color:#4f5660;
   opacity:.45;
@@ -410,6 +416,11 @@ button{font-family:inherit;}
   background:#3c310e;
 }
 
+.lock-choice.selected{
+  border:2px solid #ff9d32;
+  background:#3b2410;
+}
+
 .recover-card.selected{
   border:2px solid #44e76c;
   background:#17351f;
@@ -473,6 +484,12 @@ button{font-family:inherit;}
       You have one DISARM attempt against this Trap.
     </div>
 
+    <div class="trap-warning" id="lockWarning"
+      style="border-color:#ff9d32;background:rgba(120,62,15,.20);color:#ffbd74;">
+      &#128274; ACTIVE LOCK<br>
+      One of your ORIGINAL number cards is locked for THIS turn.
+    </div>
+
     <div class="message" id="message">Choose a number card.</div>
   </div>
 
@@ -507,7 +524,8 @@ button{font-family:inherit;}
       <button class="special locked">&#128721; SKIP &#128274;</button>
       <button class="special locked">&#128737; SHIELD &#128274;</button>
       <button class="special locked">&#128260; SWAP &#128274;</button>
-      <button class="special locked">&#128274; LOCK &#128274;</button>
+      <button class="special lock-button" id="lockButton"
+        onclick="openLockModal()">&#128274; LOCK</button>
 
     </div>
 
@@ -598,6 +616,24 @@ button{font-family:inherit;}
   </div>
 </div>
 
+<!-- LOCK -->
+<div class="modal hidden" id="lockModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:#ffbd74;">&#128274; LOCK</div>
+    <div class="modal-desc">
+      Choose ONE of your opponent's currently available ORIGINAL number cards.
+
+      That number cannot be played on their NEXT turn.
+      LOCK uses your whole turn.
+
+      After their turn ends, the Lock disappears automatically.
+    </div>
+    <div class="choice-grid" id="lockChoices"></div>
+    <button class="confirm" id="confirmLock"
+      onclick="confirmLock()" disabled>LOCK CARD</button>
+  </div>
+</div>
+
 <!-- RECOVERY -->
 <div class="modal hidden" id="recoveryModal">
   <div class="modal-box">
@@ -655,6 +691,7 @@ function freshPlayer(){
     sinceRecovery:0,
     trapUsed:false,
     stealUsed:false,
+    lockUsed:false,
     stolenCard:null
   };
 }
@@ -668,15 +705,20 @@ let consecutivePasses;
 let statusMessage;
 
 let traps;
+let locks;
 /*
 traps.you = {number, victim, disarmAvailable}
 means YOU placed this trap against FRIEND.
+
+locks.you = {number, victim}
+means YOU locked that ORIGINAL number for FRIEND's next turn.
 */
 
 let selectedTrap=null;
 let selectedSacrifice=null;
 let selectedDisarm=null;
 let selectedSteal=null;
+let selectedLock=null;
 
 let recoveryType=null;
 let recoveryPlayer=null;
@@ -712,10 +754,14 @@ function getOwnedNumbers(player){
 function getPlayableEntries(player){
   const p=players[player];
 
-  const entries=p.hand.map(n=>({
-    number:n,
-    type:"own"
-  }));
+  const activeLock=lockAgainst(player);
+
+  const entries=p.hand
+    .filter(n=>!activeLock || n!==activeLock.number)
+    .map(n=>({
+      number:n,
+      type:"own"
+    }));
 
   if(p.stolenCard!==null){
     entries.push({
@@ -739,6 +785,27 @@ function trapAgainst(player){
 
 function hasTrapAgainst(player){
   return trapAgainst(player)!==null;
+}
+
+function lockAgainst(player){
+  const owner=otherPlayer(player);
+  const lock=locks[owner];
+
+  if(!lock || lock.victim!==player) return null;
+  return lock;
+}
+
+function hasLockAgainst(player){
+  return lockAgainst(player)!==null;
+}
+
+function clearLockAfterTurn(player){
+  const owner=otherPlayer(player);
+  const lock=locks[owner];
+
+  if(lock && lock.victim===player){
+    locks[owner]=null;
+  }
 }
 
 function returnStolenCard(holder){
@@ -773,6 +840,11 @@ function resetGame(){
     friend:null
   };
 
+  locks={
+    you:null,
+    friend:null
+  };
+
   current="you";
   roundStarter="you";
   targetIndex=0;
@@ -785,6 +857,7 @@ function resetGame(){
   selectedSacrifice=null;
   selectedDisarm=null;
   selectedSteal=null;
+  selectedLock=null;
 
   recoverySelected=[];
   crownRecoveryQueue=[];
@@ -794,7 +867,7 @@ function resetGame(){
 
   [
     "winModal","trapModal","sacrificeModal","disarmModal",
-    "stealModal","recoveryModal","eventModal"
+    "stealModal","lockModal","recoveryModal","eventModal"
   ].forEach(id=>
     document.getElementById(id).classList.add("hidden")
   );
@@ -848,7 +921,13 @@ function renderHand(){
     b.innerText=n;
 
     const own=players[current].hand.includes(n);
-    const playable=own && total+n<=targets[targetIndex];
+    const activeLock=lockAgainst(current);
+    const isLocked=activeLock && activeLock.number===n;
+    const playable=own && !isLocked && total+n<=targets[targetIndex];
+
+    if(isLocked){
+      b.innerText=n+" "+String.fromCodePoint(0x1F512);
+    }
 
     if(!playable){
       b.classList.add("invalid");
@@ -932,7 +1011,9 @@ function updateSpecialControls(){
   const trapButton=document.getElementById("trapButton");
   const disarmButton=document.getElementById("disarmButton");
   const stealButton=document.getElementById("stealButton");
+  const lockButton=document.getElementById("lockButton");
   const warning=document.getElementById("trapWarning");
+  const lockWarning=document.getElementById("lockWarning");
 
   const canTrap=
     !me.trapUsed &&
@@ -965,6 +1046,12 @@ function updateSpecialControls(){
     disarmButton.classList.remove("active");
   }
 
+  if(hasLockAgainst(current)){
+    lockWarning.classList.add("active");
+  }else{
+    lockWarning.classList.remove("active");
+  }
+
   const canSteal=
     !me.stealUsed &&
     me.stolenCard===null &&
@@ -974,6 +1061,16 @@ function updateSpecialControls(){
   stealButton.innerText=me.stealUsed
     ? ICON.cat+" STEAL "+ICON.cross
     : ICON.cat+" STEAL";
+
+  const canLock=
+    !me.lockUsed &&
+    locks[current]===null &&
+    enemy.hand.length>0;
+
+  lockButton.disabled=!canLock;
+  lockButton.innerText=me.lockUsed
+    ? String.fromCodePoint(0x1F512)+" LOCK "+ICON.cross
+    : String.fromCodePoint(0x1F512)+" LOCK";
 }
 
 function playCard(number,type){
@@ -1012,7 +1109,10 @@ function playCard(number,type){
         ".\nThe turn is lost.\n\n"+
         displayName(trapOwner)+
         " earns a TRAP REWARD: recover 1 discarded card.",
-        ()=>resolveTrapVictimRecovery(player,trapOwner)
+        ()=>{
+          clearLockAfterTurn(player);
+          resolveTrapVictimRecovery(player,trapOwner);
+        }
       );
 
       return;
@@ -1058,6 +1158,7 @@ function playCard(number,type){
     return;
   }
 
+  clearLockAfterTurn(player);
   switchTurn();
 }
 
@@ -1107,6 +1208,7 @@ function passTurn(){
   if(getPlayableEntries(current).length>0) return;
 
   const passer=current;
+  clearLockAfterTurn(passer);
   consecutivePasses++;
 
   statusMessage=displayName(passer)+" passed.";
@@ -1396,7 +1498,10 @@ function confirmDisarm(){
       displayName(guesser)+
       " correctly guessed "+guess+
       ".\n\nThe Trap is destroyed.\nNo Trap reward is earned.\nThe whole turn is used.",
-      ()=>switchTurn()
+      ()=>{
+        clearLockAfterTurn(guesser);
+        switchTurn();
+      }
     );
 
   }else{
@@ -1412,7 +1517,10 @@ function confirmDisarm(){
       displayName(guesser)+
       " guessed "+guess+
       ".\n\nThe Trap remains active.\nYou cannot DISARM this Trap again.\nThe whole turn is lost.",
-      ()=>switchTurn()
+      ()=>{
+        clearLockAfterTurn(guesser);
+        switchTurn();
+      }
     );
   }
 }
@@ -1497,7 +1605,95 @@ function confirmSteal(){
     "CARD STOLEN!",
     displayName(thief)+" stole "+n+
     " from "+displayName(owner)+".\n\nThe stolen card can be played on a later turn.\nAfter it is played, it returns to the original owner's discard.\nSTEAL used the whole turn.",
-    ()=>switchTurn()
+    ()=>{
+      clearLockAfterTurn(thief);
+      switchTurn();
+    }
+  );
+}
+
+
+/* =========================
+   LOCK
+========================= */
+
+function openLockModal(){
+
+  const me=players[current];
+  const enemy=players[otherPlayer(current)];
+
+  if(me.lockUsed || locks[current]!==null) return;
+  if(enemy.hand.length===0) return;
+
+  selectedLock=null;
+  renderLockChoices();
+
+  document.getElementById("confirmLock").disabled=true;
+  document.getElementById("lockModal").classList.remove("hidden");
+}
+
+function renderLockChoices(){
+
+  const c=document.getElementById("lockChoices");
+  c.innerHTML="";
+
+  [...players[otherPlayer(current)].hand]
+    .sort((a,b)=>a-b)
+    .forEach(n=>{
+
+      const b=document.createElement("button");
+      b.className="choice-card lock-choice";
+      b.innerText=n;
+
+      if(n===selectedLock) b.classList.add("selected");
+
+      b.onclick=()=>{
+        selectedLock=n;
+        renderLockChoices();
+        document.getElementById("confirmLock").disabled=false;
+      };
+
+      c.appendChild(b);
+    });
+}
+
+function confirmLock(){
+
+  if(selectedLock===null) return;
+
+  const owner=current;
+  const victim=otherPlayer(owner);
+  const n=selectedLock;
+
+  if(!players[victim].hand.includes(n)) return;
+
+  locks[owner]={
+    number:n,
+    victim:victim
+  };
+
+  players[owner].lockUsed=true;
+
+  document.getElementById("lockModal").classList.add("hidden");
+
+  selectedLock=null;
+
+  current=victim;
+
+  statusMessage=
+    String.fromCodePoint(0x1F512)+
+    " LOCK ACTIVE - "+n+
+    " cannot be played this turn.";
+
+  updateScreen();
+
+  showTurnOverlay(
+    String.fromCodePoint(0x1F512)+" LOCKED "+n,
+    displayName(owner)+
+    " locked "+n+
+    ".\n\n"+displayName(victim)+
+    " cannot play that number on THIS turn.\n"+
+    "The Lock disappears after this turn ends."
   );
 }
 
@@ -1626,6 +1822,7 @@ function confirmRecovery(){
       " recovered "+recovered.join(" and ")+".";
 
     recoverySelected=[];
+    clearLockAfterTurn(recoveryPlayer);
     switchTurn();
     return;
   }
@@ -1725,6 +1922,9 @@ function processNextCrownRecovery(){
 function startNextRound(){
 
   returnAllStolenCards();
+
+  locks.you=null;
+  locks.friend=null;
 
   total=0;
   targetIndex++;
