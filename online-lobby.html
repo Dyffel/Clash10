@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CLASH 10 ONLINE LOBBY</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top,#14202c 0%,#070b10 45%,#000 100%);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 430px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -2px;
+  margin-bottom: 22px;
+}
+
+.logo span {
+  color: #ffc928;
+}
+
+.card {
+  background: #0b1118;
+  border: 1px solid #394552;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.sub {
+  color: #9ba6b1;
+  line-height: 1.45;
+  margin-bottom: 20px;
+}
+
+button,
+input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+button {
+  border: 0;
+  color: white;
+  margin-top: 10px;
+}
+
+.create {
+  background: #168fff;
+}
+
+.join {
+  background: #8b45ff;
+}
+
+.start {
+  background: #23a447;
+}
+
+input {
+  border: 1px solid #4c5966;
+  background: #151d26;
+  color: white;
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 5px;
+  font-size: 24px;
+}
+
+.room {
+  margin: 18px 0 6px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #8d96a1;
+  font-weight: 800;
+}
+
+.code {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  color: #ffd23f;
+  letter-spacing: 5px;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.player {
+  border: 1px solid #33414e;
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  background: #111820;
+}
+
+.player .name {
+  font-weight: 900;
+  font-size: 17px;
+}
+
+.player .state {
+  margin-top: 6px;
+  color: #8793a0;
+  font-size: 13px;
+}
+
+.player.online {
+  border-color: #32d56d;
+}
+
+.player.online .state {
+  color: #46e679;
+}
+
+.status {
+  margin-top: 16px;
+  padding: 13px;
+  border-radius: 12px;
+  background: #101820;
+  color: #aeb8c3;
+  text-align: center;
+  min-height: 48px;
+  line-height: 1.4;
+}
+
+.good {
+  color: #57e47a;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.wait {
+  margin-top: 14px;
+  text-align: center;
+  color: #ffc74d;
+  font-weight: 800;
+}
+
+.start:disabled {
+  opacity: .35;
+}
+
+.small {
+  font-size: 12px;
+  color: #737f8a;
+  text-align: center;
+  margin-top: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="logo">
+    CLASH <span>10</span>
+  </div>
+
+  <div class="card">
+
+    <div id="lobby">
+
+      <h2>ONLINE 1v1</h2>
+
+      <div class="sub">
+        Create a private room or join your friend's 6-digit code.
+      </div>
+
+      <button class="create" onclick="createRoom()">
+        CREATE GAME
+      </button>
+
+      <input
+        id="roomInput"
+        maxlength="6"
+        inputmode="numeric"
+        placeholder="000000"
+      >
+
+      <button class="join" onclick="joinRoom()">
+        JOIN GAME
+      </button>
+
+    </div>
+
+    <div id="roomPanel" class="hidden">
+
+      <div class="room">ROOM CODE</div>
+
+      <div class="code" id="roomCode">
+        ------
+      </div>
+
+      <div class="players">
+
+        <div class="player" id="p1Box">
+          <div class="name">PLAYER 1</div>
+          <div class="state" id="p1State">Waiting...</div>
+        </div>
+
+        <div class="player" id="p2Box">
+          <div class="name">PLAYER 2</div>
+          <div class="state" id="p2State">Waiting...</div>
+        </div>
+
+      </div>
+
+      <div class="wait" id="waitText">
+        Waiting for second player...
+      </div>
+
+      <button
+        class="start"
+        id="startButton"
+        onclick="startGame()"
+        disabled
+      >
+        START CLASH 10
+      </button>
+
+      <div class="status" id="status">
+        Connecting...
+      </div>
+
+      <div class="small">
+        This is the online lobby test. The full game screen is connected next.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://ukuacndhnuiulknidpbz.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_jK1ib58XWRsOD3E2bxc04Q_YuYZVdrF";
+
+const client =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let channel = null;
+let roomCode = null;
+let myRole = null;
+
+let myId =
+  crypto.randomUUID
+    ? crypto.randomUUID()
+    : String(Date.now()) + Math.random();
+
+let gameStarted = false;
+
+
+function setStatus(text, good = false) {
+
+  const el =
+    document.getElementById("status");
+
+  el.textContent = text;
+
+  el.className =
+    "status" + (good ? " good" : "");
+}
+
+
+function randomCode() {
+
+  return String(
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    )
+  );
+}
+
+
+function flattenPresence(state) {
+
+  const list = [];
+
+  Object.values(state).forEach(entries => {
+
+    entries.forEach(x => list.push(x));
+
+  });
+
+  return list;
+}
+
+
+function renderPresence() {
+
+  if (!channel) return;
+
+  const list =
+    flattenPresence(
+      channel.presenceState()
+    );
+
+  const byRole = {};
+
+  list.forEach(p => {
+
+    if (p.role && p.id)
+      byRole[p.role] = p;
+
+  });
+
+
+  const p1 = byRole.p1;
+  const p2 = byRole.p2;
+
+
+  document.getElementById("p1State")
+    .textContent =
+    p1 ? "CONNECTED" : "Waiting...";
+
+
+  document.getElementById("p2State")
+    .textContent =
+    p2 ? "CONNECTED" : "Waiting...";
+
+
+  document.getElementById("p1Box")
+    .classList.toggle(
+      "online",
+      !!p1
+    );
+
+
+  document.getElementById("p2Box")
+    .classList.toggle(
+      "online",
+      !!p2
+    );
+
+
+  const both =
+    !!p1 && !!p2;
+
+
+  document.getElementById("waitText")
+    .textContent =
+    both
+      ? "Both players connected!"
+      : "Waiting for second player...";
+
+
+  document.getElementById("startButton")
+    .disabled =
+    !(both && myRole === "p1");
+
+
+  if (both) {
+
+    setStatus(
+
+      myRole === "p1"
+
+        ? "Both players are here. You can start the match."
+
+        : "Both players are here. Waiting for Player 1 to start.",
+
+      true
+
+    );
+
+  }
+
+}
+
+
+async function connectRoom(code, role) {
+
+  if (channel) {
+
+    await client.removeChannel(channel);
+
+  }
+
+
+  roomCode = code;
+  myRole = role;
+
+
+  document.getElementById("lobby")
+    .classList.add("hidden");
+
+
+  document.getElementById("roomPanel")
+    .classList.remove("hidden");
+
+
+  document.getElementById("roomCode")
+    .textContent = code;
+
+
+  channel =
+    client.channel(
+      "clash10-lobby-" + code,
+      {
+        config: {
+
+          presence: {
+            key: myId
+          },
+
+          broadcast: {
+            self: false
+          }
+
+        }
+      }
+    );
+
+
+  channel
+
+    .on(
+      "presence",
+      { event: "sync" },
+      renderPresence
+    )
+
+    .on(
+      "presence",
+      { event: "join" },
+      renderPresence
+    )
+
+    .on(
+      "presence",
+      { event: "leave" },
+      renderPresence
+    )
+
+    .on(
+      "broadcast",
+      { event: "game-start" },
+
+      payload => {
+
+        if (gameStarted) return;
+
+        gameStarted = true;
+
+        showStart(
+          payload.payload
+        );
+
+      }
+    );
+
+
+  channel.subscribe(
+
+    async status => {
+
+      if (status === "SUBSCRIBED") {
+
+        await channel.track({
+
+          id: myId,
+
+          role: myRole,
+
+          joined_at: Date.now()
+
+        });
+
+
+        setStatus(
+
+          role === "p1"
+
+            ? "Room created. Send the code to your friend."
+
+            : "Joined room " + code + ".",
+
+          true
+
+        );
+
+
+        renderPresence();
+
+      }
+
+      else if (
+
+        status === "CHANNEL_ERROR" ||
+
+        status === "TIMED_OUT"
+
+      ) {
+
+        setStatus(
+          "Connection error. Refresh and try again."
+        );
+
+      }
+
+    }
+
+  );
+
+}
+
+
+async function createRoom() {
+
+  await connectRoom(
+    randomCode(),
+    "p1"
+  );
+
+}
+
+
+async function joinRoom() {
+
+  const code =
+    document.getElementById("roomInput")
+      .value
+      .trim();
+
+
+  if (!/^\d{6}$/.test(code)) {
+
+    alert(
+      "Enter a 6-digit room code."
+    );
+
+    return;
+
+  }
+
+
+  await connectRoom(
+    code,
+    "p2"
+  );
+
+}
+
+
+async function startGame() {
+
+  if (myRole !== "p1")
+    return;
+
+
+  const list =
+    flattenPresence(
+      channel.presenceState()
+    );
+
+
+  const roles =
+    new Set(
+      list.map(x => x.role)
+    );
+
+
+  if (
+
+    !roles.has("p1") ||
+
+    !roles.has("p2")
+
+  ) {
+
+    setStatus(
+      "Both players must be connected first."
+    );
+
+    return;
+
+  }
+
+
+  const payload = {
+
+    room: roomCode,
+
+    starter: "p1",
+
+    target: 18,
+
+    startedAt: Date.now()
+
+  };
+
+
+  await channel.send({
+
+    type: "broadcast",
+
+    event: "game-start",
+
+    payload
+
+  });
+
+
+  gameStarted = true;
+
+  showStart(payload);
+
+}
+
+
+function showStart(payload) {
+
+  document.querySelector(".card")
+    .innerHTML = `
+
+      <h2 style="
+        text-align:center;
+        margin-bottom:10px
+      ">
+        MATCH FOUND
+      </h2>
+
+      <div style="
+        text-align:center;
+        font-size:52px;
+        margin:18px 0
+      ">
+        ⚔️
+      </div>
+
+      <div style="
+        text-align:center;
+        color:#aeb8c3;
+        line-height:1.55
+      ">
+
+        Room
+        <b style="color:#ffd23f">
+          ${payload.room}
+        </b>
+
+        <br>
+
+        You are
+        <b>
+          ${
+            myRole === "p1"
+              ? "PLAYER 1"
+              : "PLAYER 2"
+          }
+        </b>
+
+        <br><br>
+
+        <b style="color:#50e879">
+          ONLINE CONNECTION READY
+        </b>
+
+      </div>
+
+      <div
+        class="status good"
+        style="margin-top:22px"
+      >
+        Next update connects this lobby
+        to the real CLASH 10 board.
+      </div>
+
+    `;
+
+}
+
+
+window.addEventListener(
+
+  "beforeunload",
+
+  () => {
+
+    try {
+
+      if (channel)
+        channel.untrack();
+
+    }
+
+    catch (e) {}
+
+  }
+
+);
+
+</script>
+
+</body>
+</html>
