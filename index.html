@@ -643,7 +643,8 @@ const ICON = {
   check: String.fromCodePoint(0x2705),
   cross: String.fromCodePoint(0x274C),
   phone: String.fromCodePoint(0x1F4F1),
-  swords: String.fromCodePoint(0x2694)
+  swords: String.fromCodePoint(0x2694),
+  trophy: String.fromCodePoint(0x1F3C6)
 };
 
 function freshPlayer(){
@@ -940,7 +941,9 @@ function updateSpecialControls(){
     me.hand.length>0;
 
   trapButton.disabled=!canTrap;
-  trapButton.innerText=me.trapUsed ? "&#128128; TRAP &#10060;" : "&#128128; TRAP";
+  trapButton.innerText=me.trapUsed
+    ? ICON.trap+" TRAP "+ICON.cross
+    : ICON.trap+" TRAP";
 
   const trap=trapAgainst(current);
 
@@ -950,11 +953,11 @@ function updateSpecialControls(){
     if(trap.disarmAvailable){
       disarmButton.classList.add("active");
       disarmButton.disabled=false;
-      disarmButton.innerText="&#128270; DISARM";
+      disarmButton.innerText=ICON.search+" DISARM";
     }else{
       disarmButton.classList.add("active");
       disarmButton.disabled=true;
-      disarmButton.innerText="&#128270; DISARM &#10060;";
+      disarmButton.innerText=ICON.search+" DISARM "+ICON.cross;
     }
 
   }else{
@@ -968,7 +971,9 @@ function updateSpecialControls(){
     enemy.discard.length>0;
 
   stealButton.disabled=!canSteal;
-  stealButton.innerText=me.stealUsed ? "&#128049; STEAL &#10060;" : "&#128049; STEAL";
+  stealButton.innerText=me.stealUsed
+    ? ICON.cat+" STEAL "+ICON.cross
+    : ICON.cat+" STEAL";
 }
 
 function playCard(number,type){
@@ -1077,7 +1082,7 @@ function beginTrapReward(trapOwner){
   if(players[trapOwner].discard.length===0){
 
     statusMessage=
-      "&#128128; Trap hit, but no discarded card was available to recover.";
+      ICON.trap+" Trap hit, but no discarded card was available to recover.";
 
     updateScreen();
 
@@ -1120,7 +1125,7 @@ function startDeadlock(){
 
   returnAllStolenCards();
 
-  statusMessage="&#128293; DEADLOCK - nobody earns a Crown.";
+  statusMessage=ICON.fire+" DEADLOCK - nobody earns a Crown.";
   updateScreen();
 
   showEvent(
@@ -1158,7 +1163,7 @@ function switchTurn(){
   const playable=getPlayableEntries(current);
 
   if(playable.length===0){
-    statusMessage="&#9888; No legal number card. You may PASS.";
+    statusMessage=ICON.warning+" No legal number card. You may PASS.";
   }else if(hasTrapAgainst(current)){
     const trap=trapAgainst(current);
 
@@ -1313,7 +1318,7 @@ function confirmTrapAndSacrifice(){
   updateScreen();
 
   showTurnOverlay(
-    "&#128128; TRAP PLACED",
+    ICON.trap+" TRAP PLACED",
     displayName(owner)+
     " sacrificed one of their own cards to place the Trap.\n\n"+
     "Pass to "+displayName(victim)+
@@ -1535,11 +1540,11 @@ function openRecovery(player,amount,type,afterTrapOwner=null){
 
   document.getElementById("recoveryModal").classList.remove("hidden");
 
-  let title="&#9851; RECOVERY";
+  let title=ICON.recycle+" RECOVERY";
 
-  if(type==="crown") title="&#128081; CROWN RECOVERY";
-  if(type==="trapReward") title="&#128128; TRAP REWARD";
-  if(type==="deadlock") title="&#128293; DEADLOCK RECOVERY";
+  if(type==="crown") title=ICON.crown+" CROWN RECOVERY";
+  if(type==="trapReward") title=ICON.trap+" TRAP REWARD";
+  if(type==="deadlock") title=ICON.fire+" DEADLOCK RECOVERY";
 
   document.getElementById("recoveryTitle").innerText=title;
 
@@ -1641,7 +1646,7 @@ function confirmRecovery(){
   if(recoveryType==="trapReward"){
 
     statusMessage=
-      "&#128128; "+displayName(recoveryPlayer)+
+      ICON.trap+" "+displayName(recoveryPlayer)+
       " recovered "+recovered[0]+
       " from the successful Trap.";
 
@@ -1684,7 +1689,7 @@ function scoreCrown(scorer){
   if(players[scorer].crowns>=5){
 
     document.getElementById("winTitle").innerText=
-      "&#127942; "+displayName(scorer)+" WINS!";
+      ICON.trophy+" "+displayName(scorer)+" WINS!";
 
     document.getElementById("winModal").classList.remove("hidden");
     return;
@@ -1744,7 +1749,7 @@ function startNextRound(){
 
   if(hasTrapAgainst(current)){
     warning=
-      "\n\n&#128128; WARNING: an opponent Trap is STILL ACTIVE.";
+      "\n\n"+ICON.trap+" WARNING: an opponent Trap is STILL ACTIVE.";
   }
 
   showTurnOverlay(
