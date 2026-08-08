@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>CLASH 10</title>
+
+<style>
+
+* {
+
+  box-sizing: border-box;
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+body {
+
+  margin: 0;
+
+  background:
+
+    radial-gradient(circle at top, #18202a 0%, #080b0f 45%, #000 100%);
+
+  color: white;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  min-height: 100vh;
+
+}
+
+.game {
+
+  width: 100%;
+
+  max-width: 480px;
+
+  margin: auto;
+
+  padding: 18px 14px 35px;
+
+}
+
+/* HEADER */
+
+.logo {
+
+  text-align: center;
+
+  font-size: 34px;
+
+  font-weight: 900;
+
+  font-style: italic;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 18px;
+
+}
+
+.logo span {
+
+  color: #ffc928;
+
+}
+
+/* PLAYERS */
+
+.player {
+
+  border: 1px solid #2d3743;
+
+  background: rgba(13,17,22,.92);
+
+  border-radius: 18px;
+
+  padding: 14px;
+
+}
+
+.player.enemy {
+
+  border-color: #e23c3c;
+
+}
+
+.player.you {
+
+  border-color: #168fff;
+
+}
+
+.player-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+}
+
+.name {
+
+  font-weight: 900;
+
+  font-size: 18px;
+
+}
+
+.enemy .name {
+
+  color: #ff5555;
+
+}
+
+.you .name {
+
+  color: #43a8ff;
+
+}
+
+.crowns {
+
+  font-size: 21px;
+
+  letter-spacing: 2px;
+
+}
+
+.small {
+
+  color: #7e8792;
+
+  font-size: 12px;
+
+  margin-top: 8px;
+
+}
+
+/* OPPONENT CARDS */
+
+.hidden-cards {
+
+  display: flex;
+
+  gap: 5px;
+
+  margin-top: 12px;
+
+}
+
+.hidden {
+
+  flex: 1;
+
+  height: 48px;
+
+  border-radius: 7px;
+
+  border: 1px solid #3c4652;
+
+  background: #171c22;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #5f6872;
+
+  font-size: 23px;
+
+  font-weight: bold;
+
+}
+
+/* CENTER */
+
+.arena {
+
+  margin: 14px 0;
+
+  border-radius: 18px;
+
+  border: 1px solid #29313a;
+
+  background: rgba(10,13,17,.95);
+
+  padding: 17px;
+
+}
+
+.numbers {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-around;
+
+}
+
+.stat {
+
+  text-align: center;
+
+}
+
+.label {
+
+  color: #929aa4;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+
+  font-weight: bold;
+
+}
+
+.target-number {
+
+  color: #ff5353;
+
+  font-size: 42px;
+
+  font-weight: 900;
+
+  margin-top: 4px;
+
+}
+
+.total-number {
+
+  font-size: 58px;
+
+  font-weight: 900;
+
+  margin-top: 2px;
+
+}
+
+.turn {
+
+  text-align: center;
+
+  color: #42e66c;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  margin-top: 8px;
+
+}
+
+.message {
+
+  margin-top: 14px;
+
+  min-height: 38px;
+
+  background: #11161c;
+
+  border-radius: 9px;
+
+  padding: 10px;
+
+  text-align: center;
+
+  color: #aab3bd;
+
+  font-size: 13px;
+
+}
+
+/* CARDS */
+
+.section-title {
+
+  color: #89939e;
+
+  font-size: 11px;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  margin: 14px 0 8px;
+
+}
+
+.hand {
+
+  display: grid;
+
+  grid-template-columns: repeat(8, 1fr);
+
+  gap: 5px;
+
+}
+
+.card {
+
+  height: 66px;
+
+  border: 1px solid #53606d;
+
+  background: linear-gradient(145deg,#1e252d,#0b0e12);
+
+  border-radius: 8px;
+
+  color: white;
+
+  font-size: 25px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 10px rgba(0,0,0,.35);
+
+}
+
+.card:active {
+
+  transform: scale(.92);
+
+}
+
+.card.used {
+
+  opacity: .15;
+
+  pointer-events: none;
+
+}
+
+.card:nth-child(1) { border-color:#aaa; }
+
+.card:nth-child(2) { border-color:#168fff; }
+
+.card:nth-child(3) { border-color:#ff4848; }
+
+.card:nth-child(4) { border-color:#ffd02e; }
+
+.card:nth-child(5) { border-color:#42dc68; }
+
+.card:nth-child(6) { border-color:#42dc68; }
+
+.card:nth-child(7) { border-color:#ffb52b; }
+
+.card:nth-child(8) { border-color:#b653ff; }
+
+/* SPECIALS */
+
+.specials {
+
+  display: grid;
+
+  grid-template-columns: repeat(3,1fr);
+
+  gap: 7px;
+
+  margin-top: 8px;
+
+}
+
+.special {
+
+  border-radius: 9px;
+
+  padding: 10px 3px;
+
+  background: #11161c;
+
+  color: white;
+
+  font-weight: bold;
+
+  font-size: 12px;
+
+  border: 1px solid #333;
+
+}
+
+.trap { border-color:#b34cff; color:#df91ff; }
+
+.steal { border-color:#ffc62e; color:#ffd35c; }
+
+.skip { border-color:#ff4747; color:#ff7373; }
+
+.shield { border-color:#309cff; color:#71bdff; }
+
+.swap { border-color:#2edbc8; color:#5cf1df; }
+
+.lock { border-color:#ff9d32; color:#ffbb6f; }
+
+/* RESET */
+
+.reset {
+
+  width: 100%;
+
+  border: 0;
+
+  margin-top: 18px;
+
+  border-radius: 10px;
+
+  padding: 13px;
+
+  background: #202832;
+
+  color: #aab3bd;
+
+  font-weight: bold;
+
+}
+
+.flash {
+
+  animation: flash .35s;
+
+}
+
+@keyframes flash {
+
+  50% {
+
+    transform: scale(1.18);
+
+    color: #ffd72f;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="game">
+
+  <div class="logo">
+
+    CLASH <span>10</span>
+
+  </div>
+
+  <!-- FRIEND -->
+
+  <div class="player enemy">
+
+    <div class="player-top">
+
+      <div class="name">FRIEND</div>
+
+      <div class="crowns" id="enemyCrowns">☆☆☆☆☆</div>
+
+    </div>
+
+    <div class="small">AVAILABLE CARDS</div>
+
+    <div class="hidden-cards">
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+      <div class="hidden">?</div>
+
+    </div>
+
+  </div>
+
+  <!-- ARENA -->
+
+  <div class="arena">
+
+    <div class="numbers">
+
+      <div class="stat">
+
+        <div class="label">TARGET</div>
+
+        <div class="target-number" id="target">10</div>
+
+      </div>
+
+      <div class="stat">
+
+        <div class="label">TOTAL</div>
+
+        <div class="total-number" id="total">0</div>
+
+      </div>
+
+    </div>
+
+    <div class="turn">YOUR TURN</div>
+
+    <div class="message" id="message">
+
+      Choose a number card.
+
+    </div>
+
+  </div>
+
+  <!-- YOU -->
+
+  <div class="player you">
+
+    <div class="player-top">
+
+      <div class="name">YOU</div>
+
+      <div class="crowns" id="yourCrowns">☆☆☆☆☆</div>
+
+    </div>
+
+    <div class="section-title">NUMBER CARDS</div>
+
+    <div class="hand" id="hand">
+
+      <button class="card" onclick="playCard(1,this)">1</button>
+
+      <button class="card" onclick="playCard(2,this)">2</button>
+
+      <button class="card" onclick="playCard(3,this)">3</button>
+
+      <button class="card" onclick="playCard(4,this)">4</button>
+
+      <button class="card" onclick="playCard(5,this)">5</button>
+
+      <button class="card" onclick="playCard(6,this)">6</button>
+
+      <button class="card" onclick="playCard(7,this)">7</button>
+
+      <button class="card" onclick="playCard(8,this)">8</button>
+
+    </div>
+
+    <div class="section-title">SPECIAL CARDS — COMING NEXT 😈</div>
+
+    <div class="specials">
+
+      <button class="special trap">💀 TRAP</button>
+
+      <button class="special steal">🐱 STEAL</button>
+
+      <button class="special skip">🛑 SKIP</button>
+
+      <button class="special shield">🛡️ SHIELD</button>
+
+      <button class="special swap">🔄 SWAP</button>
+
+      <button class="special lock">🔒 LOCK</button>
+
+    </div>
+
+  </div>
+
+  <button class="reset" onclick="resetGame()">
+
+    RESET TEST GAME
+
+  </button>
+
+</div>
+
+<script>
+
+let total = 0;
+
+let targetIndex = 0;
+
+let crowns = 0;
+
+const targets = [10,12,15,18,21];
+
+function playCard(number, element) {
+
+  if (element.classList.contains("used")) return;
+
+  if (total + number > targets[targetIndex]) {
+
+    document.getElementById("message").innerText =
+
+      "❌ " + number + " would exceed the target.";
+
+    return;
+
+  }
+
+  total += number;
+
+  element.classList.add("used");
+
+  updateScreen();
+
+  if (total === targets[targetIndex]) {
+
+    crowns++;
+
+    document.getElementById("message").innerText =
+
+      "👑 CROWN! Exact target hit!";
+
+    document.getElementById("total").classList.add("flash");
+
+    setTimeout(nextRound, 900);
+
+  } else {
+
+    document.getElementById("message").innerText =
+
+      "You played " + number + ". Total is now " + total + ".";
+
+  }
+
+}
+
+function nextRound() {
+
+  total = 0;
+
+  targetIndex++;
+
+  if (targetIndex >= targets.length) {
+
+    targetIndex = 0;
+
+  }
+
+  document.getElementById("total").classList.remove("flash");
+
+  if (crowns >= 5) {
+
+    document.getElementById("message").innerText =
+
+      "🏆 YOU WIN CLASH 10!";
+
+    return;
+
+  }
+
+  document.getElementById("message").innerText =
+
+    "🔥 New target: " + targets[targetIndex];
+
+  updateScreen();
+
+}
+
+function updateScreen() {
+
+  document.getElementById("total").innerText = total;
+
+  document.getElementById("target").innerText =
+
+    targets[targetIndex];
+
+  let crownText = "";
+
+  for (let i = 0; i < 5; i++) {
+
+    crownText += i < crowns ? "👑" : "☆";
+
+  }
+
+  document.getElementById("yourCrowns").innerText =
+
+    crownText;
+
+}
+
+function resetGame() {
+
+  total = 0;
+
+  targetIndex = 0;
+
+  crowns = 0;
+
+  document.querySelectorAll(".card").forEach(card => {
+
+    card.classList.remove("used");
+
+  });
+
+  document.getElementById("message").innerText =
+
+    "Choose a number card.";
+
+  updateScreen();
+
+}
+
+updateScreen();
+
+</script>
+
+</body>
+
+</html>
