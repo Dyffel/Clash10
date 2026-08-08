@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLASH 10 Online Test</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  background:#070b10;
+  color:white;
+  font-family:Arial,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.box{
+  width:100%;
+  max-width:420px;
+  background:#0d141c;
+  border:1px solid #34404c;
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+}
+
+h1{
+  margin-top:0;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #4b5967;
+  background:#161e27;
+  color:white;
+  font-size:18px;
+  text-align:center;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.create{
+  background:#1d8fff;
+  color:white;
+}
+
+.join{
+  background:#8e44ff;
+  color:white;
+}
+
+.send{
+  background:#26a347;
+  color:white;
+}
+
+.status{
+  margin-top:18px;
+  padding:14px;
+  border-radius:10px;
+  background:#111b25;
+  color:#aab6c2;
+  min-height:50px;
+}
+
+.code{
+  font-size:30px;
+  font-weight:900;
+  color:#ffd23f;
+  margin:12px 0;
+}
+
+.hidden{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h1>CLASH 10 ONLINE</h1>
+
+  <div id="lobby">
+
+    <button class="create" onclick="createRoom()">
+      CREATE ROOM
+    </button>
+
+    <input
+      id="roomInput"
+      maxlength="6"
+      placeholder="ROOM CODE"
+      inputmode="numeric">
+
+    <button class="join" onclick="joinRoom()">
+      JOIN ROOM
+    </button>
+
+  </div>
+
+  <div id="roomArea" class="hidden">
+
+    <div>ROOM</div>
+
+    <div class="code" id="roomCode">
+      ------
+    </div>
+
+    <button class="send" onclick="sendTest()">
+      SEND TEST MESSAGE
+    </button>
+
+  </div>
+
+  <div class="status" id="status">
+    Not connected.
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://ukuacndhnuiulknidpbz.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_jK1ib58XWRsOD3E2bxc04Q_YuYZVdrF";
+
+const client =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+let channel = null;
+let currentRoom = null;
+
+function setStatus(text){
+  document.getElementById("status").innerText = text;
+}
+
+function makeRoomCode(){
+
+  return String(
+    Math.floor(
+      100000 + Math.random() * 900000
+    )
+  );
+}
+
+async function createRoom(){
+
+  const code = makeRoomCode();
+
+  await connectToRoom(code);
+
+  setStatus(
+    "Room created. Send this code to your friend."
+  );
+}
+
+async function joinRoom(){
+
+  const code =
+    document
+      .getElementById("roomInput")
+      .value
+      .trim();
+
+  if(code.length !== 6){
+
+    setStatus(
+      "Enter a 6-digit room code."
+    );
+
+    return;
+  }
+
+  await connectToRoom(code);
+
+  setStatus(
+    "Joined room " + code + "."
+  );
+}
+
+async function connectToRoom(code){
+
+  if(channel){
+
+    await client.removeChannel(channel);
+
+    channel = null;
+  }
+
+  currentRoom = code;
+
+  document
+    .getElementById("roomCode")
+    .innerText = code;
+
+  document
+    .getElementById("roomArea")
+    .classList.remove("hidden");
+
+  channel =
+    client.channel(
+      "clash10-room-" + code
+    );
+
+  channel.on(
+    "broadcast",
+    {
+      event:"test-message"
+    },
+    payload => {
+
+      console.log(
+        "Received:",
+        payload
+      );
+
+      setStatus(
+        "🔥 MESSAGE RECEIVED FROM OTHER PHONE!"
+      );
+    }
+  );
+
+  channel.subscribe(status => {
+
+    console.log(
+      "Realtime status:",
+      status
+    );
+
+    if(status === "SUBSCRIBED"){
+
+      setStatus(
+        "✅ CONNECTED TO ROOM " + code
+      );
+    }
+
+    if(
+      status === "CHANNEL_ERROR" ||
+      status === "TIMED_OUT"
+    ){
+
+      setStatus(
+        "❌ CONNECTION ERROR"
+      );
+    }
+
+  });
+}
+
+async function sendTest(){
+
+  if(!channel){
+
+    setStatus(
+      "Join or create a room first."
+    );
+
+    return;
+  }
+
+  const result =
+    await channel.send({
+      type:"broadcast",
+      event:"test-message",
+      payload:{
+        message:"hello from CLASH 10",
+        time:Date.now()
+      }
+    });
+
+  console.log(
+    "Send result:",
+    result
+  );
+
+  setStatus(
+    "📡 TEST MESSAGE SENT"
+  );
+}
+
+</script>
+
+</body>
+</html>
