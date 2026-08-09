@@ -1,0 +1,3683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CLASH 10 v0.9.28 ORNATE CARDS</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(circle at top,#14202c 0%,#070b10 45%,#000 100%);
+  color:white;font-family:Arial,Helvetica,sans-serif
+}
+button,input{font-family:inherit}
+.hidden{display:none!important}
+
+/* LOBBY — PROFESSIONAL MENU */
+.lobby-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:28px 16px 36px;overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(0,119,255,.14),transparent 28%),
+    radial-gradient(circle at 85% 55%,rgba(255,55,35,.08),transparent 25%),
+    linear-gradient(180deg,#02060b 0%,#04080e 45%,#010204 100%);
+}
+.lobby-wrap::before,.lobby-wrap::after{
+  content:"";position:absolute;width:250px;height:360px;
+  border:1px solid rgba(42,108,190,.15);border-radius:22px;
+  transform:rotate(-24deg);pointer-events:none;opacity:.45
+}
+.lobby-wrap::before{left:-155px;top:145px}
+.lobby-wrap::after{right:-165px;bottom:120px;transform:rotate(22deg)}
+.lobby-card{
+  width:100%;max-width:460px;position:relative;z-index:1;
+  background:transparent;border:0;padding:0;
+  filter:drop-shadow(0 22px 45px rgba(0,0,0,.48))
+}
+.brand-crown{
+  text-align:center;font-size:52px;line-height:1;margin-bottom:-2px;
+  filter:drop-shadow(0 0 14px rgba(255,181,29,.42))
+}
+.logo{
+  text-align:center;font-size:54px;line-height:.95;font-weight:1000;
+  font-style:italic;letter-spacing:-3px;margin:0 0 14px;color:#32a8ff;
+  text-shadow:0 2px 0 #06436e,0 0 18px rgba(26,153,255,.35)
+}
+.logo span{
+  color:#ff432d;
+  text-shadow:0 2px 0 #7d160d,0 0 18px rgba(255,64,38,.34)
+}
+.brand-tagline{
+  text-align:center;font-size:15px;font-weight:900;letter-spacing:.7px;
+  color:#f3f5f7;text-transform:uppercase
+}
+.brand-tagline b{color:#ffbd27}
+.brand-subline{
+  text-align:center;margin:5px 0 22px;color:#b8bec7;font-size:14px;
+  font-weight:800;letter-spacing:1.2px;text-transform:uppercase
+}
+.spark-line{
+  width:110px;height:2px;margin:-10px auto 18px;
+  background:linear-gradient(90deg,transparent,#ff9d19,transparent);
+  box-shadow:0 0 12px rgba(255,151,18,.8)
+}
+.menu-name{
+  width:100%;padding:14px 16px;border-radius:13px;font-size:17px;
+  font-weight:800;border:1px solid #2a3848;
+  background:linear-gradient(180deg,#111922,#0a1017);color:white;
+  text-align:center;margin-bottom:11px;
+  box-shadow:inset 0 0 18px rgba(255,255,255,.015)
+}
+.menu-name::placeholder{color:#66717e;letter-spacing:1.7px}
+.menu-btn{
+  position:relative;width:100%;min-height:76px;margin-top:10px;
+  padding:11px 26px 11px 82px;border-radius:13px;
+  border:1px solid rgba(255,255,255,.12);color:white;text-align:left;
+  cursor:pointer;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11),
+             inset 0 -12px 26px rgba(0,0,0,.18),
+             0 7px 18px rgba(0,0,0,.28)
+}
+.menu-btn::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(255,255,255,.09),transparent 34%);
+  pointer-events:none
+}
+.menu-btn:active{transform:scale(.985)}
+.menu-icon{
+  position:absolute;left:24px;top:50%;transform:translateY(-50%);
+  font-size:35px;filter:drop-shadow(0 0 7px rgba(255,255,255,.14))
+}
+.menu-main{display:block;font-size:21px;font-weight:1000;letter-spacing:.2px}
+.menu-sub{display:block;margin-top:3px;font-size:13px;font-weight:500;color:#d5dbe2}
+.menu-online{
+  background:linear-gradient(135deg,#0755ad,#0c2d71);border-color:#168fff;
+  box-shadow:0 0 18px rgba(22,143,255,.13),inset 0 1px 0 rgba(255,255,255,.13)
+}
+.menu-normal{
+  background:linear-gradient(135deg,#5421a8,#28105f);border-color:#9749ff;
+  box-shadow:0 0 18px rgba(151,73,255,.12),inset 0 1px 0 rgba(255,255,255,.12)
+}
+.menu-hard{
+  background:linear-gradient(135deg,#b71818,#5f0b0b);border-color:#ff3b35;
+  box-shadow:0 0 18px rgba(255,59,53,.12),inset 0 1px 0 rgba(255,255,255,.12)
+}
+.menu-create{background:linear-gradient(135deg,#b55d00,#542900);border-color:#ff981c}
+.menu-code{background:linear-gradient(135deg,#151e29,#080d13);border-color:#465363}
+.menu-join{background:linear-gradient(135deg,#078124,#064817);border-color:#19cc45}
+.menu-ranked{background:linear-gradient(135deg,#5522a9,#2d125c);border-color:#9753ff}
+.menu-ranked:disabled{opacity:.55;cursor:not-allowed}
+.menu-small-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.menu-small{
+  min-height:55px;padding:12px 10px;border-radius:12px;border:1px solid #364250;
+  background:linear-gradient(180deg,#141b24,#090e14);color:#e7ebef;
+  font-size:14px;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)
+}
+.menu-small:active{transform:scale(.985)}
+.version{text-align:center;color:#536171;font-size:12px;margin-top:20px;letter-spacing:.7px}
+.online-panel{
+  padding:18px;border:1px solid #243344;background:rgba(5,10,16,.88);
+  border-radius:20px;box-shadow:0 18px 55px rgba(0,0,0,.42);
+  backdrop-filter:blur(7px)
+}
+.online-title{display:flex;align-items:center;gap:10px;margin-bottom:4px;font-size:24px;font-weight:1000}
+.online-sub{color:#8f9aa7;line-height:1.45;font-size:14px;margin-bottom:13px}
+.back-menu{
+  width:100%;margin-top:12px;border:0;border-radius:11px;padding:13px;
+  background:#111922;color:#99a6b4;font-weight:900
+}
+.lobby-btn,.room-input{width:100%;padding:15px;border-radius:12px;font-size:17px;font-weight:900}
+.lobby-btn{border:0;color:white;margin-top:10px}
+.create{background:linear-gradient(135deg,#b55d00,#6b3200);border:1px solid #ff981c}
+.join{background:linear-gradient(135deg,#078124,#07521c);border:1px solid #19cc45}
+.start{background:#23a447}.start:disabled{opacity:.35}
+.room-input{
+  border:1px solid #465363;background:linear-gradient(180deg,#131b25,#090f16);
+  color:white;text-align:center;margin-top:12px;letter-spacing:7px;font-size:24px;
+  outline:none;box-shadow:inset 0 0 20px rgba(0,0,0,.22)
+}
+.room-input:focus{border-color:#168fff;box-shadow:0 0 0 2px rgba(22,143,255,.1)}
+.room-label{
+  margin:18px 0 6px;text-align:center;font-size:12px;letter-spacing:2px;
+  color:#8d96a1;font-weight:800
+}
+.room-code{text-align:center;font-size:42px;font-weight:900;color:#ffd23f;letter-spacing:5px}
+.presence-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.presence-box{
+  border:1px solid #33414e;border-radius:14px;padding:14px;text-align:center;background:#111820
+}
+.presence-box.online{border-color:#32d56d}
+.presence-name{font-weight:900}.presence-state{margin-top:6px;color:#8793a0;font-size:13px}
+.presence-box.online .presence-state{color:#46e679}
+.lobby-status{
+  margin-top:16px;padding:13px;border-radius:12px;background:#101820;
+  color:#aeb8c3;text-align:center;min-height:48px;line-height:1.4
+}
+.good{color:#57e47a}
+.wait{margin-top:14px;text-align:center;color:#ffc74d;font-weight:800}
+.info-modal{
+  position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.88);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.info-box{
+  width:100%;max-width:410px;background:#081019;border:1px solid #344353;
+  border-radius:20px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.55)
+}
+.info-box h2{margin:0 0 12px;font-size:26px}
+.info-box p,.info-box li{color:#aeb8c3;line-height:1.5;font-size:14px}
+.info-box ul{padding-left:20px}
+.info-close{
+  width:100%;margin-top:15px;padding:13px;border-radius:11px;border:0;
+  background:#168fff;color:white;font-weight:900
+}
+
+/* GAME */
+.game{
+  width:100%;max-width:480px;margin:auto;padding:20px 14px 45px
+}
+.player{
+  background:rgba(10,14,19,.95);border:1px solid #34404c;border-radius:18px;padding:14px
+}
+.player.opponent{border-color:#e64040}
+.player.me{border-color:#168fff;margin-top:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.name{font-size:19px;font-weight:900}
+.opponent .name{color:#ff5252}.me .name{color:#45adff}
+.crowns{font-size:19px;letter-spacing:1px}
+.mini{
+  color:#828c97;font-size:11px;letter-spacing:1px;font-weight:800;margin-top:12px
+}
+.card-backs{
+  display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:8px
+}
+.back{
+  height:48px;
+  border-radius:7px;
+  border:1px solid #8b9299;
+  background:
+    linear-gradient(135deg,#c5c9cd 0 1px,transparent 1px) top 4px left 4px/9px 9px no-repeat,
+    linear-gradient(225deg,#c5c9cd 0 1px,transparent 1px) top 4px right 4px/9px 9px no-repeat,
+    linear-gradient(45deg,#c5c9cd 0 1px,transparent 1px) bottom 4px left 4px/9px 9px no-repeat,
+    linear-gradient(315deg,#c5c9cd 0 1px,transparent 1px) bottom 4px right 4px/9px 9px no-repeat,
+    radial-gradient(circle at 50% 45%,rgba(150,155,160,.11),transparent 45%),
+    linear-gradient(145deg,#171b20,#050608);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aeb4ba;
+  font-size:20px;
+  font-weight:1000;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    inset 0 0 14px rgba(255,255,255,.025),
+    0 3px 8px rgba(0,0,0,.3);
+  position:relative
+}
+.back::before{
+  content:"♛";
+  position:absolute;
+  top:3px;
+  font-size:7px;
+  color:#969ca2;
+  opacity:.62
+}
+.arena{
+  margin:14px 0;padding:16px;border:1px solid #29333d;border-radius:18px;
+  background:rgba(8,12,17,.96)
+}
+.scoreboard{display:flex;justify-content:space-around;align-items:center}
+.stat{text-align:center}
+.label{color:#8d96a1;font-size:12px;font-weight:800;letter-spacing:1px}
+.target{color:#ff4c4c;font-size:44px;font-weight:900;margin-top:3px}
+.total{font-size:60px;font-weight:900}
+.turn{text-align:center;color:#43e96f;font-size:14px;font-weight:900;margin-top:7px}
+.turn.waiting{color:#ffcc43}
+.timer{
+  width:64px;height:64px;margin:10px auto 0;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;color:#55e879;
+  box-shadow:0 0 18px rgba(85,232,121,.08)
+}
+.timer.danger{color:#ff5757;border-color:#7b2d2d}
+.timer.paused{color:#7f8994}
+.message{
+  margin-top:12px;padding:11px;min-height:42px;border-radius:10px;
+  background:#111820;color:#aeb7c1;font-size:13px;text-align:center
+}
+.warning{
+  display:none;margin-top:10px;padding:11px;border-radius:10px;font-size:12px;
+  text-align:center;font-weight:900
+}
+.warning.active{display:block}
+.trap-warning{border:1px solid #b14cff;background:rgba(87,24,120,.20);color:#e295ff}
+.lock-warning{border:1px solid #ff9d32;background:rgba(120,62,15,.20);color:#ffbd74}
+
+
+.hand{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:9px
+}
+
+/* ============================================================
+   NUMBER CARDS — ORNATE / SYMMETRIC
+   1–2 SHADOW | 3–4 EMBER | 5–6 NATURE | 7–8 VOID
+============================================================ */
+.card{
+  height:92px;
+  border-radius:11px;
+  color:white;
+  font-size:32px;
+  font-weight:1000;
+  position:relative;
+  overflow:hidden;
+  border:1px solid;
+  background:#080b10;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    inset 0 0 0 4px rgba(0,0,0,.32),
+    inset 0 -26px 36px rgba(0,0,0,.40),
+    0 6px 15px rgba(0,0,0,.46);
+  text-shadow:0 2px 5px rgba(0,0,0,.84);
+  isolation:isolate;
+}
+.card:active{transform:scale(.94)}
+
+/* Thick crown centered over number */
+.card::before{
+  content:"♛";
+  position:absolute;
+  top:7px;
+  left:50%;
+  transform:translateX(-50%) scaleX(1.18);
+  font-size:17px;
+  line-height:1;
+  font-weight:900;
+  opacity:.92;
+  z-index:3;
+  text-shadow:
+    0 0 2px currentColor,
+    0 0 7px currentColor;
+}
+
+/* Bottom suit emblem */
+.card::after{
+  position:absolute;
+  bottom:7px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3;
+  opacity:.96;
+  text-shadow:0 0 8px currentColor;
+}
+
+/* Symmetric ornamental corners using four mirrored corner layers */
+.card{
+  background-repeat:no-repeat;
+  background-position:
+    top 5px left 5px,
+    top 5px right 5px,
+    bottom 5px left 5px,
+    bottom 5px right 5px,
+    center,
+    center,
+    center;
+  background-size:
+    18px 18px,
+    18px 18px,
+    18px 18px,
+    18px 18px,
+    auto,
+    auto,
+    auto;
+}
+
+/* SHADOW */
+.card.n1,.card.n2{
+  border-color:#c8ccd0;
+  background-image:
+    linear-gradient(135deg,transparent 0 5px,#d8dcdf 5px 7px,transparent 7px),
+    linear-gradient(225deg,transparent 0 5px,#d8dcdf 5px 7px,transparent 7px),
+    linear-gradient(45deg,transparent 0 5px,#d8dcdf 5px 7px,transparent 7px),
+    linear-gradient(315deg,transparent 0 5px,#d8dcdf 5px 7px,transparent 7px),
+    radial-gradient(circle at 50% 48%,rgba(200,205,210,.12),transparent 42%),
+    radial-gradient(ellipse at 50% 54%,rgba(255,255,255,.035),transparent 58%),
+    linear-gradient(145deg,#1a1e23,#050608 72%);
+}
+.card.n1,.card.n2{
+  box-shadow:
+    inset 0 0 0 1px rgba(230,233,236,.08),
+    inset 0 0 0 4px rgba(0,0,0,.28),
+    inset 0 0 26px rgba(190,195,200,.055),
+    0 0 11px rgba(190,195,200,.055),
+    0 6px 15px rgba(0,0,0,.46)
+}
+.card.n1::before,.card.n2::before{color:#d8dcdf}
+.card.n1::after,.card.n2::after{content:"◆";color:#c8ccd0;font-size:14px}
+
+/* EMBER */
+.card.n3,.card.n4{
+  border-color:#ff3434;
+  background-image:
+    linear-gradient(135deg,transparent 0 5px,#ff4942 5px 7px,transparent 7px),
+    linear-gradient(225deg,transparent 0 5px,#ff4942 5px 7px,transparent 7px),
+    linear-gradient(45deg,transparent 0 5px,#ff4942 5px 7px,transparent 7px),
+    linear-gradient(315deg,transparent 0 5px,#ff4942 5px 7px,transparent 7px),
+    radial-gradient(circle at 50% 48%,rgba(255,48,35,.20),transparent 42%),
+    radial-gradient(ellipse at 50% 56%,rgba(255,90,50,.055),transparent 58%),
+    linear-gradient(145deg,#310b0b,#080506 72%);
+}
+.card.n3,.card.n4{
+  box-shadow:
+    inset 0 0 0 1px rgba(255,82,75,.07),
+    inset 0 0 0 4px rgba(0,0,0,.28),
+    inset 0 0 27px rgba(255,45,35,.09),
+    0 0 12px rgba(255,44,35,.10),
+    0 6px 15px rgba(0,0,0,.46)
+}
+.card.n3::before,.card.n4::before{color:#ff4942}
+.card.n3::after,.card.n4::after{content:"♨";color:#ff4038;font-size:16px}
+
+/* NATURE */
+.card.n5,.card.n6{
+  border-color:#2ae561;
+  background-image:
+    linear-gradient(135deg,transparent 0 5px,#36ee6e 5px 7px,transparent 7px),
+    linear-gradient(225deg,transparent 0 5px,#36ee6e 5px 7px,transparent 7px),
+    linear-gradient(45deg,transparent 0 5px,#36ee6e 5px 7px,transparent 7px),
+    linear-gradient(315deg,transparent 0 5px,#36ee6e 5px 7px,transparent 7px),
+    radial-gradient(circle at 50% 48%,rgba(35,220,88,.19),transparent 42%),
+    radial-gradient(ellipse at 50% 56%,rgba(74,255,120,.05),transparent 58%),
+    linear-gradient(145deg,#082b14,#040b07 72%);
+}
+.card.n5,.card.n6{
+  box-shadow:
+    inset 0 0 0 1px rgba(70,255,120,.06),
+    inset 0 0 0 4px rgba(0,0,0,.28),
+    inset 0 0 28px rgba(24,210,76,.09),
+    0 0 12px rgba(24,210,76,.09),
+    0 6px 15px rgba(0,0,0,.46)
+}
+.card.n5::before,.card.n6::before{color:#36ee6e}
+.card.n5::after,.card.n6::after{
+  content:"❦";
+  color:#38ef70;
+  font-size:19px;
+  font-family:serif;
+}
+
+/* VOID */
+.card.n7,.card.n8{
+  border-color:#ad55ff;
+  background-image:
+    linear-gradient(135deg,transparent 0 5px,#b966ff 5px 7px,transparent 7px),
+    linear-gradient(225deg,transparent 0 5px,#b966ff 5px 7px,transparent 7px),
+    linear-gradient(45deg,transparent 0 5px,#b966ff 5px 7px,transparent 7px),
+    linear-gradient(315deg,transparent 0 5px,#b966ff 5px 7px,transparent 7px),
+    radial-gradient(circle at 50% 48%,rgba(155,67,255,.21),transparent 42%),
+    radial-gradient(ellipse at 50% 56%,rgba(181,92,255,.055),transparent 58%),
+    linear-gradient(145deg,#210c34,#07050b 72%);
+}
+.card.n7,.card.n8{
+  box-shadow:
+    inset 0 0 0 1px rgba(183,95,255,.07),
+    inset 0 0 0 4px rgba(0,0,0,.28),
+    inset 0 0 28px rgba(152,67,255,.10),
+    0 0 12px rgba(152,67,255,.095),
+    0 6px 15px rgba(0,0,0,.46)
+}
+.card.n7::before,.card.n8::before{color:#b966ff}
+.card.n7::after,.card.n8::after{content:"✦";color:#b45cff;font-size:16px}
+
+.card.invalid{
+  opacity:.22;
+  filter:saturate(.55)
+}
+.card.stolen{
+  border:2px solid #ffc72d;
+  box-shadow:0 0 18px rgba(255,199,45,.25),0 6px 14px rgba(0,0,0,.42)
+}
+.card.stolen::after{
+  content:"🐱";
+  position:absolute;
+  top:5px;
+  right:7px;
+  bottom:auto;
+  left:auto;
+  transform:none;
+  font-size:14px;
+  opacity:1
+}
+
+/* ============================================================
+   DISCARD — SAME THEME, MINIATURE CARDS
+============================================================ */
+.discard{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:8px;
+  min-height:40px
+}
+.discard-chip{
+  width:35px;
+  height:44px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  border-radius:6px;
+  color:#edf0f3;
+  font-size:16px;
+  font-weight:1000;
+  border:1px solid;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    inset 0 -11px 15px rgba(0,0,0,.35),
+    0 3px 7px rgba(0,0,0,.34)
+}
+.discard-chip.empty{
+  width:auto;height:auto;padding:6px 9px;
+  color:#7f8994;background:#11171e;border-color:#343f4a
+}
+.discard-chip:not(.empty)::before{
+  content:"♛";
+  position:absolute;
+  top:2px;
+  left:50%;
+  transform:translateX(-50%) scaleX(1.12);
+  font-size:8px;
+  opacity:.78
+}
+.discard-chip.n1,.discard-chip.n2{
+  border-color:#c8ccd0;
+  background:
+    linear-gradient(135deg,transparent 0 3px,#d8dcdf 3px 4px,transparent 4px) top 3px left 3px/8px 8px no-repeat,
+    linear-gradient(315deg,transparent 0 3px,#d8dcdf 3px 4px,transparent 4px) bottom 3px right 3px/8px 8px no-repeat,
+    linear-gradient(145deg,#1a1e23,#050608)
+}
+.discard-chip.n3,.discard-chip.n4{
+  border-color:#ff3434;
+  background:
+    linear-gradient(135deg,transparent 0 3px,#ff4942 3px 4px,transparent 4px) top 3px left 3px/8px 8px no-repeat,
+    linear-gradient(315deg,transparent 0 3px,#ff4942 3px 4px,transparent 4px) bottom 3px right 3px/8px 8px no-repeat,
+    linear-gradient(145deg,#310b0b,#080506)
+}
+.discard-chip.n5,.discard-chip.n6{
+  border-color:#2ae561;
+  background:
+    linear-gradient(135deg,transparent 0 3px,#36ee6e 3px 4px,transparent 4px) top 3px left 3px/8px 8px no-repeat,
+    linear-gradient(315deg,transparent 0 3px,#36ee6e 3px 4px,transparent 4px) bottom 3px right 3px/8px 8px no-repeat,
+    linear-gradient(145deg,#082b14,#040b07)
+}
+.discard-chip.n7,.discard-chip.n8{
+  border-color:#ad55ff;
+  background:
+    linear-gradient(135deg,transparent 0 3px,#b966ff 3px 4px,transparent 4px) top 3px left 3px/8px 8px no-repeat,
+    linear-gradient(315deg,transparent 0 3px,#b966ff 3px 4px,transparent 4px) bottom 3px right 3px/8px 8px no-repeat,
+    linear-gradient(145deg,#210c34,#07050b)
+}
+.recovery-info{
+  margin-top:10px;
+  color:#ffc934;
+  font-size:12px;
+  font-weight:bold
+}
+
+/* ============================================================
+   SPECIAL CARDS — HIGH DETAIL ORNATE FRAMES
+============================================================ */
+.specials{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:8px
+}
+.special{
+  min-height:94px;
+  padding:10px;
+  border-radius:10px;
+  color:white;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:49px 1fr;
+  column-gap:9px;
+  align-items:center;
+  border:1px solid currentColor;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    inset 0 -19px 30px rgba(0,0,0,.28),
+    0 5px 13px rgba(0,0,0,.36);
+}
+.special::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,transparent 0 5px,currentColor 5px 7px,transparent 7px) top 5px left 5px/18px 18px no-repeat,
+    linear-gradient(225deg,transparent 0 5px,currentColor 5px 7px,transparent 7px) top 5px right 5px/18px 18px no-repeat,
+    linear-gradient(45deg,transparent 0 5px,currentColor 5px 7px,transparent 7px) bottom 5px left 5px/18px 18px no-repeat,
+    linear-gradient(315deg,transparent 0 5px,currentColor 5px 7px,transparent 7px) bottom 5px right 5px/18px 18px no-repeat,
+    linear-gradient(125deg,rgba(255,255,255,.045),transparent 38%);
+  opacity:.9
+}
+.special-icon{
+  grid-column:1;
+  grid-row:1 / span 2;
+  width:47px;
+  height:60px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:29px;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,255,255,.06),transparent 44%),
+    rgba(0,0,0,.30);
+  border:1px solid currentColor;
+  box-shadow:
+    inset 0 0 16px rgba(0,0,0,.36),
+    0 0 12px color-mix(in srgb,currentColor 18%,transparent);
+  position:relative;
+  z-index:2
+}
+.special-copy{grid-column:2;min-width:0;position:relative;z-index:2}
+.special-title{
+  display:block;
+  font-size:13px;
+  line-height:1.1;
+  font-weight:1000;
+  letter-spacing:.3px;
+  margin-bottom:5px;
+  text-shadow:0 0 9px currentColor
+}
+.special-desc{
+  display:block;
+  color:#c8cfd6;
+  font-size:10px;
+  line-height:1.3;
+  font-weight:600
+}
+
+/* TRAP — original red eye */
+.trap-button{
+  color:#ff3f3f;
+  background:
+    radial-gradient(circle at 18% 50%,rgba(230,31,31,.18),transparent 28%),
+    radial-gradient(circle at 72% 50%,rgba(160,18,18,.055),transparent 55%),
+    linear-gradient(145deg,#25090c,#080b0f 70%)
+}
+
+/* STEAL — gold cat */
+.steal-button{
+  color:#f4c12f;
+  background:
+    radial-gradient(circle at 18% 50%,rgba(226,176,35,.17),transparent 28%),
+    radial-gradient(circle at 72% 50%,rgba(214,163,29,.045),transparent 55%),
+    linear-gradient(145deg,#221a06,#080b0f 70%)
+}
+
+/* LOCK — orange/gold */
+.lock-button{
+  color:#ff9b32;
+  background:
+    radial-gradient(circle at 18% 50%,rgba(240,132,28,.17),transparent 28%),
+    radial-gradient(circle at 72% 50%,rgba(211,111,23,.045),transparent 55%),
+    linear-gradient(145deg,#251407,#080b0f 70%)
+}
+
+/* DOUBLE — electric cyan */
+.double-button{
+  color:#44d9f4;
+  background:
+    radial-gradient(circle at 18% 50%,rgba(40,196,231,.18),transparent 28%),
+    radial-gradient(circle at 72% 50%,rgba(34,180,220,.045),transparent 55%),
+    linear-gradient(145deg,#061d25,#080b0f 70%)
+}
+.special:disabled{
+  border-color:#303943;
+  color:#505861;
+  opacity:.42;
+  filter:saturate(.45)
+}
+.special:disabled .special-desc{color:#555d66}
+
+.actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}
+.action{border:0;padding:13px;border-radius:10px;font-weight:900}
+.pass{background:#5a2727;color:#ffb2b2}
+.pass:disabled{background:#1b2026;color:#555e67}
+
+/* MODALS */
+.modal{
+  position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.94);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.modal-box{
+  width:100%;max-width:390px;text-align:center;border:1px solid #3a4653;
+  background:#0b1118;border-radius:22px;padding:25px 20px
+}
+.modal-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#55e879
+}
+.modal-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.recovery-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#ffd45d
+}
+.recovery-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.modal-title{font-size:27px;font-weight:900}
+.modal-desc{
+  color:#9ba6b1;margin:13px 0 20px;line-height:1.5;font-size:14px;white-space:pre-line
+}
+.confirm{
+  width:100%;padding:15px;border:0;border-radius:11px;background:#238f3e;
+  color:white;font-weight:900;font-size:16px;margin-top:15px
+}
+.confirm:disabled{background:#252c33;color:#5b636b}
+.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.choice-card,.recover-card{
+  height:67px;border-radius:10px;background:#171e26;border:1px solid #596674;
+  color:white;font-size:25px;font-weight:900
+}
+.choice-card.selected{border:2px solid #b653ff;background:#321342}
+.sacrifice-choice.selected{border:2px solid #ff5050;background:#421616}
+.steal-choice.selected{border:2px solid #ffc72d;background:#3c310e}
+.lock-choice.selected{border:2px solid #ff9d32;background:#3b2410}
+.double-choice.selected{border:2px solid #52d9ff;background:#103542}
+.recover-card.selected{border:2px solid #44e76c;background:#17351f}
+.event-icon{font-size:55px;margin-bottom:12px}
+.event-title{font-size:29px;font-weight:900}
+.wait-box{font-size:16px;color:#aeb8c3;line-height:1.5}
+</style>
+</head>
+
+<body>
+
+<!-- LOBBY -->
+<div class="lobby-wrap" id="lobbyScreen">
+  <div class="lobby-card">
+
+    <div id="mainMenu">
+      <div class="brand-crown">👑</div>
+      <div class="logo">CLASH <span>10</span></div>
+      <div class="brand-tagline">THE ULTIMATE <b>1v1</b> CARD BATTLE</div>
+      <div class="brand-subline">IQ. STRATEGY. TIMING.</div>
+      <div class="spark-line"></div>
+
+      <input
+        class="menu-name"
+        id="nameInput"
+        maxlength="12"
+        placeholder="YOUR NICKNAME"
+        autocomplete="off"
+        autocapitalize="words"
+      >
+
+      <button class="menu-btn menu-online" onclick="openOnlineMenu()">
+        <span class="menu-icon">👥</span>
+        <span class="menu-main">PLAY ONLINE</span>
+        <span class="menu-sub">Play vs real players</span>
+      </button>
+
+      <button class="menu-btn menu-normal" onclick="startBotGame('normal')">
+        <span class="menu-icon">🤖</span>
+        <span class="menu-main">PLAY VS NORMAL BOT</span>
+        <span class="menu-sub">Test your skills</span>
+      </button>
+
+      <button class="menu-btn menu-hard" onclick="startBotGame('hard')">
+        <span class="menu-icon">🔥</span>
+        <span class="menu-main">PLAY VS HARD BOT</span>
+        <span class="menu-sub">Are you ready?</span>
+      </button>
+
+      <div class="menu-small-row">
+        <button class="menu-small" onclick="openInfoModal('how')">📖 &nbsp; HOW TO PLAY</button>
+        <button class="menu-small" onclick="openInfoModal('settings')">⚙️ &nbsp; SETTINGS</button>
+      </div>
+
+      <div class="version">v0.9.28</div>
+    </div>
+
+    <div id="lobbyForm" class="hidden online-panel">
+      <div class="online-title">🌐 PLAY ONLINE</div>
+      <div class="online-sub">Create a private room or enter your friend's 6-digit room code.</div>
+
+      <button class="menu-btn menu-ranked" disabled>
+        <span class="menu-icon">🏆</span>
+        <span class="menu-main">RANKED</span>
+        <span class="menu-sub">Coming soon</span>
+      </button>
+
+      <button class="menu-btn menu-create" onclick="createRoom()">
+        <span class="menu-icon">🚪</span>
+        <span class="menu-main">CREATE ROOM</span>
+        <span class="menu-sub">Create a room and invite your friend</span>
+      </button>
+
+      <input class="room-input" id="roomInput" maxlength="6" inputmode="numeric" placeholder="000000">
+
+      <button class="menu-btn menu-join" onclick="joinRoom()">
+        <span class="menu-icon">↪️</span>
+        <span class="menu-main">JOIN GAME</span>
+        <span class="menu-sub">Join your friend's room</span>
+      </button>
+
+      <button class="back-menu" onclick="backToMainMenu()">← BACK TO MAIN MENU</button>
+    </div>
+
+    <div id="roomPanel" class="hidden online-panel">
+      <div class="online-title">⚔️ GAME LOBBY</div>
+      <div class="room-label">ROOM CODE</div>
+      <div class="room-code" id="roomCode">------</div>
+
+      <div class="presence-grid">
+        <div class="presence-box" id="p1Box">
+          <div class="presence-name" id="p1Name">PLAYER 1</div>
+          <div class="presence-state" id="p1State">Waiting...</div>
+        </div>
+        <div class="presence-box" id="p2Box">
+          <div class="presence-name" id="p2Name">PLAYER 2</div>
+          <div class="presence-state" id="p2State">Waiting...</div>
+        </div>
+      </div>
+
+      <div class="wait" id="waitText">Waiting for second player...</div>
+
+      <button class="lobby-btn start" id="startButton" onclick="startGame()" disabled>
+        START CLASH 10
+      </button>
+
+      <div class="lobby-status" id="lobbyStatus">Connecting...</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="info-modal hidden" id="infoModal">
+  <div class="info-box">
+    <div id="infoContent"></div>
+    <button class="info-close" onclick="closeInfoModal()">CLOSE</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="game hidden" id="gameScreen">
+  <div class="logo">CLASH <span>10</span></div>
+
+  <div class="player opponent">
+    <div class="row">
+      <div class="name" id="opponentName">OPPONENT</div>
+      <div class="crowns" id="opponentCrowns">&#9734;&#9734;&#9734;&#9734;&#9734;</div>
+    </div>
+    <div class="mini">AVAILABLE CARDS</div>
+    <div class="card-backs" id="opponentCards"></div>
+  </div>
+
+  <div class="arena">
+    <div class="scoreboard">
+      <div class="stat">
+        <div class="label">TARGET</div>
+        <div class="target" id="target">18</div>
+      </div>
+      <div class="stat">
+        <div class="label">TOTAL</div>
+        <div class="total" id="total">0</div>
+      </div>
+    </div>
+
+    <div class="turn" id="turnText">YOUR TURN</div>
+    <div class="timer" id="turnTimer">20</div>
+
+    <div class="warning trap-warning" id="trapWarning">
+      &#128128; ACTIVE TRAP - one of your ORIGINAL cards is trapped.
+    </div>
+
+    <div class="warning lock-warning" id="lockWarning">
+      &#128274; ACTIVE LOCK - one ORIGINAL card is locked this turn.
+    </div>
+
+    <div class="message" id="message">Choose a number card.</div>
+  </div>
+
+  <div class="player me">
+    <div class="row">
+      <div class="name">YOU</div>
+      <div class="crowns" id="myCrowns">&#9734;&#9734;&#9734;&#9734;&#9734;</div>
+    </div>
+
+    <div class="mini">NUMBER CARDS</div>
+    <div class="hand" id="hand"></div>
+
+    <div class="mini">DISCARD</div>
+    <div class="discard" id="discard"></div>
+
+    <div class="recovery-info" id="recoveryInfo"></div>
+
+    <div class="mini">SPECIAL CARDS</div>
+    <div class="specials">
+      <button class="special trap-button" id="trapButton" onclick="openTrapModal()">
+        <span class="special-icon">👁️</span>
+        <span class="special-copy">
+          <span class="special-title" id="trapTitle">TRAP</span>
+          <span class="special-desc">Trap an opponent's card.<br>If triggered, recover 1 card.</span>
+        </span>
+      </button>
+
+      <button class="special steal-button" id="stealButton" onclick="openStealModal()">
+        <span class="special-icon">🐱</span>
+        <span class="special-copy">
+          <span class="special-title" id="stealTitle">STEAL</span>
+          <span class="special-desc">Take 1 card from your opponent's discard.</span>
+        </span>
+      </button>
+
+      <button class="special lock-button" id="lockButton" onclick="openLockModal()">
+        <span class="special-icon">🔒</span>
+        <span class="special-copy">
+          <span class="special-title" id="lockTitle">LOCK</span>
+          <span class="special-desc">Lock 1 of your opponent's cards for their next turn.</span>
+        </span>
+      </button>
+
+      <button class="special double-button" id="doubleButton" onclick="openDoubleModal()">
+        <span class="special-icon">⚡</span>
+        <span class="special-copy">
+          <span class="special-title" id="doubleTitle">DOUBLE</span>
+          <span class="special-desc">Play 2 number cards together.</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="actions">
+      <button class="action pass" id="passButton" onclick="passTurn()">PASS</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRAP TARGET -->
+<div class="modal hidden" id="trapModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#dc83ff">&#128128; PLACE TRAP</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.</div>
+    <div class="choice-grid" id="trapChoices"></div>
+    <button class="confirm" id="confirmTrap" onclick="goToTrapSacrifice()" disabled>NEXT</button>
+  </div>
+</div>
+
+<!-- TRAP SACRIFICE -->
+<div class="modal hidden" id="sacrificeModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ff6666">&#128293; PAY THE PRICE</div>
+    <div class="modal-desc">Sacrifice one of your own ORIGINAL number cards.
+It goes to your discard and does not count toward Recovery.</div>
+    <div class="choice-grid" id="sacrificeChoices"></div>
+    <button class="confirm" id="confirmSacrifice" onclick="confirmTrapAndSacrifice()" disabled>
+      SACRIFICE & PLACE TRAP
+    </button>
+  </div>
+</div>
+
+<!-- STEAL -->
+<div class="modal hidden" id="stealModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ffd24d">&#128049; STEAL</div>
+    <div class="modal-desc">Take one number from the opponent's discard.
+It costs your whole turn and returns after you play it or when the round ends.</div>
+    <div class="choice-grid" id="stealChoices"></div>
+    <button class="confirm" id="confirmSteal" onclick="confirmSteal()" disabled>STEAL CARD</button>
+  </div>
+</div>
+
+<!-- LOCK -->
+<div class="modal hidden" id="lockModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ffbd74">&#128274; LOCK</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.
+It cannot be played on their next turn. LOCK uses your whole turn.</div>
+    <div class="choice-grid" id="lockChoices"></div>
+    <button class="confirm" id="confirmLock" onclick="confirmLock()" disabled>LOCK CARD</button>
+  </div>
+</div>
+
+<!-- DOUBLE -->
+<div class="modal hidden" id="doubleModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#7ee7ff">&#9889; DOUBLE</div>
+    <div class="modal-desc">Choose TWO of your ORIGINAL number cards and play them together.
+
+Their combined value must not go above the Target.
+DOUBLE is permanently gone after use.</div>
+    <div class="choice-grid" id="doubleChoices"></div>
+    <button class="confirm" id="confirmDouble" onclick="confirmDouble()" disabled>PLAY BOTH</button>
+  </div>
+</div>
+
+<!-- RECOVERY -->
+<div class="modal hidden" id="recoveryModal">
+  <div class="modal-box">
+    <div class="recovery-timer" id="recoveryTimer">10</div>
+    <div class="modal-title" id="recoveryTitle">&#9851; RECOVERY</div>
+    <div class="modal-desc" id="recoveryDesc"></div>
+    <div class="choice-grid" id="recoveryCards"></div>
+    <button class="confirm" id="confirmRecovery" onclick="confirmRecovery()" disabled>CONFIRM</button>
+  </div>
+</div>
+
+<!-- EVENT / WAIT -->
+<div class="modal hidden" id="eventModal">
+  <div class="modal-box">
+    <div class="recovery-timer hidden" id="crownEventTimer">5</div>
+    <div class="event-icon" id="eventIcon">&#128293;</div>
+    <div class="event-title" id="eventTitle">EVENT</div>
+    <div class="modal-desc" id="eventText"></div>
+    <button class="confirm" id="eventContinueButton" onclick="closeEvent()">CONTINUE</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="waitingModal">
+  <div class="modal-box">
+    <div class="event-icon">&#9203;</div>
+    <div class="event-title">WAITING</div>
+    <div class="modal-desc wait-box" id="waitingText">Opponent is choosing...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://ukuacndhnuiulknidpbz.supabase.co";
+const SUPABASE_KEY="sb_publishable_jK1ib58XWRsOD3E2bxc04Q_YuYZVdrF";
+const client=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const TARGETS=[18,21,24,27,30];
+const TURN_SECONDS=20;
+const TURN_MS=TURN_SECONDS*1000;
+const RECOVERY_SECONDS=10;
+const RECOVERY_MS=RECOVERY_SECONDS*1000;
+const CROWN_EVENT_SECONDS=5;
+const CROWN_EVENT_MS=CROWN_EVENT_SECONDS*1000;
+const DEADLOCK_EVENT_SECONDS=5;
+const DEADLOCK_EVENT_MS=DEADLOCK_EVENT_SECONDS*1000;
+const TRAP_EVENT_SECONDS=5;
+const TRAP_EVENT_MS=TRAP_EVENT_SECONDS*1000;
+const ICON={
+  crown:String.fromCodePoint(0x1F451),
+  trap:String.fromCodePoint(0x1F480),
+  cat:String.fromCodePoint(0x1F431),
+  fire:String.fromCodePoint(0x1F525),
+  lock:String.fromCodePoint(0x1F512),
+  recycle:String.fromCodePoint(0x267B),
+  trophy:String.fromCodePoint(0x1F3C6),
+  double:String.fromCodePoint(0x26A1)
+};
+
+let channel=null;
+let roomCode=null;
+let myRole=null;
+let myName=null;
+let myId=(crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random());
+let state=null;
+let gameStarted=false;
+
+// Local single-player bot mode.
+let botMode=false;
+const BOT_ROLE="p2";
+let botDifficulty="normal";
+
+function botName(){
+  return botDifficulty==="hard" ? "HARD BOT" : "NORMAL BOT";
+}
+
+let botThinking=false;
+let botActionTimer=null;
+
+let selectedTrap=null;
+let selectedSacrifice=null;
+let selectedSteal=null;
+let selectedLock=null;
+let selectedDouble=[];
+let recoverySelected=[];
+let eventAckNeeded=false;
+let processingEvent=false;
+let timeoutProcessing=false;
+let recoveryTimeoutProcessing=false;
+let crownEventProcessing=false;
+let heartbeatTimer=null;
+let countdownTimer=null;
+
+function other(role){return role==="p1"?"p2":"p1"}
+
+
+function openOnlineMenu(){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){
+    alert("Enter your nickname first.");
+    return;
+  }
+  document.getElementById("mainMenu").classList.add("hidden");
+  document.getElementById("lobbyForm").classList.remove("hidden");
+}
+
+function backToMainMenu(){
+  document.getElementById("lobbyForm").classList.add("hidden");
+  document.getElementById("mainMenu").classList.remove("hidden");
+}
+
+function openInfoModal(type){
+  const modal=document.getElementById("infoModal");
+  const content=document.getElementById("infoContent");
+
+  if(type==="how"){
+    content.innerHTML=`
+      <h2>📖 HOW TO PLAY</h2>
+      <p>Reach the exact TARGET to earn a Crown. First player to 5 Crowns wins.</p>
+      <ul>
+        <li>Play number cards without exceeding the TARGET.</li>
+        <li>Only successfully played ORIGINAL cards count toward Recovery.</li>
+        <li>Use TRAP, STEAL, LOCK and DOUBLE to outplay your opponent.</li>
+        <li>PASS is available only when no legal number card can be played.</li>
+        <li>Pay attention: hidden information, Recovery and specials matter.</li>
+      </ul>
+    `;
+  }else{
+    content.innerHTML=`
+      <h2>⚙️ SETTINGS</h2>
+      <p>More settings will be added later.</p>
+      <p>Your current game rules, timers and multiplayer behavior are unchanged.</p>
+    `;
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeInfoModal(){
+  document.getElementById("infoModal").classList.add("hidden");
+}
+
+function sanitizeName(value){
+  return String(value||"")
+    .replace(/[<>]/g,"")
+    .replace(/\s+/g," ")
+    .trim()
+    .slice(0,12);
+}
+
+function displayName(role){
+  if(state&&state.names&&state.names[role]) return state.names[role];
+  if(role===myRole&&myName) return myName;
+  return role==="p1"?"PLAYER 1":"PLAYER 2";
+}
+
+function nameOf(role){
+  return displayName(role);
+}
+
+function freshPlayer(){
+  return {
+    hand:[1,2,3,4,5,6,7,8],
+    discard:[],
+    crowns:0,
+    sinceRecovery:0,
+    trapUsed:false,
+    stealUsed:false,
+    lockUsed:false,
+    doubleUsed:false,
+    specialUsedTarget:null,
+    passUsedTarget:null,
+    stolenCard:null
+  };
+}
+
+function freshState(){
+  return {
+    version:1,
+    updatedAt:Date.now(),
+    current:"p1",
+    turnId:1,
+    turnDeadline:Date.now()+TURN_MS,
+    roundStarter:"p1",
+    targetIndex:0,
+    total:0,
+    consecutivePasses:0,
+    message:"Choose a number card.",
+    phase:"playing",
+    winner:null,
+    names:{p1:"PLAYER 1",p2:"PLAYER 2"},
+    players:{p1:freshPlayer(),p2:freshPlayer()},
+    traps:{p1:null,p2:null},
+    locks:{p1:null,p2:null},
+    pendingRecovery:null,
+    recoveryQueue:[],
+    event:null
+  };
+}
+
+/* ---------------- LOBBY ---------------- */
+
+function setLobbyStatus(text,good=false){
+  const el=document.getElementById("lobbyStatus");
+  el.textContent=text;
+  el.className="lobby-status"+(good?" good":"");
+}
+
+function randomCode(){
+  return String(Math.floor(100000+Math.random()*900000));
+}
+
+function flattenPresence(presenceState){
+  const list=[];
+  Object.values(presenceState).forEach(entries=>entries.forEach(x=>list.push(x)));
+  return list;
+}
+
+function renderPresence(){
+  if(!channel)return;
+  const list=flattenPresence(channel.presenceState());
+  const roles={};
+  list.forEach(p=>{if(p.role)roles[p.role]=p});
+
+  const p1Data=roles.p1||null;
+  const p2Data=roles.p2||null;
+  const p1=!!p1Data,p2=!!p2Data;
+
+  document.getElementById("p1Name").textContent=p1Data&&p1Data.name?p1Data.name:"PLAYER 1";
+  document.getElementById("p2Name").textContent=p2Data&&p2Data.name?p2Data.name:"PLAYER 2";
+
+  document.getElementById("p1State").textContent=p1?"CONNECTED":"Waiting...";
+  document.getElementById("p2State").textContent=p2?"CONNECTED":"Waiting...";
+  document.getElementById("p1Box").classList.toggle("online",p1);
+  document.getElementById("p2Box").classList.toggle("online",p2);
+
+  const both=p1&&p2;
+  document.getElementById("waitText").textContent=
+    both?"Both players connected!":"Waiting for second player...";
+  document.getElementById("startButton").disabled=!(both&&myRole==="p1");
+
+  if(both){
+    setLobbyStatus(
+      myRole==="p1"?"Both players are here. Start when ready.":"Both players are here. Waiting for Player 1.",
+      true
+    );
+  }
+}
+
+async function connectRoom(code,role){
+  roomCode=code;
+  myRole=role;
+
+  document.getElementById("lobbyForm").classList.add("hidden");
+  document.getElementById("roomPanel").classList.remove("hidden");
+  document.getElementById("roomCode").textContent=code;
+
+  channel=client.channel("clash10-live-"+code,{
+    config:{
+      presence:{key:myId},
+      broadcast:{self:false}
+    }
+  });
+
+  channel
+    .on("presence",{event:"sync"},renderPresence)
+    .on("presence",{event:"join"},renderPresence)
+    .on("presence",{event:"leave"},renderPresence)
+    .on("broadcast",{event:"game-start"},packet=>{
+      if(gameStarted)return;
+      state=packet.payload.state;
+      gameStarted=true;
+      enterGame();
+    })
+    .on("broadcast",{event:"state-sync"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    })
+    .on("broadcast",{event:"state-heartbeat"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    });
+
+  channel.subscribe(async status=>{
+    if(status==="SUBSCRIBED"){
+      await channel.track({
+        id:myId,
+        role:myRole,
+        name:myName,
+        joinedAt:Date.now()
+      });
+      setLobbyStatus(role==="p1"?"Room created. Send the code to your friend.":"Joined room "+code+".",true);
+      renderPresence();
+    }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
+      setLobbyStatus("Connection error. Refresh and try again.");
+    }
+  });
+}
+
+function startBotGame(difficulty="normal"){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+
+  if(!chosen){
+    alert("Enter your nickname first.");
+    return;
+  }
+
+  botMode=true;
+  botDifficulty=difficulty==="hard" ? "hard" : "normal";
+  botThinking=false;
+
+  if(botActionTimer){
+    clearTimeout(botActionTimer);
+    botActionTimer=null;
+  }
+
+  myName=chosen;
+  myRole="p1";
+  roomCode=null;
+  channel=null;
+
+  state=freshState();
+  state.names={
+    p1:chosen,
+    p2:botName()
+  };
+
+  gameStarted=true;
+  enterGame();
+  scheduleBotAction();
+}
+
+async function createRoom(){
+  botMode=false;
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+  myName=chosen;
+  await connectRoom(randomCode(),"p1");
+}
+
+async function joinRoom(){
+  botMode=false;
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+
+  const code=document.getElementById("roomInput").value.trim();
+  if(!/^\d{6}$/.test(code)){alert("Enter a 6-digit room code.");return}
+
+  myName=chosen;
+  await connectRoom(code,"p2");
+}
+
+async function startGame(){
+  if(myRole!=="p1")return;
+  const roles=new Set(flattenPresence(channel.presenceState()).map(x=>x.role));
+  if(!roles.has("p1")||!roles.has("p2")){setLobbyStatus("Both players must be connected.");return}
+
+  const presence=flattenPresence(channel.presenceState());
+  const p1Presence=presence.find(x=>x.role==="p1");
+  const p2Presence=presence.find(x=>x.role==="p2");
+
+  state=freshState();
+  state.names={
+    p1:sanitizeName(p1Presence&&p1Presence.name)||"PLAYER 1",
+    p2:sanitizeName(p2Presence&&p2Presence.name)||"PLAYER 2"
+  };
+
+  gameStarted=true;
+
+  await channel.send({
+    type:"broadcast",
+    event:"game-start",
+    payload:{state}
+  });
+
+  enterGame();
+}
+
+function enterGame(){
+  document.getElementById("lobbyScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+  renderGame();
+  startRealtimeSafetyLoops();
+}
+
+function acceptIncomingState(incoming){
+  if(!incoming)return;
+
+  const incomingVersion=incoming.version||0;
+  const localVersion=state ? (state.version||0) : -1;
+  const incomingUpdated=incoming.updatedAt||0;
+  const localUpdated=state ? (state.updatedAt||0) : -1;
+
+  // Never allow an older phone state to roll the match backwards.
+  if(
+    !state ||
+    incomingVersion>localVersion ||
+    (incomingVersion===localVersion && incomingUpdated>localUpdated)
+  ){
+    state=incoming;
+    processingEvent=false;
+    timeoutProcessing=false;
+    renderGame();
+  }
+}
+
+function startRealtimeSafetyLoops(){
+  if(heartbeatTimer)clearInterval(heartbeatTimer);
+  if(countdownTimer)clearInterval(countdownTimer);
+
+  // Re-broadcast the newest known state regularly.
+  // If iPhone/Safari misses one Realtime message, the other phone repairs it automatically.
+  heartbeatTimer=setInterval(()=>{
+    if(!gameStarted||!state||!channel)return;
+    channel.send({
+      type:"broadcast",
+      event:"state-heartbeat",
+      payload:{state}
+    }).catch(()=>{});
+  },1200);
+
+  countdownTimer=setInterval(()=>{
+    updateTurnTimer();
+    updateRecoveryTimer();
+    updateCrownEventTimer();
+    checkTurnTimeout();
+    checkRecoveryTimeout();
+    checkCrownEventTimeout();
+  },200);
+}
+
+async function syncState(){
+  state.version=(state.version||0)+1;
+  state.updatedAt=Date.now();
+  renderGame();
+
+  if(botMode){
+    scheduleBotAction();
+    return;
+  }
+
+  const packet={
+    type:"broadcast",
+    event:"state-sync",
+    payload:{state}
+  };
+
+  // Send twice a fraction apart; heartbeat remains the long-term backup.
+  await channel.send(packet);
+  setTimeout(()=>{
+    if(channel&&state){
+      channel.send({
+        type:"broadcast",
+        event:"state-sync",
+        payload:{state}
+      }).catch(()=>{});
+    }
+  },180);
+}
+
+/* ---------------- GAME HELPERS ---------------- */
+
+function crownHTML(amount){
+  let s="";
+  for(let i=0;i<5;i++)s+=i<amount?"&#128081;":"&#9734;";
+  return s;
+}
+
+function trapAgainst(role){
+  const owner=other(role);
+  const trap=state.traps[owner];
+  return trap&&trap.victim===role?trap:null;
+}
+
+function lockAgainst(role){
+  const owner=other(role);
+  const lock=state.locks[owner];
+  return lock&&lock.victim===role?lock:null;
+}
+
+function clearLockAfterTurn(role){
+  const owner=other(role);
+  if(state.locks[owner]&&state.locks[owner].victim===role){
+    state.locks[owner]=null;
+  }
+}
+
+function beginTurn(role){
+  state.current=role;
+  state.turnId=(state.turnId||0)+1;
+  state.turnDeadline=Date.now()+TURN_MS;
+  setTurnMessage();
+}
+
+function updateTurnTimer(){
+  const el=document.getElementById("turnTimer");
+  if(!el||!state)return;
+
+  const timerActive=
+    state.phase==="playing" &&
+    !state.event &&
+    !state.pendingRecovery &&
+    !!state.turnDeadline;
+
+  const modalTimers=[...document.querySelectorAll(".action-timer")];
+
+  if(!timerActive){
+    el.textContent="--";
+    el.classList.add("paused");
+    el.classList.remove("danger");
+
+    modalTimers.forEach(timer=>{
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    });
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((state.turnDeadline-Date.now())/1000));
+  el.textContent=left;
+  el.classList.remove("paused");
+  el.classList.toggle("danger",left<=5);
+
+  // Same live countdown is visible while choosing TRAP / sacrifice / STEAL / LOCK.
+  modalTimers.forEach(timer=>{
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=5);
+  });
+}
+
+function closeActionModals(){
+  ["trapModal","sacrificeModal","stealModal","lockModal","doubleModal"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.add("hidden");
+  });
+  selectedTrap=null;
+  selectedSacrifice=null;
+  selectedSteal=null;
+  selectedLock=null;
+  selectedDouble=[];
+}
+
+async function checkTurnTimeout(){
+  if(
+    timeoutProcessing ||
+    !state ||
+    state.phase!=="playing" ||
+    state.current!==myRole ||
+    state.pendingRecovery ||
+    state.event ||
+    !state.turnDeadline ||
+    Date.now()<state.turnDeadline
+  ) return;
+
+  timeoutProcessing=true;
+
+  try{
+    const role=myRole;
+    const p=state.players[role];
+
+    closeActionModals();
+
+    // TIME OUT is always a penalty:
+    // discard the lowest ORIGINAL number card still owned by the player.
+    const available=[...(p.hand||[])].sort((a,b)=>a-b);
+
+    state.turnDeadline=null;
+    state.consecutivePasses=0;
+
+    if(available.length>0){
+      const lost=available[0];
+
+      p.hand=p.hand.filter(n=>n!==lost);
+
+      if(!p.discard.includes(lost)){
+        p.discard.push(lost);
+        p.discard.sort((a,b)=>a-b);
+      }
+
+      // Timeout is a penalty discard, NOT a successful play.
+      // Recovery meter intentionally stays unchanged.
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout",
+        actor:role,
+        number:lost
+      };
+
+      state.message="TIME OUT";
+
+    }else{
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout-empty",
+        actor:role
+      };
+
+      state.message="TIME OUT";
+    }
+
+    beginTurn(other(role));
+    await syncState();
+
+  }finally{
+    timeoutProcessing=false;
+  }
+}
+
+function playableEntries(role){
+  const p=state.players[role];
+  const activeLock=lockAgainst(role);
+
+  let entries=p.hand
+    .filter(n=>!activeLock||n!==activeLock.number)
+    .map(n=>({number:n,type:"own"}));
+
+  if(p.stolenCard)entries.push({number:p.stolenCard.number,type:"stolen"});
+
+  return entries.filter(x=>state.total+x.number<=TARGETS[state.targetIndex]);
+}
+
+function returnStolen(holder){
+  const item=state.players[holder].stolenCard;
+  if(!item)return;
+  const owner=item.owner,n=item.number;
+  if(!state.players[owner].discard.includes(n)&&!state.players[owner].hand.includes(n)){
+    state.players[owner].discard.push(n);
+  }
+  state.players[holder].stolenCard=null;
+}
+
+function returnAllStolen(){
+  returnStolen("p1");
+  returnStolen("p2");
+}
+
+function canAct(){
+  return state&&state.phase==="playing"&&state.current===myRole&&!state.event&&!state.pendingRecovery;
+}
+
+function canUseSpecial(role){
+  const p=state.players[role];
+  return canAct() && p.specialUsedTarget!==state.targetIndex;
+}
+
+function markSpecialUsed(role){
+  state.players[role].specialUsedTarget=state.targetIndex;
+}
+
+function canPass(role){
+  return playableEntries(role).length===0;
+}
+
+function markPassUsed(role){
+  // PASS is unlimited in v0.9.9.
+  // Kept as a no-op for compatibility with older code paths.
+}
+
+
+function makeRecovery(player,amount,type,extra={}){
+  return {
+    player,
+    amount,
+    type,
+    deadline:Date.now()+RECOVERY_MS,
+    ...extra
+  };
+}
+
+function updateRecoveryTimer(){
+  const rec=state&&state.pendingRecovery;
+  const timer=document.getElementById("recoveryTimer");
+
+  if(!rec||!rec.deadline){
+    if(timer){
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    }
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((rec.deadline-Date.now())/1000));
+
+  if(timer){
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=3);
+  }
+
+  // The waiting player can also see how much time the opponent has left.
+  if(rec.player!==myRole){
+    const waiting=document.getElementById("waitingText");
+    if(waiting){
+      waiting.textContent="Opponent is choosing Recovery cards... "+left+"s";
+    }
+  }
+}
+
+
+function updateCrownEventTimer(){
+  const timer=document.getElementById("crownEventTimer");
+  const e=state&&state.event;
+
+  if(
+    !timer ||
+    !e ||
+    (e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit")
+  ){
+    if(timer)timer.classList.add("hidden");
+    return;
+  }
+
+  timer.classList.remove("hidden");
+
+  const left=Math.max(0,Math.ceil(((e.deadline||0)-Date.now())/1000));
+  timer.textContent=left;
+  timer.classList.toggle("danger",left<=2);
+}
+
+async function checkCrownEventTimeout(){
+  const e=state&&state.event;
+
+  if(
+    crownEventProcessing ||
+    !e ||
+    (e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit") ||
+    e.resolveBy!==myRole ||
+    !e.deadline ||
+    Date.now()<e.deadline
+  ) return;
+
+  crownEventProcessing=true;
+
+  try{
+    state.event=null;
+
+    if(e.kind==="crown-won"){
+      // Same single-authority transition as pressing CONTINUE.
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+
+    }else if(e.kind==="deadlock"){
+      // Same exact order as the manual DEADLOCK continue.
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="trap-hit"){
+      // Same exact Trap flow as manual CONTINUE.
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+    }
+
+    await syncState();
+
+  }finally{
+    crownEventProcessing=false;
+  }
+}
+
+async function checkRecoveryTimeout(){
+  const rec=state&&state.pendingRecovery;
+
+  if(
+    recoveryTimeoutProcessing ||
+    !rec ||
+    rec.player!==myRole ||
+    !rec.deadline ||
+    Date.now()<rec.deadline
+  ) return;
+
+  recoveryTimeoutProcessing=true;
+
+  try{
+    document.getElementById("recoveryModal").classList.add("hidden");
+    recoverySelected=[];
+    await finishRecovery(rec,[],true);
+  }finally{
+    recoveryTimeoutProcessing=false;
+  }
+}
+
+async function finishRecovery(rec,selectedCards,timedOut=false){
+  if(!state.pendingRecovery)return;
+
+  const role=rec.player;
+  const p=state.players[role];
+
+  selectedCards.forEach(n=>{
+    p.discard=p.discard.filter(x=>x!==n);
+    if(!p.hand.includes(n))p.hand.push(n);
+  });
+  p.hand.sort((a,b)=>a-b);
+
+  state.pendingRecovery=null;
+
+  if(rec.type==="normal"){
+    p.sinceRecovery=0;
+    clearLockAfterTurn(role);
+    beginTurn(other(role));
+    if(timedOut){
+      state.message="Recovery timed out. No card was recovered.";
+    }
+
+  }else if(rec.type==="crown"){
+    queueNextRecovery("crown");
+
+  }else if(rec.type==="deadlock"){
+    queueNextRecovery("deadlock");
+
+  }else if(rec.type==="trapVictim"){
+    p.sinceRecovery=0;
+    beginTrapReward(rec.afterTrapOwner);
+
+  }else if(rec.type==="trapReward"){
+    beginTurn(role);
+    state.message=timedOut
+      ? ICON.trap+" Trap reward timed out. No card recovered; your normal turn begins."
+      : ICON.trap+" Trap reward recovered a card. You keep your normal turn.";
+  }
+
+  await syncState();
+}
+
+
+/* ---------------- RENDER ---------------- */
+
+function getDisplayMessage(){
+  if(!state)return "";
+
+  const n=state.notice;
+  if(!n)return state.message||"";
+
+  const mine=n.actor===myRole;
+
+  if(n.type==="steal"){
+    return mine
+      ? ICON.cat+" "+displayName(myRole)+" stole "+n.number+" from "+displayName(other(myRole))+"'s discard."
+      : ICON.cat+" "+displayName(n.actor)+" stole "+n.number+" from "+displayName(myRole)+"'s discard.";
+  }
+
+  if(n.type==="lock"){
+    return mine
+      ? ICON.lock+" "+displayName(myRole)+" locked "+displayName(other(myRole))+"'s "+n.number+" for their next turn."
+      : ICON.lock+" "+displayName(n.actor)+" locked one of "+displayName(myRole)+"'s ORIGINAL cards for this turn.";
+  }
+
+  if(n.type==="trap-place"){
+    return mine
+      ? ICON.trap+" "+displayName(myRole)+" placed a Trap."
+      : ICON.trap+" "+displayName(n.actor)+" placed a Trap. One of "+displayName(myRole)+"'s ORIGINAL cards is trapped.";
+  }
+
+  if(n.type==="double"){
+    return mine
+      ? ICON.double+" "+displayName(myRole)+" played DOUBLE: "+n.a+" + "+n.b+". Total = "+state.total+"."
+      : ICON.double+" "+displayName(n.actor)+" played DOUBLE: "+n.a+" + "+n.b+". Total = "+state.total+".";
+  }
+
+  if(n.type==="pass"){
+    return mine ? displayName(myRole)+" passed." : displayName(n.actor)+" passed.";
+  }
+
+  if(n.type==="timeout"){
+    return mine
+      ? "TIME OUT! "+displayName(myRole)+"'s lowest card ("+n.number+") was discarded. TOTAL stays at "+state.total+"."
+      : "TIME OUT! "+displayName(n.actor)+"'s lowest card ("+n.number+") was discarded. TOTAL stays at "+state.total+".";
+  }
+
+  if(n.type==="timeout-empty"){
+    return mine
+      ? "TIME OUT! You had no number card to discard. Turn lost."
+      : "TIME OUT! Opponent had no number card to discard.";
+  }
+
+  // PASS availability is private information.
+  // Only the current player sees it on their own phone.
+  if(
+    state.phase==="playing" &&
+    state.current===myRole &&
+    !state.event &&
+    !state.pendingRecovery &&
+    playableEntries(myRole).length===0
+  ){
+    return "PASS is available.";
+  }
+
+  return state.message||"";
+}
+
+function clearNotice(){
+  state.notice=null;
+}
+
+function renderGame(){
+  if(!state||!myRole)return;
+
+  const me=state.players[myRole];
+  const enemyRole=other(myRole);
+  const enemy=state.players[enemyRole];
+
+  document.getElementById("opponentName").textContent=displayName(other(myRole));
+  const myNameNode=document.querySelector(".player.me .name");
+  if(myNameNode)myNameNode.textContent=displayName(myRole);
+  document.getElementById("myCrowns").innerHTML=crownHTML(me.crowns);
+  document.getElementById("opponentCrowns").innerHTML=crownHTML(enemy.crowns);
+  document.getElementById("target").textContent=TARGETS[state.targetIndex];
+  document.getElementById("total").textContent=state.total;
+
+  const myTurn=state.current===myRole&&state.phase==="playing";
+  const turnEl=document.getElementById("turnText");
+  turnEl.textContent=myTurn?"YOUR TURN":displayName(other(myRole)).toUpperCase()+"'S TURN";
+  turnEl.classList.toggle("waiting",!myTurn);
+
+  document.getElementById("message").textContent=getDisplayMessage();
+  document.getElementById("recoveryInfo").textContent=
+    ICON.recycle+" Recovery meter: "+me.sinceRecovery+" / 4 number cards";
+
+  document.getElementById("trapWarning").classList.toggle("active",!!trapAgainst(myRole));
+  document.getElementById("lockWarning").classList.toggle("active",!!lockAgainst(myRole));
+
+  renderOpponentCards();
+  renderHand();
+  renderDiscard();
+  renderSpecials();
+  renderPass();
+  renderPending();
+  updateTurnTimer();
+  updateRecoveryTimer();
+
+}
+
+function renderOpponentCards(){
+  const c=document.getElementById("opponentCards");
+  c.innerHTML="";
+  const enemy=state.players[other(myRole)];
+  const count=enemy.hand.length+(enemy.stolenCard?1:0);
+
+  for(let i=0;i<8;i++){
+    const d=document.createElement("div");
+    d.className="back";
+    d.textContent=i<count?"?":"x";
+    if(i>=count)d.style.opacity=".2";
+    c.appendChild(d);
+  }
+}
+
+function renderHand(){
+  const c=document.getElementById("hand");
+  c.innerHTML="";
+  const p=state.players[myRole];
+  const activeLock=lockAgainst(myRole);
+
+  for(let n=1;n<=8;n++){
+    const b=document.createElement("button");
+    b.className="card n"+n;
+    b.textContent=n;
+
+    const owned=p.hand.includes(n);
+    const locked=!!activeLock&&activeLock.number===n;
+    const legal=owned&&!locked&&state.total+n<=TARGETS[state.targetIndex]&&canAct();
+
+    if(locked)b.textContent=n+" "+ICON.lock;
+
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"own");
+
+    c.appendChild(b);
+  }
+
+  if(p.stolenCard){
+    const n=p.stolenCard.number;
+    const b=document.createElement("button");
+    b.className="card stolen n"+n;
+    b.textContent=n;
+    const legal=state.total+n<=TARGETS[state.targetIndex]&&canAct();
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"stolen");
+    c.appendChild(b);
+  }
+}
+
+function renderDiscard(){
+  const c=document.getElementById("discard");
+  c.innerHTML="";
+  const cards=[...state.players[myRole].discard].sort((a,b)=>a-b);
+
+  if(cards.length===0){
+    const x=document.createElement("span");
+    x.className="discard-chip empty";
+    x.textContent="EMPTY";
+    c.appendChild(x);
+    return;
+  }
+
+  cards.forEach(n=>{
+    const x=document.createElement("span");
+    x.className="discard-chip n"+n;
+    x.textContent=n;
+    c.appendChild(x);
+  });
+}
+
+function renderSpecials(){
+  const me=state.players[myRole];
+  const enemy=state.players[other(myRole)];
+  const specialAllowed=canUseSpecial(myRole);
+
+  const trap=document.getElementById("trapButton");
+  trap.disabled=!specialAllowed||me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0;
+  document.getElementById("trapTitle").textContent=me.trapUsed?"TRAP x":"TRAP";
+
+  const steal=document.getElementById("stealButton");
+  steal.disabled=!specialAllowed||me.stealUsed||!!me.stolenCard||enemy.discard.length===0;
+  document.getElementById("stealTitle").textContent=me.stealUsed?"STEAL x":"STEAL";
+
+  const lock=document.getElementById("lockButton");
+  lock.disabled=!specialAllowed||me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0;
+  document.getElementById("lockTitle").textContent=me.lockUsed?"LOCK x":"LOCK";
+
+  const doubleButton=document.getElementById("doubleButton");
+  const doublePairs=getLegalDoublePairs(myRole);
+  doubleButton.disabled=!specialAllowed||me.doubleUsed||doublePairs.length===0;
+  document.getElementById("doubleTitle").textContent=me.doubleUsed?"DOUBLE x":"DOUBLE";
+}
+
+function renderPass(){
+  const b=document.getElementById("passButton");
+  const noLegal=playableEntries(myRole).length===0;
+
+  b.disabled=!canAct() || !noLegal;
+  b.textContent="PASS";
+}
+
+function renderPending(){
+  const rec=state.pendingRecovery;
+
+  if(rec){
+    // A Recovery state always replaces any previous shared event popup.
+    // This is especially important after DEADLOCK: the player who pressed
+    // PASS first may still have the DEADLOCK modal visible locally.
+    document.getElementById("eventModal").classList.add("hidden");
+
+    const eventButton=document.getElementById("eventContinueButton");
+    if(eventButton){
+      eventButton.disabled=false;
+      eventButton.textContent="CONTINUE";
+    }
+
+    if(rec.player===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      openRecoveryModalFromState();
+    }else{
+      document.getElementById("recoveryModal").classList.add("hidden");
+      updateRecoveryTimer();
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("recoveryModal").classList.add("hidden");
+
+  if(state.event){
+    if(state.event.visibleTo==="both"||state.event.visibleTo===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      showEventFromState();
+    }else{
+      document.getElementById("eventModal").classList.add("hidden");
+      document.getElementById("waitingText").textContent="Opponent is resolving an event...";
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("eventModal").classList.add("hidden");
+  const crownTimer=document.getElementById("crownEventTimer");
+  if(crownTimer)crownTimer.classList.add("hidden");
+  document.getElementById("waitingModal").classList.add("hidden");
+
+  if(state.winner){
+    const winnerName=displayName(state.winner);
+    const iWon=state.winner===myRole;
+
+    document.getElementById("eventIcon").textContent=ICON.trophy;
+    document.getElementById("eventTitle").textContent=iWon?"YOU WIN!":"YOU LOSE!";
+    document.getElementById("eventText").textContent=
+      iWon
+        ? winnerName+" WON CLASH 10!"
+        : winnerName+" WON CLASH 10!";
+
+    const button=document.getElementById("eventContinueButton");
+    button.disabled=true;
+    button.textContent="GAME OVER";
+
+    document.getElementById("waitingModal").classList.add("hidden");
+    document.getElementById("eventModal").classList.remove("hidden");
+  }
+}
+
+
+/* ============================================================
+   BOT MODE
+============================================================ */
+
+function botCanAct(){
+  return (
+    botMode &&
+    state &&
+    state.phase==="playing" &&
+    state.current===BOT_ROLE &&
+    !state.event &&
+    !state.pendingRecovery
+  );
+}
+
+function botCanUseSpecial(){
+  return (
+    botCanAct() &&
+    state.players[BOT_ROLE].specialUsedTarget!==state.targetIndex
+  );
+}
+
+function botDelay(min=700,max=1400){
+  return Math.floor(min+Math.random()*(max-min));
+}
+
+function scheduleBotAction(){
+  if(!botMode||!gameStarted||!state)return;
+
+  if(botActionTimer){
+    clearTimeout(botActionTimer);
+    botActionTimer=null;
+  }
+
+  if(state.pendingRecovery&&state.pendingRecovery.player===BOT_ROLE){
+    // Bot still completes Recovery automatically, but not instantly.
+    botActionTimer=setTimeout(botHandleRecovery,botDelay(1800,2600));
+    return;
+  }
+
+  if(state.event&&state.event.resolveBy===BOT_ROLE){
+    const e=state.event;
+
+    // In VS BOT, do not instantly skip important information screens.
+    // Let the full Crown / Deadlock / Trap timer remain visible so a
+    // new player has time to read it.
+    const remaining=Math.max(
+      0,
+      (e.deadline||Date.now()+5000)-Date.now()
+    );
+
+    botActionTimer=setTimeout(
+      botResolveEvent,
+      remaining+150
+    );
+    return;
+  }
+
+  if(botCanAct()){
+    // Make the bot feel like a real opponent and give the human
+    // time to see/react to the previous move.
+    botActionTimer=setTimeout(botTakeTurn,botDelay(3000,5000));
+  }
+}
+
+function botChooseNormalEntry(){
+  const entries=playableEntries(BOT_ROLE);
+  if(entries.length===0)return null;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const exact=entries.find(e=>e.number===remaining);
+  if(exact)return exact;
+
+  const sorted=[...entries].sort((a,b)=>b.number-a.number);
+  const pool=sorted.slice(0,Math.min(3,sorted.length));
+
+  if(Math.random()<0.72)return pool[0];
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function botUseTrap(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.trapUsed ||
+    state.traps[BOT_ROLE]!==null ||
+    human.hand.length===0 ||
+    bot.hand.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const candidates=[...human.hand].sort((a,b)=>{
+    const av=(a===remaining?100:0)+a;
+    const bv=(b===remaining?100:0)+b;
+    return bv-av;
+  });
+
+  const target=candidates[0];
+  const sacrifice=[...bot.hand].sort((a,b)=>a-b)[0];
+
+  if(target==null||sacrifice==null)return false;
+
+  bot.hand=bot.hand.filter(n=>n!==sacrifice);
+  bot.discard.push(sacrifice);
+  bot.trapUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  // Bot special action breaks the consecutive-PASS chain too.
+  state.consecutivePasses=0;
+
+  state.traps[BOT_ROLE]={
+    number:target,
+    victim:myRole
+  };
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"trap-place",
+    actor:BOT_ROLE
+  };
+  state.message="TRAP";
+  beginTurn(myRole);
+  return true;
+}
+
+function botUseSteal(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.stealUsed ||
+    bot.stolenCard ||
+    human.discard.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const cards=[...human.discard].sort((a,b)=>b-a);
+
+  const chosen=
+    cards.find(n=>n===remaining) ??
+    cards.find(n=>n<=remaining) ??
+    cards[0];
+
+  if(chosen==null)return false;
+
+  human.discard=human.discard.filter(n=>n!==chosen);
+  bot.stolenCard={number:chosen,owner:myRole};
+  bot.stealUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  state.consecutivePasses=0;
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"steal",
+    actor:BOT_ROLE,
+    number:chosen
+  };
+  state.message="STEAL";
+  beginTurn(myRole);
+  return true;
+}
+
+function botUseLock(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.lockUsed ||
+    state.locks[BOT_ROLE]!==null ||
+    human.hand.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  let chosen=human.hand.find(n=>n===remaining);
+
+  if(chosen==null){
+    const useful=human.hand.filter(n=>n<=remaining).sort((a,b)=>b-a);
+    chosen=useful[0] ?? [...human.hand].sort((a,b)=>b-a)[0];
+  }
+
+  if(chosen==null)return false;
+
+  state.locks[BOT_ROLE]={
+    number:chosen,
+    victim:myRole
+  };
+  bot.lockUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  state.consecutivePasses=0;
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"lock",
+    actor:BOT_ROLE,
+    number:chosen
+  };
+  state.message="LOCK";
+  beginTurn(myRole);
+  return true;
+}
+
+async function botPlayDouble(pair){
+  if(!pair||pair.length!==2||!botCanAct())return false;
+
+  const role=BOT_ROLE;
+  const p=state.players[role];
+  const [a,b]=pair;
+  const sum=a+b;
+
+  if(
+    !botCanUseSpecial() ||
+    p.doubleUsed ||
+    !p.hand.includes(a) ||
+    !p.hand.includes(b) ||
+    state.total+sum>TARGETS[state.targetIndex]
+  ) return false;
+
+  p.hand=p.hand.filter(n=>n!==a&&n!==b);
+  p.discard.push(a,b);
+  p.doubleUsed=true;
+  markSpecialUsed(role);
+  state.consecutivePasses=0;
+
+  const trap=trapAgainst(role);
+
+  if(trap&&(trap.number===a||trap.number===b)){
+    const owner=other(role);
+    state.traps[owner]=null;
+    clearLockAfterTurn(role);
+    state.turnDeadline=null;
+    state.notice=null;
+    state.message=ICON.trap+" DOUBLE TRAPPED! Both cards are discarded. TOTAL stays at "+state.total+".";
+
+    if(p.sinceRecovery>=4&&p.discard.length>=2){
+      state.pendingRecovery=makeRecovery(
+        role,
+        2,
+        "trapVictim",
+        {afterTrapOwner:owner}
+      );
+    }else{
+      beginTrapReward(owner);
+    }
+
+    await syncState();
+    return true;
+  }
+
+  // A successful DOUBLE places two ORIGINAL cards into TOTAL.
+  // If DOUBLE is trapped above, this line is never reached and meter stays unchanged.
+  p.sinceRecovery=(p.sinceRecovery||0)+2;
+
+  state.total+=sum;
+  state.notice={
+    type:"double",
+    actor:role,
+    a:a,
+    b:b
+  };
+  state.message="DOUBLE";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return true;
+  }
+
+  if(p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return true;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+async function botPlayCard(entry){
+  if(!entry||!botCanAct())return false;
+
+  const role=BOT_ROLE;
+  const p=state.players[role];
+  const number=entry.number;
+  const type=entry.type;
+
+  if(state.total+number>TARGETS[state.targetIndex])return false;
+
+  if(type==="own"){
+    if(!p.hand.includes(number))return false;
+
+    const activeLock=lockAgainst(role);
+    if(activeLock&&activeLock.number===number)return false;
+
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+
+    const trap=trapAgainst(role);
+
+    if(trap&&trap.number===number){
+      const owner=other(role);
+
+      state.traps[owner]=null;
+      state.consecutivePasses=0;
+      clearLockAfterTurn(role);
+      state.turnDeadline=null;
+      state.notice=null;
+      state.message="TRAP ACTIVATED";
+
+      state.event={
+        icon:ICON.trap,
+        title:"TRAP ACTIVATED!",
+        text:displayName(owner)+"'s Trap caught "+displayName(role)+"!\n\n"+
+             displayName(role)+" played the trapped "+number+
+             ". The card is discarded. TOTAL stays at "+state.total+".",
+        visibleTo:"both",
+        kind:"trap-hit",
+        victim:role,
+        owner:owner,
+        number:number,
+        resolveBy:role,
+        deadline:Date.now()+TRAP_EVENT_MS
+      };
+
+      await syncState();
+      return true;
+    }
+
+  }else{
+    if(!p.stolenCard||p.stolenCard.number!==number)return false;
+
+    const owner=p.stolenCard.owner;
+    p.stolenCard=null;
+
+    if(!state.players[owner].discard.includes(number)){
+      state.players[owner].discard.push(number);
+    }
+  }
+
+  state.consecutivePasses=0;
+  clearNotice();
+
+  // Same Recovery rule for bots: only an ORIGINAL card that actually
+  // enters TOTAL advances the meter.
+  if(type==="own"){
+    p.sinceRecovery=(p.sinceRecovery||0)+1;
+  }
+
+  state.total+=number;
+
+  state.message=
+    displayName(role)+" played "+
+    (type==="stolen"?"stolen ":"")+
+    number+". Total = "+state.total+".";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return true;
+  }
+
+  if(type==="own"&&p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return true;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+async function botPass(){
+  if(!botCanAct()||playableEntries(BOT_ROLE).length>0)return false;
+
+  const passer=BOT_ROLE;
+
+  clearLockAfterTurn(passer);
+  state.consecutivePasses=(state.consecutivePasses||0)+1;
+
+  state.notice={
+    type:"pass",
+    actor:passer
+  };
+  state.message="PASS";
+
+  if(state.consecutivePasses>=2){
+    state.consecutivePasses=0;
+    returnAllStolen();
+    state.turnDeadline=null;
+
+    state.event={
+      icon:ICON.fire,
+      title:"DEADLOCK!",
+      text:"Both players passed consecutively. Nobody earns a Crown. Each player may recover 1 discarded card.",
+      visibleTo:"both",
+      kind:"deadlock",
+      resolveBy:passer,
+      deadline:Date.now()+DEADLOCK_EVENT_MS
+    };
+
+    await syncState();
+    return true;
+  }
+
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+
+function hardBotRemaining(){
+  return TARGETS[state.targetIndex]-state.total;
+}
+
+function hardBotPossibleHumanNumbers(){
+  // Public-information estimate only: numbers visibly in discard are less likely
+  // to be available; recovered cards remain uncertain.
+  const human=state.players[myRole];
+  const discarded=new Set(human.discard||[]);
+  const result=[];
+  for(let n=1;n<=8;n++){
+    if(!discarded.has(n))result.push(n);
+  }
+  return result;
+}
+
+function hardBotHumanCanHitAfter(nextTotal){
+  const need=TARGETS[state.targetIndex]-nextTotal;
+  return hardBotPossibleHumanNumbers().includes(need);
+}
+
+function hardBotHumanDoubleThreatAfter(nextTotal){
+  const human=state.players[myRole];
+  if(human.doubleUsed)return false;
+
+  const need=TARGETS[state.targetIndex]-nextTotal;
+  const nums=hardBotPossibleHumanNumbers();
+
+  for(let i=0;i<nums.length;i++){
+    for(let j=i+1;j<nums.length;j++){
+      if(nums[i]+nums[j]===need)return true;
+    }
+  }
+  return false;
+}
+
+function hardBotScoreEntry(entry){
+  const n=entry.number;
+  const remaining=hardBotRemaining();
+
+  if(n===remaining)return 10000;
+
+  const next=state.total+n;
+  let score=n*5;
+
+  if(hardBotHumanCanHitAfter(next))score-=120;
+  if(hardBotHumanDoubleThreatAfter(next))score-=30;
+
+  const rem=TARGETS[state.targetIndex]-next;
+  if(rem>8)score+=15;
+  if(rem>=1&&rem<=3)score-=10;
+
+  // Preserve high cards a little.
+  score-=n*0.7;
+
+  // Stolen cards go back to the opponent after use.
+  if(entry.type==="stolen")score-=5;
+
+  return score;
+}
+
+function hardBotBestNormal(){
+  const entries=playableEntries(BOT_ROLE);
+  if(!entries.length)return null;
+  return entries
+    .map(entry=>({entry,score:hardBotScoreEntry(entry)}))
+    .sort((a,b)=>b.score-a.score)[0];
+}
+
+function hardBotUrgency(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+  return (human.crowns-bot.crowns)*18 + (human.crowns>=4?30:0);
+}
+
+function hardBotShouldSpend(value){
+  return value + hardBotUrgency() + state.targetIndex*5 >= 60;
+}
+
+function hardBotBestDouble(){
+  const bot=state.players[BOT_ROLE];
+  if(bot.doubleUsed||!botCanUseSpecial())return null;
+
+  const remaining=hardBotRemaining();
+  const pairs=getLegalDoublePairs(BOT_ROLE);
+  if(!pairs.length)return null;
+
+  return pairs.map(pair=>{
+    const sum=pair[0]+pair[1];
+    if(sum===remaining)return {pair,score:10000};
+
+    const next=state.total+sum;
+    let score=sum*4-70; // permanent-special conservation cost
+    if(hardBotHumanCanHitAfter(next))score-=120;
+    if(hardBotHumanDoubleThreatAfter(next))score-=25;
+    if((bot.sinceRecovery||0)+2>=4)score+=18;
+    return {pair,score};
+  }).sort((a,b)=>b.score-a.score)[0];
+}
+
+function hardBotBestLockValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.lockUsed||state.locks[BOT_ROLE]!==null||!human.hand.length)return 0;
+
+  const remaining=hardBotRemaining();
+  if(human.hand.includes(remaining))return 100;
+
+  const useful=human.hand.filter(n=>n<=remaining);
+  if(!useful.length)return 0;
+  return 30+Math.max(...useful)*2;
+}
+
+function hardBotBestTrapValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.trapUsed||state.traps[BOT_ROLE]!==null||!human.hand.length||!bot.hand.length)return 0;
+
+  const remaining=hardBotRemaining();
+  if(human.hand.includes(remaining))return 95;
+  return 35 + Math.max(...human.hand);
+}
+
+function hardBotBestStealValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.stealUsed||bot.stolenCard||!human.discard.length)return 0;
+
+  const remaining=hardBotRemaining();
+  let best=0;
+  for(const n of human.discard){
+    let value=n*2;
+    if(n===remaining)value+=70;
+    else if(n<remaining)value+=15;
+    best=Math.max(best,value);
+  }
+  return best;
+}
+
+function hardBotRecoveryChoice(rec){
+  const discard=[...state.players[BOT_ROLE].discard];
+  const remaining=hardBotRemaining();
+
+  return discard
+    .map(n=>{
+      let score=n*2;
+      if(n===remaining)score+=80;
+      else if(n<remaining)score+=15;
+      return {n,score};
+    })
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,Math.min(rec.amount,discard.length))
+    .map(x=>x.n);
+}
+
+
+async function normalBotTakeTurn(){
+  if(botThinking||!botCanAct())return;
+
+  botThinking=true;
+
+  try{
+    const remaining=TARGETS[state.targetIndex]-state.total;
+    const bot=state.players[BOT_ROLE];
+    const human=state.players[myRole];
+
+    const exact=playableEntries(BOT_ROLE).find(e=>e.number===remaining);
+    if(exact){
+      await botPlayCard(exact);
+      return;
+    }
+
+    if(botCanUseSpecial()&&!bot.doubleUsed){
+      const exactPair=getLegalDoublePairs(BOT_ROLE)
+        .find(pair=>pair[0]+pair[1]===remaining);
+
+      if(exactPair){
+        await botPlayDouble(exactPair);
+        return;
+      }
+    }
+
+    if(playableEntries(BOT_ROLE).length===0){
+      await botPass();
+      return;
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.lockUsed &&
+      human.hand.includes(remaining) &&
+      Math.random()<0.75
+    ){
+      if(botUseLock()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.trapUsed &&
+      human.hand.length>=3 &&
+      bot.hand.length>=3 &&
+      Math.random()<0.20
+    ){
+      if(botUseTrap()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.stealUsed &&
+      !bot.stolenCard &&
+      human.discard.some(n=>n<=remaining) &&
+      Math.random()<0.15
+    ){
+      if(botUseSteal()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.doubleUsed &&
+      getLegalDoublePairs(BOT_ROLE).length>0 &&
+      Math.random()<0.12
+    ){
+      const pairs=getLegalDoublePairs(BOT_ROLE)
+        .sort((a,b)=>(b[0]+b[1])-(a[0]+a[1]));
+
+      await botPlayDouble(pairs[0]);
+      return;
+    }
+
+    const entry=botChooseNormalEntry();
+    if(entry){
+      await botPlayCard(entry);
+      return;
+    }
+
+    await botPass();
+
+  }catch(error){
+    console.error("NORMAL BOT turn failed:",error);
+
+    if(botCanAct()){
+      const entry=playableEntries(BOT_ROLE)[0];
+      if(entry)await botPlayCard(entry);
+      else await botPass();
+    }
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botTakeTurn(){
+  return botDifficulty==="hard"
+    ? hardBotTakeTurn()
+    : normalBotTakeTurn();
+}
+
+async function hardBotTakeTurn(){
+  if(botThinking||!botCanAct())return;
+  botThinking=true;
+
+  try{
+    const remaining=hardBotRemaining();
+    const bot=state.players[BOT_ROLE];
+    const human=state.players[myRole];
+
+    // 1) Never waste DOUBLE if a normal card already wins.
+    const exactNormal=playableEntries(BOT_ROLE).find(e=>e.number===remaining);
+    if(exactNormal){
+      await botPlayCard(exactNormal);
+      return;
+    }
+
+    const bestNormal=hardBotBestNormal();
+
+    // 2) DOUBLE only when it is worth permanently spending.
+    const bestDouble=hardBotBestDouble();
+    if(bestDouble){
+      if(bestDouble.score>=10000){
+        const behind=bot.crowns<human.crowns;
+        const late=human.crowns>=3 || state.targetIndex>=2;
+
+        if(behind || late || Math.random()<0.20){
+          await botPlayDouble(bestDouble.pair);
+          return;
+        }
+      }else if(
+        bestNormal &&
+        bestDouble.score>bestNormal.score+25 &&
+        hardBotShouldSpend(bestDouble.score)
+      ){
+        await botPlayDouble(bestDouble.pair);
+        return;
+      }
+    }
+
+    // 3) Forced PASS.
+    if(!bestNormal){
+      await botPass();
+      return;
+    }
+
+    // 4) LOCK dangerous human cards.
+    const lockValue=hardBotBestLockValue();
+    if(lockValue>=90 || (lockValue>0&&hardBotShouldSpend(lockValue))){
+      if(botUseLock()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 5) TRAP only when the predicted value is high.
+    const trapValue=hardBotBestTrapValue();
+    if(trapValue>=90 || (trapValue>0&&hardBotShouldSpend(trapValue))){
+      if(botUseTrap()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 6) STEAL only when it has real denial/offensive value.
+    const stealValue=hardBotBestStealValue();
+    if(stealValue>=75 || (stealValue>0&&hardBotShouldSpend(stealValue))){
+      if(botUseSteal()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 7) Best calculated normal move.
+    await botPlayCard(bestNormal.entry);
+
+  }catch(error){
+    console.error("HARD BOT turn failed:",error);
+
+    if(botCanAct()){
+      const entry=playableEntries(BOT_ROLE)[0];
+      if(entry)await botPlayCard(entry);
+      else await botPass();
+    }
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botHandleRecovery(){
+  if(
+    botThinking ||
+    !botMode ||
+    !state ||
+    !state.pendingRecovery ||
+    state.pendingRecovery.player!==BOT_ROLE
+  ) return;
+
+  botThinking=true;
+
+  try{
+    const rec=state.pendingRecovery;
+    const discard=[...state.players[BOT_ROLE].discard];
+
+    const chosen=botDifficulty==="hard"
+      ? hardBotRecoveryChoice(rec)
+      : discard
+          .sort((a,b)=>b-a)
+          .slice(0,Math.min(rec.amount,discard.length));
+
+    if(chosen.length===rec.amount){
+      await finishRecovery(rec,chosen,false);
+    }else{
+      await finishRecovery(rec,[],true);
+    }
+
+  }catch(error){
+    console.error("BOT recovery failed:",error);
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botResolveEvent(){
+  if(
+    botThinking ||
+    !botMode ||
+    !state ||
+    !state.event ||
+    state.event.resolveBy!==BOT_ROLE
+  ) return;
+
+  botThinking=true;
+
+  try{
+    const e=state.event;
+    state.event=null;
+
+    if(e.kind==="trap-hit"){
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+    }else if(e.kind==="deadlock"){
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="crown-won"){
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+    }
+
+    await syncState();
+
+  }catch(error){
+    console.error("BOT event resolution failed:",error);
+  }finally{
+    botThinking=false;
+  }
+}
+
+/* ---------------- NUMBER PLAY ---------------- */
+
+async function playCard(number,type){
+  if(!canAct())return;
+
+  const role=myRole;
+  const p=state.players[role];
+  if(state.total+number>TARGETS[state.targetIndex])return;
+
+  if(type==="own"){
+    if(!p.hand.includes(number))return;
+
+    const activeLock=lockAgainst(role);
+    if(activeLock&&activeLock.number===number)return;
+
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+
+    const trap=trapAgainst(role);
+
+    if(trap&&trap.number===number){
+      const owner=other(role);
+
+      // The Trap has now been consumed.
+      state.traps[owner]=null;
+      state.consecutivePasses=0;
+      clearLockAfterTurn(role);
+      state.turnDeadline=null;
+
+      // Clear the old "X placed a Trap" notice immediately.
+      // Otherwise that stale placement message can remain visible after activation.
+      state.notice=null;
+      state.message="TRAP ACTIVATED";
+
+      // Synchronized information screen for BOTH players.
+      // The trapped player's phone is the only authority allowed to advance it,
+      // because that phone initiated this state transition by playing the card.
+      state.event={
+        icon:ICON.trap,
+        title:"TRAP ACTIVATED!",
+        text:displayName(owner)+"'s Trap caught "+displayName(role)+"!\n\n"+
+             displayName(role)+" played the trapped "+number+
+             ". The card is discarded. TOTAL stays at "+state.total+".",
+        visibleTo:"both",
+        kind:"trap-hit",
+        victim:role,
+        owner:owner,
+        number:number,
+        resolveBy:role,
+        deadline:Date.now()+TRAP_EVENT_MS
+      };
+
+      await syncState();
+      return;
+    }
+
+  }else{
+    if(!p.stolenCard||p.stolenCard.number!==number)return;
+    const owner=p.stolenCard.owner;
+    p.stolenCard=null;
+    if(!state.players[owner].discard.includes(number)){
+      state.players[owner].discard.push(number);
+    }
+  }
+
+  state.consecutivePasses=0;
+  clearNotice();
+
+  // Recovery meter only counts successfully played ORIGINAL cards.
+  // Stolen cards and cards caught by Trap do not count.
+  if(type==="own"){
+    p.sinceRecovery=(p.sinceRecovery||0)+1;
+  }
+
+  state.total+=number;
+  state.message=displayName(role)+" played "+(type==="stolen"?"stolen ":"")+number+". Total = "+state.total+".";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(type==="own"&&p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+/* ---------------- PASS / DEADLOCK ---------------- */
+
+async function passTurn(){
+  if(!canAct())return;
+
+  // PASS is only legal when you genuinely cannot play any number card.
+  if(playableEntries(myRole).length>0)return;
+
+  const passer=myRole;
+
+  clearLockAfterTurn(passer);
+  state.consecutivePasses=(state.consecutivePasses||0)+1;
+
+  state.notice={
+    type:"pass",
+    actor:passer
+  };
+  state.message="PASS";
+
+  // If BOTH players consecutively have no legal play and pass,
+  // the Target ends as a Deadlock.
+  if(state.consecutivePasses>=2){
+    state.consecutivePasses=0;
+    returnAllStolen();
+    state.turnDeadline=null;
+
+    state.event={
+      icon:ICON.fire,
+      title:"DEADLOCK!",
+      text:"Both players passed consecutively. Nobody earns a Crown. Each player may recover 1 discarded card.",
+      visibleTo:"both",
+      kind:"deadlock",
+      resolveBy:passer,
+      deadline:Date.now()+DEADLOCK_EVENT_MS
+    };
+
+    await syncState();
+    return;
+  }
+
+  beginTurn(other(passer));
+  await syncState();
+}
+
+function setTurnMessage(){
+  // Keep shared state neutral. Whether PASS is available is private hand info
+  // and is added locally by getDisplayMessage() only on the current player's phone.
+  state.message="Choose a number card.";
+}
+
+/* ---------------- CROWNS / ROUNDS ---------------- */
+
+function scoreCrown(scorer){
+  state.players[scorer].crowns++;
+  returnAllStolen();
+
+  const winnerName=displayName(scorer);
+  const hitTarget=TARGETS[state.targetIndex];
+
+  state.message=ICON.crown+" "+winnerName+" HIT THE TARGET!";
+  state.turnDeadline=null;
+
+  // Fifth Crown still ends the whole match immediately.
+  if(state.players[scorer].crowns>=5){
+    state.winner=scorer;
+    state.phase="finished";
+    return;
+  }
+
+  // Clear any Recovery state first. Crown Recovery begins ONLY after
+  // the Crown winner presses CONTINUE on the synchronized result screen.
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+
+  state.event={
+    icon:ICON.crown,
+    title:"CROWN WON!",
+    text:winnerName+" HIT "+hitTarget+"!\n\n"+winnerName+" EARNS A CROWN!",
+    visibleTo:"both",
+    kind:"crown-won",
+    scorer:scorer,
+    target:hitTarget,
+    deadline:Date.now()+CROWN_EVENT_MS,
+
+    // IMPORTANT: only the Crown winner advances the shared game state.
+    // The other phone only observes the synchronized transition.
+    resolveBy:scorer
+  };
+}
+
+function queueNextRecovery(type){
+  while(state.recoveryQueue.length){
+    const role=state.recoveryQueue.shift();
+    if(state.players[role].discard.length>0){
+      state.turnDeadline=null;
+      state.pendingRecovery=makeRecovery(role,1,type);
+      return;
+    }
+  }
+  startNextRound();
+}
+
+function startNextRound(){
+  returnAllStolen();
+
+  // LOCK lasts only for its intended turn.
+  state.locks.p1=null;
+  state.locks.p2=null;
+
+  // TRAP now lasts for ONE ROUND only.
+  // If it was not triggered before the round ended, it expires.
+  state.traps.p1=null;
+  state.traps.p2=null;
+
+  state.total=0;
+  state.targetIndex=(state.targetIndex+1)%TARGETS.length;
+  state.consecutivePasses=0;
+  state.roundStarter=other(state.roundStarter);
+  state.phase="playing";
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+  clearNotice();
+
+  beginTurn(state.roundStarter);
+  state.message=ICON.fire+" New round. Choose a number card.";
+}
+
+/* ---------------- RECOVERY ---------------- */
+
+function openRecoveryModalFromState(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole)return;
+
+  recoverySelected=[];
+
+  const title=document.getElementById("recoveryTitle");
+  if(rec.type==="crown")title.textContent=ICON.crown+" CROWN RECOVERY";
+  else if(rec.type==="deadlock")title.textContent=ICON.fire+" DEADLOCK RECOVERY";
+  else if(rec.type==="trapReward")title.textContent=ICON.trap+" TRAP REWARD";
+  else title.textContent=ICON.recycle+" RECOVERY";
+
+  document.getElementById("recoveryDesc").textContent=
+    "Choose "+rec.amount+" discarded card"+(rec.amount>1?"s":"")+" to recover.\n\nYou have 10 seconds. If time runs out, this Recovery is skipped.";
+
+  renderRecoveryChoices();
+  document.getElementById("recoveryModal").classList.remove("hidden");
+}
+
+function renderRecoveryChoices(){
+  const c=document.getElementById("recoveryCards");
+  c.innerHTML="";
+  const rec=state.pendingRecovery;
+  if(!rec)return;
+
+  [...state.players[myRole].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="recover-card";
+    b.textContent=n;
+    if(recoverySelected.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(recoverySelected.includes(n)){
+        recoverySelected=recoverySelected.filter(x=>x!==n);
+      }else if(recoverySelected.length<rec.amount){
+        recoverySelected.push(n);
+      }
+      renderRecoveryChoices();
+    };
+    c.appendChild(b);
+  });
+
+  document.getElementById("confirmRecovery").disabled=
+    recoverySelected.length!==rec.amount;
+}
+
+async function confirmRecovery(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole||recoverySelected.length!==rec.amount)return;
+
+  const chosen=[...recoverySelected];
+  recoverySelected=[];
+  document.getElementById("recoveryModal").classList.add("hidden");
+  await finishRecovery(rec,chosen,false);
+}
+
+/* ---------------- EVENTS ---------------- */
+
+function showEventFromState(){
+  const e=state.event;
+  if(!e)return;
+
+  const crownTimer=document.getElementById("crownEventTimer");
+  if(crownTimer){
+    crownTimer.classList.toggle(
+      "hidden",
+      e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit"
+    );
+  }
+
+  document.getElementById("eventIcon").textContent=e.icon||ICON.fire;
+  document.getElementById("eventTitle").textContent=e.title||"EVENT";
+  document.getElementById("eventText").textContent=e.text||"";
+
+  const button=document.getElementById("eventContinueButton");
+  const canResolve=!e.resolveBy||e.resolveBy===myRole;
+
+  button.disabled=!canResolve||processingEvent;
+  if(canResolve){
+    button.textContent="CONTINUE";
+  }else if(
+    e.kind==="crown-won" ||
+    e.kind==="deadlock" ||
+    e.kind==="trap-hit"
+  ){
+    button.textContent="WAITING FOR "+displayName(e.resolveBy).toUpperCase()+"...";
+  }else{
+    button.textContent="WAITING FOR OPPONENT...";
+  }
+
+  document.getElementById("eventModal").classList.remove("hidden");
+}
+
+async function closeEvent(){
+  if(!state||!state.event||processingEvent)return;
+
+  const e=state.event;
+
+  // Only one phone is allowed to resolve a shared event.
+  // This prevents both phones from sending conflicting copies of the state.
+  if(e.resolveBy&&e.resolveBy!==myRole)return;
+  if(e.kind==="gameover")return;
+
+  processingEvent=true;
+  if(
+    e.kind==="crown-won" ||
+    e.kind==="deadlock" ||
+    e.kind==="trap-hit"
+  )crownEventProcessing=true;
+
+  const button=document.getElementById("eventContinueButton");
+  if(button){
+    button.disabled=true;
+    button.textContent="CONTINUING...";
+  }
+
+  // Hide immediately so the button always feels responsive on iPhone.
+  document.getElementById("eventModal").classList.add("hidden");
+
+  try{
+    state.event=null;
+
+    if(e.kind==="trap-hit"){
+      // Compatibility for an older state received during an update.
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+    }else if(e.kind==="deadlock"){
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="crown-won"){
+      // Crown winner is the single authority for this transition.
+      // After CONTINUE we enter the already-tested Crown Recovery flow.
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+    }
+
+    await syncState();
+
+  }catch(error){
+    console.error("Could not continue event:",error);
+
+    // Restore the event locally so the player can retry instead of getting stuck.
+    state.event=e;
+    renderGame();
+    alert("Connection hiccup. Tap CONTINUE again.");
+
+  }finally{
+    processingEvent=false;
+    crownEventProcessing=false;
+    if(state&&state.event)showEventFromState();
+  }
+}
+
+function beginTrapReward(owner){
+  if(state.players[owner].discard.length>0){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(owner,1,"trapReward");
+  }else{
+    beginTurn(owner);
+    state.message=ICON.trap+" Trap hit, but there was no discarded card to recover. You still get your normal turn.";
+  }
+}
+
+/* ---------------- TRAP ---------------- */
+
+function openTrapModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0)return;
+
+  selectedTrap=null;selectedSacrifice=null;
+  renderTrapChoices();
+  document.getElementById("confirmTrap").disabled=true;
+  document.getElementById("trapModal").classList.remove("hidden");
+}
+
+function renderTrapChoices(){
+  const c=document.getElementById("trapChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card";b.textContent=n;
+    if(n===selectedTrap)b.classList.add("selected");
+    b.onclick=()=>{selectedTrap=n;renderTrapChoices();document.getElementById("confirmTrap").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+function goToTrapSacrifice(){
+  if(selectedTrap===null)return;
+  document.getElementById("trapModal").classList.add("hidden");
+  renderSacrificeChoices();
+  document.getElementById("confirmSacrifice").disabled=true;
+  document.getElementById("sacrificeModal").classList.remove("hidden");
+}
+
+function renderSacrificeChoices(){
+  const c=document.getElementById("sacrificeChoices");
+  c.innerHTML="";
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card sacrifice-choice";b.textContent=n;
+    if(n===selectedSacrifice)b.classList.add("selected");
+    b.onclick=()=>{selectedSacrifice=n;renderSacrificeChoices();document.getElementById("confirmSacrifice").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmTrapAndSacrifice(){
+  if(!canAct()||selectedTrap===null||selectedSacrifice===null)return;
+  const owner=myRole,victim=other(owner),p=state.players[owner];
+
+  p.hand=p.hand.filter(n=>n!==selectedSacrifice);
+  p.discard.push(selectedSacrifice);
+  p.trapUsed=true;
+  markSpecialUsed(owner);
+
+  // A special action breaks the consecutive-PASS chain.
+  state.consecutivePasses=0;
+
+  state.traps[owner]={number:selectedTrap,victim:victim};
+
+  selectedTrap=null;selectedSacrifice=null;
+  document.getElementById("sacrificeModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"trap-place",
+    actor:owner
+  };
+  state.message="TRAP";
+  beginTurn(victim);
+  await syncState();
+}
+
+/* ---------------- STEAL ---------------- */
+
+function openStealModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.stealUsed||me.stolenCard||enemy.discard.length===0)return;
+
+  selectedSteal=null;
+  renderStealChoices();
+  document.getElementById("confirmSteal").disabled=true;
+  document.getElementById("stealModal").classList.remove("hidden");
+}
+
+function renderStealChoices(){
+  const c=document.getElementById("stealChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card steal-choice";b.textContent=n;
+    if(n===selectedSteal)b.classList.add("selected");
+    b.onclick=()=>{selectedSteal=n;renderStealChoices();document.getElementById("confirmSteal").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmSteal(){
+  if(!canAct()||selectedSteal===null)return;
+  const thief=myRole,owner=other(thief),n=selectedSteal;
+  if(!state.players[owner].discard.includes(n))return;
+
+  state.players[owner].discard=state.players[owner].discard.filter(x=>x!==n);
+  state.players[thief].stolenCard={number:n,owner:owner};
+  state.players[thief].stealUsed=true;
+  markSpecialUsed(thief);
+
+  // STEAL changes the game state, so a previous PASS no longer counts.
+  state.consecutivePasses=0;
+
+  selectedSteal=null;
+  document.getElementById("stealModal").classList.add("hidden");
+
+  clearLockAfterTurn(thief);
+  state.notice={
+    type:"steal",
+    actor:thief,
+    number:n
+  };
+  state.message="STEAL";
+  beginTurn(owner);
+  await syncState();
+}
+
+/* ---------------- LOCK ---------------- */
+
+function openLockModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0)return;
+
+  selectedLock=null;
+  renderLockChoices();
+  document.getElementById("confirmLock").disabled=true;
+  document.getElementById("lockModal").classList.remove("hidden");
+}
+
+function renderLockChoices(){
+  const c=document.getElementById("lockChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card lock-choice";b.textContent=n;
+    if(n===selectedLock)b.classList.add("selected");
+    b.onclick=()=>{selectedLock=n;renderLockChoices();document.getElementById("confirmLock").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmLock(){
+  if(!canAct()||selectedLock===null)return;
+  const owner=myRole,victim=other(owner),n=selectedLock;
+  if(!state.players[victim].hand.includes(n))return;
+
+  state.locks[owner]={number:n,victim:victim};
+  state.players[owner].lockUsed=true;
+  markSpecialUsed(owner);
+
+  // LOCK breaks the consecutive-PASS chain.
+  state.consecutivePasses=0;
+
+  selectedLock=null;
+  document.getElementById("lockModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"lock",
+    actor:owner,
+    number:n
+  };
+  state.message="LOCK";
+  beginTurn(victim);
+  await syncState();
+}
+
+
+/* ---------------- DOUBLE ---------------- */
+
+function getLegalDoublePairs(role){
+  const p=state.players[role];
+  const cards=[...p.hand].sort((a,b)=>a-b);
+  const pairs=[];
+
+  for(let i=0;i<cards.length;i++){
+    for(let j=i+1;j<cards.length;j++){
+      if(state.total+cards[i]+cards[j]<=TARGETS[state.targetIndex]){
+        pairs.push([cards[i],cards[j]]);
+      }
+    }
+  }
+  return pairs;
+}
+
+function openDoubleModal(){
+  if(!canUseSpecial(myRole))return;
+
+  const me=state.players[myRole];
+  if(me.doubleUsed||getLegalDoublePairs(myRole).length===0)return;
+
+  selectedDouble=[];
+  renderDoubleChoices();
+  document.getElementById("confirmDouble").disabled=true;
+  document.getElementById("doubleModal").classList.remove("hidden");
+}
+
+function renderDoubleChoices(){
+  const c=document.getElementById("doubleChoices");
+  c.innerHTML="";
+
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card double-choice";
+    b.textContent=n;
+
+    if(selectedDouble.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(selectedDouble.includes(n)){
+        selectedDouble=selectedDouble.filter(x=>x!==n);
+      }else if(selectedDouble.length<2){
+        selectedDouble.push(n);
+      }
+
+      renderDoubleChoices();
+
+      const valid=
+        selectedDouble.length===2 &&
+        state.total+selectedDouble[0]+selectedDouble[1]<=TARGETS[state.targetIndex];
+
+      document.getElementById("confirmDouble").disabled=!valid;
+    };
+
+    c.appendChild(b);
+  });
+
+  if(selectedDouble.length===2){
+    document.getElementById("confirmDouble").disabled=
+      state.total+selectedDouble[0]+selectedDouble[1]>TARGETS[state.targetIndex];
+  }
+}
+
+async function confirmDouble(){
+  if(
+    !canUseSpecial(myRole) ||
+    selectedDouble.length!==2
+  ) return;
+
+  const role=myRole;
+  const p=state.players[role];
+  const [a,b]=selectedDouble;
+  const sum=a+b;
+
+  if(
+    !p.hand.includes(a) ||
+    !p.hand.includes(b) ||
+    state.total+sum>TARGETS[state.targetIndex]
+  ) return;
+
+  // DOUBLE plays two ORIGINAL cards at the same time.
+  p.hand=p.hand.filter(n=>n!==a&&n!==b);
+  p.discard.push(a,b);
+  p.doubleUsed=true;
+  markSpecialUsed(role);
+  state.consecutivePasses=0;
+
+  document.getElementById("doubleModal").classList.add("hidden");
+  selectedDouble=[];
+
+  // A trapped number inside DOUBLE still triggers the Trap.
+  const trap=trapAgainst(role);
+  if(trap && (trap.number===a || trap.number===b)){
+    const owner=other(role);
+    state.traps[owner]=null;
+    clearLockAfterTurn(role);
+    state.turnDeadline=null;
+
+    // Same robust direct transition as a normal trapped card.
+    state.message=ICON.trap+" DOUBLE TRAPPED! Both cards are discarded. TOTAL stays at "+state.total+".";
+
+    if(p.sinceRecovery>=4&&p.discard.length>=2){
+      state.pendingRecovery=makeRecovery(
+        role,
+        2,
+        "trapVictim",
+        {afterTrapOwner:owner}
+      );
+    }else{
+      beginTrapReward(owner);
+    }
+
+    await syncState();
+    return;
+  }
+
+  // DOUBLE advances Recovery only when both original cards
+  // successfully enter TOTAL. A trapped DOUBLE gives +0.
+  p.sinceRecovery=(p.sinceRecovery||0)+2;
+
+  state.total+=sum;
+  state.notice={
+    type:"double",
+    actor:role,
+    a:a,
+    b:b
+  };
+  state.message="DOUBLE";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+window.addEventListener("beforeunload",()=>{
+  try{
+    if(heartbeatTimer)clearInterval(heartbeatTimer);
+    if(countdownTimer)clearInterval(countdownTimer);
+    if(botActionTimer)clearTimeout(botActionTimer);
+    if(channel)channel.untrack();
+  }catch(e){}
+});
+</script>
+</body>
+</html>
