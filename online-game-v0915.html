@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CLASH 10 ONLINE v0.9.15</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(circle at top,#14202c 0%,#070b10 45%,#000 100%);
+  color:white;font-family:Arial,Helvetica,sans-serif
+}
+button,input{font-family:inherit}
+.hidden{display:none!important}
+
+/* LOBBY */
+.lobby-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px
+}
+.lobby-card{
+  width:100%;max-width:430px;background:#0b1118;border:1px solid #394552;
+  border-radius:24px;padding:24px
+}
+.logo{
+  text-align:center;font-size:38px;font-weight:900;font-style:italic;
+  letter-spacing:-2px;margin-bottom:20px
+}
+.logo span{color:#ffc928}
+.lobby-title{font-size:28px;font-weight:900;margin-bottom:8px}
+.lobby-sub{color:#9ba6b1;line-height:1.45;margin-bottom:18px}
+.lobby-btn,.room-input{
+  width:100%;padding:15px;border-radius:12px;font-size:17px;font-weight:900
+}
+.lobby-btn{border:0;color:white;margin-top:10px}
+.create{background:#168fff}.join{background:#8b45ff}.start{background:#23a447}
+.start:disabled{opacity:.35}
+.room-input{
+  border:1px solid #4c5966;background:#151d26;color:white;text-align:center;
+  margin-top:12px;letter-spacing:5px;font-size:24px
+}
+.room-label{
+  margin:18px 0 6px;text-align:center;font-size:12px;letter-spacing:2px;
+  color:#8d96a1;font-weight:800
+}
+.room-code{
+  text-align:center;font-size:42px;font-weight:900;color:#ffd23f;letter-spacing:5px
+}
+.presence-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.presence-box{
+  border:1px solid #33414e;border-radius:14px;padding:14px;text-align:center;background:#111820
+}
+.presence-box.online{border-color:#32d56d}
+.presence-name{font-weight:900}.presence-state{margin-top:6px;color:#8793a0;font-size:13px}
+.presence-box.online .presence-state{color:#46e679}
+.lobby-status{
+  margin-top:16px;padding:13px;border-radius:12px;background:#101820;
+  color:#aeb8c3;text-align:center;min-height:48px;line-height:1.4
+}
+.good{color:#57e47a}
+.wait{margin-top:14px;text-align:center;color:#ffc74d;font-weight:800}
+
+/* GAME */
+.game{
+  width:100%;max-width:480px;margin:auto;padding:20px 14px 45px
+}
+.player{
+  background:rgba(10,14,19,.95);border:1px solid #34404c;border-radius:18px;padding:14px
+}
+.player.opponent{border-color:#e64040}
+.player.me{border-color:#168fff;margin-top:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.name{font-size:19px;font-weight:900}
+.opponent .name{color:#ff5252}.me .name{color:#45adff}
+.crowns{font-size:19px;letter-spacing:1px}
+.mini{
+  color:#828c97;font-size:11px;letter-spacing:1px;font-weight:800;margin-top:12px
+}
+.card-backs{
+  display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:8px
+}
+.back{
+  height:42px;border-radius:7px;border:1px solid #3b4652;background:#151b22;
+  display:flex;align-items:center;justify-content:center;color:#59636e;font-size:19px;font-weight:900
+}
+.arena{
+  margin:14px 0;padding:16px;border:1px solid #29333d;border-radius:18px;
+  background:rgba(8,12,17,.96)
+}
+.scoreboard{display:flex;justify-content:space-around;align-items:center}
+.stat{text-align:center}
+.label{color:#8d96a1;font-size:12px;font-weight:800;letter-spacing:1px}
+.target{color:#ff4c4c;font-size:44px;font-weight:900;margin-top:3px}
+.total{font-size:60px;font-weight:900}
+.turn{text-align:center;color:#43e96f;font-size:14px;font-weight:900;margin-top:7px}
+.turn.waiting{color:#ffcc43}
+.timer{
+  width:64px;height:64px;margin:10px auto 0;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;color:#55e879;
+  box-shadow:0 0 18px rgba(85,232,121,.08)
+}
+.timer.danger{color:#ff5757;border-color:#7b2d2d}
+.timer.paused{color:#7f8994}
+.message{
+  margin-top:12px;padding:11px;min-height:42px;border-radius:10px;
+  background:#111820;color:#aeb7c1;font-size:13px;text-align:center
+}
+.warning{
+  display:none;margin-top:10px;padding:11px;border-radius:10px;font-size:12px;
+  text-align:center;font-weight:900
+}
+.warning.active{display:block}
+.trap-warning{border:1px solid #b14cff;background:rgba(87,24,120,.20);color:#e295ff}
+.lock-warning{border:1px solid #ff9d32;background:rgba(120,62,15,.20);color:#ffbd74}
+
+.hand{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:9px
+}
+.card{
+  height:76px;border-radius:10px;background:linear-gradient(145deg,#202833,#090c10);
+  color:white;font-size:29px;font-weight:900;border:1px solid #586573;
+  box-shadow:0 5px 12px rgba(0,0,0,.4);position:relative
+}
+.card:active{transform:scale(.94)}
+.card.n1{border-color:#aaa}.card.n2{border-color:#1c99ff}.card.n3{border-color:#ff4848}
+.card.n4{border-color:#ffd32f}.card.n5{border-color:#3fe36b}.card.n6{border-color:#3fe36b}
+.card.n7{border-color:#ffac2e}.card.n8{border-color:#ad55ff}
+.card.invalid{opacity:.22}
+.card.stolen{border:2px solid #ffc72d;box-shadow:0 0 18px rgba(255,199,45,.24)}
+.card.stolen::after{content:"\1F431";position:absolute;top:5px;right:7px;font-size:15px}
+
+.discard{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.discard-chip{
+  padding:6px 9px;background:#11171e;border:1px solid #343f4a;
+  border-radius:7px;color:#7f8994;font-weight:bold
+}
+.recovery-info{margin-top:10px;color:#ffc934;font-size:12px;font-weight:bold}
+
+.specials{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:8px}
+.special{
+  padding:12px 4px;border-radius:9px;background:#10151b;font-weight:900;font-size:11px
+}
+.trap-button{border:1px solid #b34cff;color:#e295ff}
+.steal-button{border:1px solid #ffc72d;color:#ffd45d}
+.lock-button{border:1px solid #ff9d32;color:#ffbd74}
+.double-button{border:1px solid #52d9ff;color:#7ee7ff}
+.special:disabled{border-color:#303943;color:#4f5660;opacity:.45}
+
+.actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}
+.action{border:0;padding:13px;border-radius:10px;font-weight:900}
+.pass{background:#5a2727;color:#ffb2b2}
+.pass:disabled{background:#1b2026;color:#555e67}
+
+/* MODALS */
+.modal{
+  position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.94);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.modal-box{
+  width:100%;max-width:390px;text-align:center;border:1px solid #3a4653;
+  background:#0b1118;border-radius:22px;padding:25px 20px
+}
+.modal-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#55e879
+}
+.modal-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.recovery-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#ffd45d
+}
+.recovery-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.modal-title{font-size:27px;font-weight:900}
+.modal-desc{
+  color:#9ba6b1;margin:13px 0 20px;line-height:1.5;font-size:14px;white-space:pre-line
+}
+.confirm{
+  width:100%;padding:15px;border:0;border-radius:11px;background:#238f3e;
+  color:white;font-weight:900;font-size:16px;margin-top:15px
+}
+.confirm:disabled{background:#252c33;color:#5b636b}
+.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.choice-card,.recover-card{
+  height:67px;border-radius:10px;background:#171e26;border:1px solid #596674;
+  color:white;font-size:25px;font-weight:900
+}
+.choice-card.selected{border:2px solid #b653ff;background:#321342}
+.sacrifice-choice.selected{border:2px solid #ff5050;background:#421616}
+.steal-choice.selected{border:2px solid #ffc72d;background:#3c310e}
+.lock-choice.selected{border:2px solid #ff9d32;background:#3b2410}
+.double-choice.selected{border:2px solid #52d9ff;background:#103542}
+.recover-card.selected{border:2px solid #44e76c;background:#17351f}
+.event-icon{font-size:55px;margin-bottom:12px}
+.event-title{font-size:29px;font-weight:900}
+.wait-box{font-size:16px;color:#aeb8c3;line-height:1.5}
+</style>
+</head>
+
+<body>
+
+<!-- LOBBY -->
+<div class="lobby-wrap" id="lobbyScreen">
+  <div class="lobby-card">
+    <div class="logo">CLASH <span>10</span></div>
+
+    <div id="lobbyForm">
+      <div class="lobby-title">ONLINE 1v1</div>
+      <div class="lobby-sub">Choose your nickname, then create a room or join your friend's 6-digit code.</div>
+
+      <input
+        class="room-input"
+        id="nameInput"
+        maxlength="12"
+        placeholder="YOUR NAME"
+        autocomplete="off"
+        autocapitalize="words"
+        style="letter-spacing:0;font-size:18px"
+      >
+
+      <button class="lobby-btn create" onclick="createRoom()">CREATE GAME</button>
+      <input class="room-input" id="roomInput" maxlength="6" inputmode="numeric" placeholder="000000">
+      <button class="lobby-btn join" onclick="joinRoom()">JOIN GAME</button>
+    </div>
+
+    <div id="roomPanel" class="hidden">
+      <div class="room-label">ROOM CODE</div>
+      <div class="room-code" id="roomCode">------</div>
+
+      <div class="presence-grid">
+        <div class="presence-box" id="p1Box">
+          <div class="presence-name" id="p1Name">PLAYER 1</div>
+          <div class="presence-state" id="p1State">Waiting...</div>
+        </div>
+        <div class="presence-box" id="p2Box">
+          <div class="presence-name" id="p2Name">PLAYER 2</div>
+          <div class="presence-state" id="p2State">Waiting...</div>
+        </div>
+      </div>
+
+      <div class="wait" id="waitText">Waiting for second player...</div>
+
+      <button class="lobby-btn start" id="startButton" onclick="startGame()" disabled>
+        START CLASH 10
+      </button>
+
+      <div class="lobby-status" id="lobbyStatus">Connecting...</div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="game hidden" id="gameScreen">
+  <div class="logo">CLASH <span>10</span></div>
+
+  <div class="player opponent">
+    <div class="row">
+      <div class="name" id="opponentName">OPPONENT</div>
+      <div class="crowns" id="opponentCrowns">&#9734;&#9734;&#9734;&#9734;&#9734;</div>
+    </div>
+    <div class="mini">AVAILABLE CARDS</div>
+    <div class="card-backs" id="opponentCards"></div>
+  </div>
+
+  <div class="arena">
+    <div class="scoreboard">
+      <div class="stat">
+        <div class="label">TARGET</div>
+        <div class="target" id="target">18</div>
+      </div>
+      <div class="stat">
+        <div class="label">TOTAL</div>
+        <div class="total" id="total">0</div>
+      </div>
+    </div>
+
+    <div class="turn" id="turnText">YOUR TURN</div>
+    <div class="timer" id="turnTimer">20</div>
+
+    <div class="warning trap-warning" id="trapWarning">
+      &#128128; ACTIVE TRAP - one of your ORIGINAL cards is trapped.
+    </div>
+
+    <div class="warning lock-warning" id="lockWarning">
+      &#128274; ACTIVE LOCK - one ORIGINAL card is locked this turn.
+    </div>
+
+    <div class="message" id="message">Choose a number card.</div>
+  </div>
+
+  <div class="player me">
+    <div class="row">
+      <div class="name">YOU</div>
+      <div class="crowns" id="myCrowns">&#9734;&#9734;&#9734;&#9734;&#9734;</div>
+    </div>
+
+    <div class="mini">NUMBER CARDS</div>
+    <div class="hand" id="hand"></div>
+
+    <div class="mini">DISCARD</div>
+    <div class="discard" id="discard"></div>
+
+    <div class="recovery-info" id="recoveryInfo"></div>
+
+    <div class="mini">SPECIAL CARDS</div>
+    <div class="specials">
+      <button class="special trap-button" id="trapButton" onclick="openTrapModal()">&#128128; TRAP</button>
+      <button class="special steal-button" id="stealButton" onclick="openStealModal()">&#128049; STEAL</button>
+      <button class="special lock-button" id="lockButton" onclick="openLockModal()">&#128274; LOCK</button>
+      <button class="special double-button" id="doubleButton" onclick="openDoubleModal()">&#9889; DOUBLE</button>
+    </div>
+
+    <div class="actions">
+      <button class="action pass" id="passButton" onclick="passTurn()">PASS</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRAP TARGET -->
+<div class="modal hidden" id="trapModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#dc83ff">&#128128; PLACE TRAP</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.</div>
+    <div class="choice-grid" id="trapChoices"></div>
+    <button class="confirm" id="confirmTrap" onclick="goToTrapSacrifice()" disabled>NEXT</button>
+  </div>
+</div>
+
+<!-- TRAP SACRIFICE -->
+<div class="modal hidden" id="sacrificeModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ff6666">&#128293; PAY THE PRICE</div>
+    <div class="modal-desc">Sacrifice one of your own ORIGINAL number cards.
+It goes to your discard and does not count toward Recovery.</div>
+    <div class="choice-grid" id="sacrificeChoices"></div>
+    <button class="confirm" id="confirmSacrifice" onclick="confirmTrapAndSacrifice()" disabled>
+      SACRIFICE & PLACE TRAP
+    </button>
+  </div>
+</div>
+
+<!-- STEAL -->
+<div class="modal hidden" id="stealModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ffd24d">&#128049; STEAL</div>
+    <div class="modal-desc">Take one number from the opponent's discard.
+It costs your whole turn and returns after you play it or when the round ends.</div>
+    <div class="choice-grid" id="stealChoices"></div>
+    <button class="confirm" id="confirmSteal" onclick="confirmSteal()" disabled>STEAL CARD</button>
+  </div>
+</div>
+
+<!-- LOCK -->
+<div class="modal hidden" id="lockModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#ffbd74">&#128274; LOCK</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.
+It cannot be played on their next turn. LOCK uses your whole turn.</div>
+    <div class="choice-grid" id="lockChoices"></div>
+    <button class="confirm" id="confirmLock" onclick="confirmLock()" disabled>LOCK CARD</button>
+  </div>
+</div>
+
+<!-- DOUBLE -->
+<div class="modal hidden" id="doubleModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title" style="color:#7ee7ff">&#9889; DOUBLE</div>
+    <div class="modal-desc">Choose TWO of your ORIGINAL number cards and play them together.
+
+Their combined value must not go above the Target.
+DOUBLE is permanently gone after use.</div>
+    <div class="choice-grid" id="doubleChoices"></div>
+    <button class="confirm" id="confirmDouble" onclick="confirmDouble()" disabled>PLAY BOTH</button>
+  </div>
+</div>
+
+<!-- RECOVERY -->
+<div class="modal hidden" id="recoveryModal">
+  <div class="modal-box">
+    <div class="recovery-timer" id="recoveryTimer">10</div>
+    <div class="modal-title" id="recoveryTitle">&#9851; RECOVERY</div>
+    <div class="modal-desc" id="recoveryDesc"></div>
+    <div class="choice-grid" id="recoveryCards"></div>
+    <button class="confirm" id="confirmRecovery" onclick="confirmRecovery()" disabled>CONFIRM</button>
+  </div>
+</div>
+
+<!-- EVENT / WAIT -->
+<div class="modal hidden" id="eventModal">
+  <div class="modal-box">
+    <div class="event-icon" id="eventIcon">&#128293;</div>
+    <div class="event-title" id="eventTitle">EVENT</div>
+    <div class="modal-desc" id="eventText"></div>
+    <button class="confirm" id="eventContinueButton" onclick="closeEvent()">CONTINUE</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="waitingModal">
+  <div class="modal-box">
+    <div class="event-icon">&#9203;</div>
+    <div class="event-title">WAITING</div>
+    <div class="modal-desc wait-box" id="waitingText">Opponent is choosing...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://ukuacndhnuiulknidpbz.supabase.co";
+const SUPABASE_KEY="sb_publishable_jK1ib58XWRsOD3E2bxc04Q_YuYZVdrF";
+const client=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const TARGETS=[18,21,24,27,30];
+const TURN_SECONDS=20;
+const TURN_MS=TURN_SECONDS*1000;
+const RECOVERY_SECONDS=10;
+const RECOVERY_MS=RECOVERY_SECONDS*1000;
+const ICON={
+  crown:String.fromCodePoint(0x1F451),
+  trap:String.fromCodePoint(0x1F480),
+  cat:String.fromCodePoint(0x1F431),
+  fire:String.fromCodePoint(0x1F525),
+  lock:String.fromCodePoint(0x1F512),
+  recycle:String.fromCodePoint(0x267B),
+  trophy:String.fromCodePoint(0x1F3C6),
+  double:String.fromCodePoint(0x26A1)
+};
+
+let channel=null;
+let roomCode=null;
+let myRole=null;
+let myName=null;
+let myId=(crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random());
+let state=null;
+let gameStarted=false;
+
+let selectedTrap=null;
+let selectedSacrifice=null;
+let selectedSteal=null;
+let selectedLock=null;
+let selectedDouble=[];
+let recoverySelected=[];
+let eventAckNeeded=false;
+let processingEvent=false;
+let timeoutProcessing=false;
+let recoveryTimeoutProcessing=false;
+let heartbeatTimer=null;
+let countdownTimer=null;
+
+function other(role){return role==="p1"?"p2":"p1"}
+
+function sanitizeName(value){
+  return String(value||"")
+    .replace(/[<>]/g,"")
+    .replace(/\s+/g," ")
+    .trim()
+    .slice(0,12);
+}
+
+function displayName(role){
+  if(state&&state.names&&state.names[role]) return state.names[role];
+  if(role===myRole&&myName) return myName;
+  return role==="p1"?"PLAYER 1":"PLAYER 2";
+}
+
+function nameOf(role){
+  return displayName(role);
+}
+
+function freshPlayer(){
+  return {
+    hand:[1,2,3,4,5,6,7,8],
+    discard:[],
+    crowns:0,
+    sinceRecovery:0,
+    trapUsed:false,
+    stealUsed:false,
+    lockUsed:false,
+    doubleUsed:false,
+    specialUsedTarget:null,
+    passUsedTarget:null,
+    stolenCard:null
+  };
+}
+
+function freshState(){
+  return {
+    version:1,
+    updatedAt:Date.now(),
+    current:"p1",
+    turnId:1,
+    turnDeadline:Date.now()+TURN_MS,
+    roundStarter:"p1",
+    targetIndex:0,
+    total:0,
+    consecutivePasses:0,
+    message:"Choose a number card.",
+    phase:"playing",
+    winner:null,
+    names:{p1:"PLAYER 1",p2:"PLAYER 2"},
+    players:{p1:freshPlayer(),p2:freshPlayer()},
+    traps:{p1:null,p2:null},
+    locks:{p1:null,p2:null},
+    pendingRecovery:null,
+    recoveryQueue:[],
+    event:null
+  };
+}
+
+/* ---------------- LOBBY ---------------- */
+
+function setLobbyStatus(text,good=false){
+  const el=document.getElementById("lobbyStatus");
+  el.textContent=text;
+  el.className="lobby-status"+(good?" good":"");
+}
+
+function randomCode(){
+  return String(Math.floor(100000+Math.random()*900000));
+}
+
+function flattenPresence(presenceState){
+  const list=[];
+  Object.values(presenceState).forEach(entries=>entries.forEach(x=>list.push(x)));
+  return list;
+}
+
+function renderPresence(){
+  if(!channel)return;
+  const list=flattenPresence(channel.presenceState());
+  const roles={};
+  list.forEach(p=>{if(p.role)roles[p.role]=p});
+
+  const p1Data=roles.p1||null;
+  const p2Data=roles.p2||null;
+  const p1=!!p1Data,p2=!!p2Data;
+
+  document.getElementById("p1Name").textContent=p1Data&&p1Data.name?p1Data.name:"PLAYER 1";
+  document.getElementById("p2Name").textContent=p2Data&&p2Data.name?p2Data.name:"PLAYER 2";
+
+  document.getElementById("p1State").textContent=p1?"CONNECTED":"Waiting...";
+  document.getElementById("p2State").textContent=p2?"CONNECTED":"Waiting...";
+  document.getElementById("p1Box").classList.toggle("online",p1);
+  document.getElementById("p2Box").classList.toggle("online",p2);
+
+  const both=p1&&p2;
+  document.getElementById("waitText").textContent=
+    both?"Both players connected!":"Waiting for second player...";
+  document.getElementById("startButton").disabled=!(both&&myRole==="p1");
+
+  if(both){
+    setLobbyStatus(
+      myRole==="p1"?"Both players are here. Start when ready.":"Both players are here. Waiting for Player 1.",
+      true
+    );
+  }
+}
+
+async function connectRoom(code,role){
+  roomCode=code;
+  myRole=role;
+
+  document.getElementById("lobbyForm").classList.add("hidden");
+  document.getElementById("roomPanel").classList.remove("hidden");
+  document.getElementById("roomCode").textContent=code;
+
+  channel=client.channel("clash10-live-"+code,{
+    config:{
+      presence:{key:myId},
+      broadcast:{self:false}
+    }
+  });
+
+  channel
+    .on("presence",{event:"sync"},renderPresence)
+    .on("presence",{event:"join"},renderPresence)
+    .on("presence",{event:"leave"},renderPresence)
+    .on("broadcast",{event:"game-start"},packet=>{
+      if(gameStarted)return;
+      state=packet.payload.state;
+      gameStarted=true;
+      enterGame();
+    })
+    .on("broadcast",{event:"state-sync"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    })
+    .on("broadcast",{event:"state-heartbeat"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    });
+
+  channel.subscribe(async status=>{
+    if(status==="SUBSCRIBED"){
+      await channel.track({
+        id:myId,
+        role:myRole,
+        name:myName,
+        joinedAt:Date.now()
+      });
+      setLobbyStatus(role==="p1"?"Room created. Send the code to your friend.":"Joined room "+code+".",true);
+      renderPresence();
+    }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
+      setLobbyStatus("Connection error. Refresh and try again.");
+    }
+  });
+}
+
+async function createRoom(){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+  myName=chosen;
+  await connectRoom(randomCode(),"p1");
+}
+
+async function joinRoom(){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+
+  const code=document.getElementById("roomInput").value.trim();
+  if(!/^\d{6}$/.test(code)){alert("Enter a 6-digit room code.");return}
+
+  myName=chosen;
+  await connectRoom(code,"p2");
+}
+
+async function startGame(){
+  if(myRole!=="p1")return;
+  const roles=new Set(flattenPresence(channel.presenceState()).map(x=>x.role));
+  if(!roles.has("p1")||!roles.has("p2")){setLobbyStatus("Both players must be connected.");return}
+
+  const presence=flattenPresence(channel.presenceState());
+  const p1Presence=presence.find(x=>x.role==="p1");
+  const p2Presence=presence.find(x=>x.role==="p2");
+
+  state=freshState();
+  state.names={
+    p1:sanitizeName(p1Presence&&p1Presence.name)||"PLAYER 1",
+    p2:sanitizeName(p2Presence&&p2Presence.name)||"PLAYER 2"
+  };
+
+  gameStarted=true;
+
+  await channel.send({
+    type:"broadcast",
+    event:"game-start",
+    payload:{state}
+  });
+
+  enterGame();
+}
+
+function enterGame(){
+  document.getElementById("lobbyScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+  renderGame();
+  startRealtimeSafetyLoops();
+}
+
+function acceptIncomingState(incoming){
+  if(!incoming)return;
+
+  const incomingVersion=incoming.version||0;
+  const localVersion=state ? (state.version||0) : -1;
+  const incomingUpdated=incoming.updatedAt||0;
+  const localUpdated=state ? (state.updatedAt||0) : -1;
+
+  // Never allow an older phone state to roll the match backwards.
+  if(
+    !state ||
+    incomingVersion>localVersion ||
+    (incomingVersion===localVersion && incomingUpdated>localUpdated)
+  ){
+    state=incoming;
+    processingEvent=false;
+    timeoutProcessing=false;
+    renderGame();
+  }
+}
+
+function startRealtimeSafetyLoops(){
+  if(heartbeatTimer)clearInterval(heartbeatTimer);
+  if(countdownTimer)clearInterval(countdownTimer);
+
+  // Re-broadcast the newest known state regularly.
+  // If iPhone/Safari misses one Realtime message, the other phone repairs it automatically.
+  heartbeatTimer=setInterval(()=>{
+    if(!gameStarted||!state||!channel)return;
+    channel.send({
+      type:"broadcast",
+      event:"state-heartbeat",
+      payload:{state}
+    }).catch(()=>{});
+  },1200);
+
+  countdownTimer=setInterval(()=>{
+    updateTurnTimer();
+    updateRecoveryTimer();
+    checkTurnTimeout();
+    checkRecoveryTimeout();
+  },200);
+}
+
+async function syncState(){
+  state.version=(state.version||0)+1;
+  state.updatedAt=Date.now();
+  renderGame();
+
+  const packet={
+    type:"broadcast",
+    event:"state-sync",
+    payload:{state}
+  };
+
+  // Send twice a fraction apart; heartbeat remains the long-term backup.
+  await channel.send(packet);
+  setTimeout(()=>{
+    if(channel&&state){
+      channel.send({
+        type:"broadcast",
+        event:"state-sync",
+        payload:{state}
+      }).catch(()=>{});
+    }
+  },180);
+}
+
+/* ---------------- GAME HELPERS ---------------- */
+
+function crownHTML(amount){
+  let s="";
+  for(let i=0;i<5;i++)s+=i<amount?"&#128081;":"&#9734;";
+  return s;
+}
+
+function trapAgainst(role){
+  const owner=other(role);
+  const trap=state.traps[owner];
+  return trap&&trap.victim===role?trap:null;
+}
+
+function lockAgainst(role){
+  const owner=other(role);
+  const lock=state.locks[owner];
+  return lock&&lock.victim===role?lock:null;
+}
+
+function clearLockAfterTurn(role){
+  const owner=other(role);
+  if(state.locks[owner]&&state.locks[owner].victim===role){
+    state.locks[owner]=null;
+  }
+}
+
+function beginTurn(role){
+  state.current=role;
+  state.turnId=(state.turnId||0)+1;
+  state.turnDeadline=Date.now()+TURN_MS;
+  setTurnMessage();
+}
+
+function updateTurnTimer(){
+  const el=document.getElementById("turnTimer");
+  if(!el||!state)return;
+
+  const timerActive=
+    state.phase==="playing" &&
+    !state.event &&
+    !state.pendingRecovery &&
+    !!state.turnDeadline;
+
+  const modalTimers=[...document.querySelectorAll(".action-timer")];
+
+  if(!timerActive){
+    el.textContent="--";
+    el.classList.add("paused");
+    el.classList.remove("danger");
+
+    modalTimers.forEach(timer=>{
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    });
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((state.turnDeadline-Date.now())/1000));
+  el.textContent=left;
+  el.classList.remove("paused");
+  el.classList.toggle("danger",left<=5);
+
+  // Same live countdown is visible while choosing TRAP / sacrifice / STEAL / LOCK.
+  modalTimers.forEach(timer=>{
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=5);
+  });
+}
+
+function closeActionModals(){
+  ["trapModal","sacrificeModal","stealModal","lockModal","doubleModal"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.add("hidden");
+  });
+  selectedTrap=null;
+  selectedSacrifice=null;
+  selectedSteal=null;
+  selectedLock=null;
+  selectedDouble=[];
+}
+
+async function checkTurnTimeout(){
+  if(
+    timeoutProcessing ||
+    !state ||
+    state.phase!=="playing" ||
+    state.current!==myRole ||
+    state.pendingRecovery ||
+    state.event ||
+    !state.turnDeadline ||
+    Date.now()<state.turnDeadline
+  ) return;
+
+  timeoutProcessing=true;
+
+  try{
+    const role=myRole;
+    const p=state.players[role];
+
+    closeActionModals();
+
+    // TIME OUT is always a penalty:
+    // discard the lowest ORIGINAL number card still owned by the player.
+    const available=[...(p.hand||[])].sort((a,b)=>a-b);
+
+    state.turnDeadline=null;
+    state.consecutivePasses=0;
+
+    if(available.length>0){
+      const lost=available[0];
+
+      p.hand=p.hand.filter(n=>n!==lost);
+
+      if(!p.discard.includes(lost)){
+        p.discard.push(lost);
+        p.discard.sort((a,b)=>a-b);
+      }
+
+      p.sinceRecovery=(p.sinceRecovery||0)+1;
+
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout",
+        actor:role,
+        number:lost
+      };
+
+      state.message="TIME OUT";
+
+      // Timeout discard counts toward Recovery normally.
+      if(p.sinceRecovery>=4 && p.discard.length>=2){
+        state.pendingRecovery=makeRecovery(role,2,"normal");
+        await syncState();
+        return;
+      }
+
+    }else{
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout-empty",
+        actor:role
+      };
+
+      state.message="TIME OUT";
+    }
+
+    beginTurn(other(role));
+    await syncState();
+
+  }finally{
+    timeoutProcessing=false;
+  }
+}
+
+function playableEntries(role){
+  const p=state.players[role];
+  const activeLock=lockAgainst(role);
+
+  let entries=p.hand
+    .filter(n=>!activeLock||n!==activeLock.number)
+    .map(n=>({number:n,type:"own"}));
+
+  if(p.stolenCard)entries.push({number:p.stolenCard.number,type:"stolen"});
+
+  return entries.filter(x=>state.total+x.number<=TARGETS[state.targetIndex]);
+}
+
+function returnStolen(holder){
+  const item=state.players[holder].stolenCard;
+  if(!item)return;
+  const owner=item.owner,n=item.number;
+  if(!state.players[owner].discard.includes(n)&&!state.players[owner].hand.includes(n)){
+    state.players[owner].discard.push(n);
+  }
+  state.players[holder].stolenCard=null;
+}
+
+function returnAllStolen(){
+  returnStolen("p1");
+  returnStolen("p2");
+}
+
+function canAct(){
+  return state&&state.phase==="playing"&&state.current===myRole&&!state.event&&!state.pendingRecovery;
+}
+
+function canUseSpecial(role){
+  const p=state.players[role];
+  return canAct() && p.specialUsedTarget!==state.targetIndex;
+}
+
+function markSpecialUsed(role){
+  state.players[role].specialUsedTarget=state.targetIndex;
+}
+
+function canPass(role){
+  return playableEntries(role).length===0;
+}
+
+function markPassUsed(role){
+  // PASS is unlimited in v0.9.9.
+  // Kept as a no-op for compatibility with older code paths.
+}
+
+
+function makeRecovery(player,amount,type,extra={}){
+  return {
+    player,
+    amount,
+    type,
+    deadline:Date.now()+RECOVERY_MS,
+    ...extra
+  };
+}
+
+function updateRecoveryTimer(){
+  const rec=state&&state.pendingRecovery;
+  const timer=document.getElementById("recoveryTimer");
+
+  if(!rec||!rec.deadline){
+    if(timer){
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    }
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((rec.deadline-Date.now())/1000));
+
+  if(timer){
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=3);
+  }
+
+  // The waiting player can also see how much time the opponent has left.
+  if(rec.player!==myRole){
+    const waiting=document.getElementById("waitingText");
+    if(waiting){
+      waiting.textContent="Opponent is choosing Recovery cards... "+left+"s";
+    }
+  }
+}
+
+async function checkRecoveryTimeout(){
+  const rec=state&&state.pendingRecovery;
+
+  if(
+    recoveryTimeoutProcessing ||
+    !rec ||
+    rec.player!==myRole ||
+    !rec.deadline ||
+    Date.now()<rec.deadline
+  ) return;
+
+  recoveryTimeoutProcessing=true;
+
+  try{
+    document.getElementById("recoveryModal").classList.add("hidden");
+    recoverySelected=[];
+    await finishRecovery(rec,[],true);
+  }finally{
+    recoveryTimeoutProcessing=false;
+  }
+}
+
+async function finishRecovery(rec,selectedCards,timedOut=false){
+  if(!state.pendingRecovery)return;
+
+  const role=rec.player;
+  const p=state.players[role];
+
+  selectedCards.forEach(n=>{
+    p.discard=p.discard.filter(x=>x!==n);
+    if(!p.hand.includes(n))p.hand.push(n);
+  });
+  p.hand.sort((a,b)=>a-b);
+
+  state.pendingRecovery=null;
+
+  if(rec.type==="normal"){
+    p.sinceRecovery=0;
+    clearLockAfterTurn(role);
+    beginTurn(other(role));
+    if(timedOut){
+      state.message="Recovery timed out. No card was recovered.";
+    }
+
+  }else if(rec.type==="crown"){
+    queueNextRecovery("crown");
+
+  }else if(rec.type==="deadlock"){
+    queueNextRecovery("deadlock");
+
+  }else if(rec.type==="trapVictim"){
+    p.sinceRecovery=0;
+    beginTrapReward(rec.afterTrapOwner);
+
+  }else if(rec.type==="trapReward"){
+    beginTurn(role);
+    state.message=timedOut
+      ? ICON.trap+" Trap reward timed out. No card recovered; your normal turn begins."
+      : ICON.trap+" Trap reward recovered a card. You keep your normal turn.";
+  }
+
+  await syncState();
+}
+
+
+/* ---------------- RENDER ---------------- */
+
+function getDisplayMessage(){
+  if(!state)return "";
+
+  const n=state.notice;
+  if(!n)return state.message||"";
+
+  const mine=n.actor===myRole;
+
+  if(n.type==="steal"){
+    return mine
+      ? ICON.cat+" "+displayName(myRole)+" stole "+n.number+" from "+displayName(other(myRole))+"'s discard."
+      : ICON.cat+" "+displayName(n.actor)+" stole "+n.number+" from "+displayName(myRole)+"'s discard.";
+  }
+
+  if(n.type==="lock"){
+    return mine
+      ? ICON.lock+" "+displayName(myRole)+" locked "+displayName(other(myRole))+"'s "+n.number+" for their next turn."
+      : ICON.lock+" "+displayName(n.actor)+" locked one of "+displayName(myRole)+"'s ORIGINAL cards for this turn.";
+  }
+
+  if(n.type==="trap-place"){
+    return mine
+      ? ICON.trap+" "+displayName(myRole)+" placed a Trap."
+      : ICON.trap+" "+displayName(n.actor)+" placed a Trap. One of "+displayName(myRole)+"'s ORIGINAL cards is trapped.";
+  }
+
+  if(n.type==="double"){
+    return mine
+      ? ICON.double+" "+displayName(myRole)+" played DOUBLE: "+n.a+" + "+n.b+". Total = "+state.total+"."
+      : ICON.double+" "+displayName(n.actor)+" played DOUBLE: "+n.a+" + "+n.b+". Total = "+state.total+".";
+  }
+
+  if(n.type==="pass"){
+    return mine ? displayName(myRole)+" passed." : displayName(n.actor)+" passed.";
+  }
+
+  if(n.type==="timeout"){
+    return mine
+      ? "TIME OUT! "+displayName(myRole)+"'s lowest card ("+n.number+") was discarded. TOTAL stays at "+state.total+"."
+      : "TIME OUT! "+displayName(n.actor)+"'s lowest card ("+n.number+") was discarded. TOTAL stays at "+state.total+".";
+  }
+
+  if(n.type==="timeout-empty"){
+    return mine
+      ? "TIME OUT! You had no number card to discard. Turn lost."
+      : "TIME OUT! Opponent had no number card to discard.";
+  }
+
+  return state.message||"";
+}
+
+function clearNotice(){
+  state.notice=null;
+}
+
+function renderGame(){
+  if(!state||!myRole)return;
+
+  const me=state.players[myRole];
+  const enemyRole=other(myRole);
+  const enemy=state.players[enemyRole];
+
+  document.getElementById("opponentName").textContent=displayName(other(myRole));
+  const myNameNode=document.querySelector(".player.me .name");
+  if(myNameNode)myNameNode.textContent=displayName(myRole);
+  document.getElementById("myCrowns").innerHTML=crownHTML(me.crowns);
+  document.getElementById("opponentCrowns").innerHTML=crownHTML(enemy.crowns);
+  document.getElementById("target").textContent=TARGETS[state.targetIndex];
+  document.getElementById("total").textContent=state.total;
+
+  const myTurn=state.current===myRole&&state.phase==="playing";
+  const turnEl=document.getElementById("turnText");
+  turnEl.textContent=myTurn?"YOUR TURN":displayName(other(myRole)).toUpperCase()+"'S TURN";
+  turnEl.classList.toggle("waiting",!myTurn);
+
+  document.getElementById("message").textContent=getDisplayMessage();
+  document.getElementById("recoveryInfo").textContent=
+    ICON.recycle+" Recovery meter: "+me.sinceRecovery+" / 4 number cards";
+
+  document.getElementById("trapWarning").classList.toggle("active",!!trapAgainst(myRole));
+  document.getElementById("lockWarning").classList.toggle("active",!!lockAgainst(myRole));
+
+  renderOpponentCards();
+  renderHand();
+  renderDiscard();
+  renderSpecials();
+  renderPass();
+  renderPending();
+  updateTurnTimer();
+  updateRecoveryTimer();
+
+}
+
+function renderOpponentCards(){
+  const c=document.getElementById("opponentCards");
+  c.innerHTML="";
+  const enemy=state.players[other(myRole)];
+  const count=enemy.hand.length+(enemy.stolenCard?1:0);
+
+  for(let i=0;i<8;i++){
+    const d=document.createElement("div");
+    d.className="back";
+    d.textContent=i<count?"?":"x";
+    if(i>=count)d.style.opacity=".2";
+    c.appendChild(d);
+  }
+}
+
+function renderHand(){
+  const c=document.getElementById("hand");
+  c.innerHTML="";
+  const p=state.players[myRole];
+  const activeLock=lockAgainst(myRole);
+
+  for(let n=1;n<=8;n++){
+    const b=document.createElement("button");
+    b.className="card n"+n;
+    b.textContent=n;
+
+    const owned=p.hand.includes(n);
+    const locked=!!activeLock&&activeLock.number===n;
+    const legal=owned&&!locked&&state.total+n<=TARGETS[state.targetIndex]&&canAct();
+
+    if(locked)b.textContent=n+" "+ICON.lock;
+
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"own");
+
+    c.appendChild(b);
+  }
+
+  if(p.stolenCard){
+    const n=p.stolenCard.number;
+    const b=document.createElement("button");
+    b.className="card stolen n"+n;
+    b.textContent=n;
+    const legal=state.total+n<=TARGETS[state.targetIndex]&&canAct();
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"stolen");
+    c.appendChild(b);
+  }
+}
+
+function renderDiscard(){
+  const c=document.getElementById("discard");
+  c.innerHTML="";
+  const cards=[...state.players[myRole].discard].sort((a,b)=>a-b);
+
+  if(cards.length===0){
+    const x=document.createElement("span");
+    x.className="discard-chip";x.textContent="EMPTY";c.appendChild(x);return;
+  }
+
+  cards.forEach(n=>{
+    const x=document.createElement("span");
+    x.className="discard-chip";x.textContent=n;c.appendChild(x);
+  });
+}
+
+function renderSpecials(){
+  const me=state.players[myRole];
+  const enemy=state.players[other(myRole)];
+  const acting=canAct();
+  const specialAllowed=canUseSpecial(myRole);
+
+  const trap=document.getElementById("trapButton");
+  trap.disabled=!specialAllowed||me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0;
+  trap.textContent=me.trapUsed?ICON.trap+" TRAP x":ICON.trap+" TRAP";
+
+  const steal=document.getElementById("stealButton");
+  steal.disabled=!specialAllowed||me.stealUsed||!!me.stolenCard||enemy.discard.length===0;
+  steal.textContent=me.stealUsed?ICON.cat+" STEAL x":ICON.cat+" STEAL";
+
+  const lock=document.getElementById("lockButton");
+  lock.disabled=!specialAllowed||me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0;
+  lock.textContent=me.lockUsed?ICON.lock+" LOCK x":ICON.lock+" LOCK";
+
+  const doubleButton=document.getElementById("doubleButton");
+  const doublePairs=getLegalDoublePairs(myRole);
+  doubleButton.disabled=!specialAllowed||me.doubleUsed||doublePairs.length===0;
+  doubleButton.textContent=me.doubleUsed?ICON.double+" DOUBLE x":ICON.double+" DOUBLE";
+}
+
+function renderPass(){
+  const b=document.getElementById("passButton");
+  const noLegal=playableEntries(myRole).length===0;
+
+  b.disabled=!canAct() || !noLegal;
+  b.textContent="PASS";
+}
+
+function renderPending(){
+  const rec=state.pendingRecovery;
+
+  if(rec){
+    // A Recovery state always replaces any previous shared event popup.
+    // This is especially important after DEADLOCK: the player who pressed
+    // PASS first may still have the DEADLOCK modal visible locally.
+    document.getElementById("eventModal").classList.add("hidden");
+
+    const eventButton=document.getElementById("eventContinueButton");
+    if(eventButton){
+      eventButton.disabled=false;
+      eventButton.textContent="CONTINUE";
+    }
+
+    if(rec.player===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      openRecoveryModalFromState();
+    }else{
+      document.getElementById("recoveryModal").classList.add("hidden");
+      updateRecoveryTimer();
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("recoveryModal").classList.add("hidden");
+
+  if(state.event){
+    if(state.event.visibleTo==="both"||state.event.visibleTo===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      showEventFromState();
+    }else{
+      document.getElementById("eventModal").classList.add("hidden");
+      document.getElementById("waitingText").textContent="Opponent is resolving an event...";
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("eventModal").classList.add("hidden");
+  document.getElementById("waitingModal").classList.add("hidden");
+
+  if(state.winner){
+    const winnerName=displayName(state.winner);
+    const iWon=state.winner===myRole;
+
+    document.getElementById("eventIcon").textContent=ICON.trophy;
+    document.getElementById("eventTitle").textContent=iWon?"YOU WIN!":"YOU LOSE!";
+    document.getElementById("eventText").textContent=
+      iWon
+        ? winnerName+" WON CLASH 10!"
+        : winnerName+" WON CLASH 10!";
+
+    const button=document.getElementById("eventContinueButton");
+    button.disabled=true;
+    button.textContent="GAME OVER";
+
+    document.getElementById("waitingModal").classList.add("hidden");
+    document.getElementById("eventModal").classList.remove("hidden");
+  }
+}
+
+/* ---------------- NUMBER PLAY ---------------- */
+
+async function playCard(number,type){
+  if(!canAct())return;
+
+  const role=myRole;
+  const p=state.players[role];
+  if(state.total+number>TARGETS[state.targetIndex])return;
+
+  if(type==="own"){
+    if(!p.hand.includes(number))return;
+
+    const activeLock=lockAgainst(role);
+    if(activeLock&&activeLock.number===number)return;
+
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+    p.sinceRecovery++;
+
+    const trap=trapAgainst(role);
+
+    if(trap&&trap.number===number){
+      const owner=other(role);
+      state.traps[owner]=null;
+      state.consecutivePasses=0;
+      clearLockAfterTurn(role);
+      state.turnDeadline=null;
+
+      // IMPORTANT: Trap no longer creates a shared "CONTINUE" event.
+      // The game moves directly to the correct next state. This removes the
+      // rare two-phone deadlock where one device waited on the popup while
+      // the other had already entered Recovery.
+      state.message=ICON.trap+" TRAP ACTIVATED! The trapped "+number+
+        " is discarded. TOTAL stays at "+state.total+".";
+
+      if(p.sinceRecovery>=4&&p.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          role,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+      await syncState();
+      return;
+    }
+
+  }else{
+    if(!p.stolenCard||p.stolenCard.number!==number)return;
+    const owner=p.stolenCard.owner;
+    p.stolenCard=null;
+    if(!state.players[owner].discard.includes(number)){
+      state.players[owner].discard.push(number);
+    }
+  }
+
+  state.consecutivePasses=0;
+  clearNotice();
+  state.total+=number;
+  state.message=displayName(role)+" played "+(type==="stolen"?"stolen ":"")+number+". Total = "+state.total+".";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(type==="own"&&p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+/* ---------------- PASS / DEADLOCK ---------------- */
+
+async function passTurn(){
+  if(!canAct())return;
+
+  // PASS is only legal when you genuinely cannot play any number card.
+  if(playableEntries(myRole).length>0)return;
+
+  const passer=myRole;
+
+  clearLockAfterTurn(passer);
+  state.consecutivePasses=(state.consecutivePasses||0)+1;
+
+  state.notice={
+    type:"pass",
+    actor:passer
+  };
+  state.message="PASS";
+
+  // If BOTH players consecutively have no legal play and pass,
+  // the Target ends as a Deadlock.
+  if(state.consecutivePasses>=2){
+    state.consecutivePasses=0;
+    returnAllStolen();
+    state.turnDeadline=null;
+
+    state.event={
+      icon:ICON.fire,
+      title:"DEADLOCK!",
+      text:"Both players passed consecutively. Nobody earns a Crown. Each player may recover 1 discarded card.",
+      visibleTo:"both",
+      kind:"deadlock",
+      resolveBy:passer
+    };
+
+    await syncState();
+    return;
+  }
+
+  beginTurn(other(passer));
+  await syncState();
+}
+
+function setTurnMessage(){
+  const legal=playableEntries(state.current);
+  state.message=legal.length===0
+    ? "PASS is available."
+    : "Choose a number card.";
+}
+
+/* ---------------- CROWNS / ROUNDS ---------------- */
+
+function scoreCrown(scorer){
+  state.players[scorer].crowns++;
+  returnAllStolen();
+
+  const winnerName=displayName(scorer);
+  const hitTarget=TARGETS[state.targetIndex];
+
+  state.message=ICON.crown+" "+winnerName+" HIT THE TARGET!";
+  state.turnDeadline=null;
+
+  // Fifth Crown still ends the whole match immediately.
+  if(state.players[scorer].crowns>=5){
+    state.winner=scorer;
+    state.phase="finished";
+    return;
+  }
+
+  // Clear any Recovery state first. Crown Recovery begins ONLY after
+  // the Crown winner presses CONTINUE on the synchronized result screen.
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+
+  state.event={
+    icon:ICON.crown,
+    title:"CROWN WON!",
+    text:winnerName+" HIT "+hitTarget+"!\n\n"+winnerName+" EARNS A CROWN!",
+    visibleTo:"both",
+    kind:"crown-won",
+    scorer:scorer,
+    target:hitTarget,
+
+    // IMPORTANT: only the Crown winner advances the shared game state.
+    // The other phone only observes the synchronized transition.
+    resolveBy:scorer
+  };
+}
+
+function queueNextRecovery(type){
+  while(state.recoveryQueue.length){
+    const role=state.recoveryQueue.shift();
+    if(state.players[role].discard.length>0){
+      state.turnDeadline=null;
+      state.pendingRecovery=makeRecovery(role,1,type);
+      return;
+    }
+  }
+  startNextRound();
+}
+
+function startNextRound(){
+  returnAllStolen();
+
+  // LOCK lasts only for its intended turn.
+  state.locks.p1=null;
+  state.locks.p2=null;
+
+  // TRAP now lasts for ONE ROUND only.
+  // If it was not triggered before the round ended, it expires.
+  state.traps.p1=null;
+  state.traps.p2=null;
+
+  state.total=0;
+  state.targetIndex=(state.targetIndex+1)%TARGETS.length;
+  state.consecutivePasses=0;
+  state.roundStarter=other(state.roundStarter);
+  state.phase="playing";
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+  clearNotice();
+
+  beginTurn(state.roundStarter);
+  state.message=ICON.fire+" New round. Choose a number card.";
+}
+
+/* ---------------- RECOVERY ---------------- */
+
+function openRecoveryModalFromState(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole)return;
+
+  recoverySelected=[];
+
+  const title=document.getElementById("recoveryTitle");
+  if(rec.type==="crown")title.textContent=ICON.crown+" CROWN RECOVERY";
+  else if(rec.type==="deadlock")title.textContent=ICON.fire+" DEADLOCK RECOVERY";
+  else if(rec.type==="trapReward")title.textContent=ICON.trap+" TRAP REWARD";
+  else title.textContent=ICON.recycle+" RECOVERY";
+
+  document.getElementById("recoveryDesc").textContent=
+    "Choose "+rec.amount+" discarded card"+(rec.amount>1?"s":"")+" to recover.\n\nYou have 10 seconds. If time runs out, this Recovery is skipped.";
+
+  renderRecoveryChoices();
+  document.getElementById("recoveryModal").classList.remove("hidden");
+}
+
+function renderRecoveryChoices(){
+  const c=document.getElementById("recoveryCards");
+  c.innerHTML="";
+  const rec=state.pendingRecovery;
+  if(!rec)return;
+
+  [...state.players[myRole].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="recover-card";
+    b.textContent=n;
+    if(recoverySelected.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(recoverySelected.includes(n)){
+        recoverySelected=recoverySelected.filter(x=>x!==n);
+      }else if(recoverySelected.length<rec.amount){
+        recoverySelected.push(n);
+      }
+      renderRecoveryChoices();
+    };
+    c.appendChild(b);
+  });
+
+  document.getElementById("confirmRecovery").disabled=
+    recoverySelected.length!==rec.amount;
+}
+
+async function confirmRecovery(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole||recoverySelected.length!==rec.amount)return;
+
+  const chosen=[...recoverySelected];
+  recoverySelected=[];
+  document.getElementById("recoveryModal").classList.add("hidden");
+  await finishRecovery(rec,chosen,false);
+}
+
+/* ---------------- EVENTS ---------------- */
+
+function showEventFromState(){
+  const e=state.event;
+  if(!e)return;
+
+  document.getElementById("eventIcon").textContent=e.icon||ICON.fire;
+  document.getElementById("eventTitle").textContent=e.title||"EVENT";
+  document.getElementById("eventText").textContent=e.text||"";
+
+  const button=document.getElementById("eventContinueButton");
+  const canResolve=!e.resolveBy||e.resolveBy===myRole;
+
+  button.disabled=!canResolve||processingEvent;
+  if(canResolve){
+    button.textContent="CONTINUE";
+  }else if(e.kind==="crown-won"){
+    button.textContent="WAITING FOR "+displayName(e.resolveBy).toUpperCase()+"...";
+  }else{
+    button.textContent="WAITING FOR OPPONENT...";
+  }
+
+  document.getElementById("eventModal").classList.remove("hidden");
+}
+
+async function closeEvent(){
+  if(!state||!state.event||processingEvent)return;
+
+  const e=state.event;
+
+  // Only one phone is allowed to resolve a shared event.
+  // This prevents both phones from sending conflicting copies of the state.
+  if(e.resolveBy&&e.resolveBy!==myRole)return;
+  if(e.kind==="gameover")return;
+
+  processingEvent=true;
+
+  const button=document.getElementById("eventContinueButton");
+  if(button){
+    button.disabled=true;
+    button.textContent="CONTINUING...";
+  }
+
+  // Hide immediately so the button always feels responsive on iPhone.
+  document.getElementById("eventModal").classList.add("hidden");
+
+  try{
+    state.event=null;
+
+    if(e.kind==="trap-hit"){
+      // Compatibility for an older state received during an update.
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+    }else if(e.kind==="deadlock"){
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="crown-won"){
+      // Crown winner is the single authority for this transition.
+      // After CONTINUE we enter the already-tested Crown Recovery flow.
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+    }
+
+    await syncState();
+
+  }catch(error){
+    console.error("Could not continue event:",error);
+
+    // Restore the event locally so the player can retry instead of getting stuck.
+    state.event=e;
+    renderGame();
+    alert("Connection hiccup. Tap CONTINUE again.");
+
+  }finally{
+    processingEvent=false;
+    if(state&&state.event)showEventFromState();
+  }
+}
+
+function beginTrapReward(owner){
+  if(state.players[owner].discard.length>0){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(owner,1,"trapReward");
+  }else{
+    beginTurn(owner);
+    state.message=ICON.trap+" Trap hit, but there was no discarded card to recover. You still get your normal turn.";
+  }
+}
+
+/* ---------------- TRAP ---------------- */
+
+function openTrapModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0)return;
+
+  selectedTrap=null;selectedSacrifice=null;
+  renderTrapChoices();
+  document.getElementById("confirmTrap").disabled=true;
+  document.getElementById("trapModal").classList.remove("hidden");
+}
+
+function renderTrapChoices(){
+  const c=document.getElementById("trapChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card";b.textContent=n;
+    if(n===selectedTrap)b.classList.add("selected");
+    b.onclick=()=>{selectedTrap=n;renderTrapChoices();document.getElementById("confirmTrap").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+function goToTrapSacrifice(){
+  if(selectedTrap===null)return;
+  document.getElementById("trapModal").classList.add("hidden");
+  renderSacrificeChoices();
+  document.getElementById("confirmSacrifice").disabled=true;
+  document.getElementById("sacrificeModal").classList.remove("hidden");
+}
+
+function renderSacrificeChoices(){
+  const c=document.getElementById("sacrificeChoices");
+  c.innerHTML="";
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card sacrifice-choice";b.textContent=n;
+    if(n===selectedSacrifice)b.classList.add("selected");
+    b.onclick=()=>{selectedSacrifice=n;renderSacrificeChoices();document.getElementById("confirmSacrifice").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmTrapAndSacrifice(){
+  if(!canAct()||selectedTrap===null||selectedSacrifice===null)return;
+  const owner=myRole,victim=other(owner),p=state.players[owner];
+
+  p.hand=p.hand.filter(n=>n!==selectedSacrifice);
+  p.discard.push(selectedSacrifice);
+  p.trapUsed=true;
+  markSpecialUsed(owner);
+  state.traps[owner]={number:selectedTrap,victim:victim};
+
+  selectedTrap=null;selectedSacrifice=null;
+  document.getElementById("sacrificeModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"trap-place",
+    actor:owner
+  };
+  state.message="TRAP";
+  beginTurn(victim);
+  await syncState();
+}
+
+/* ---------------- STEAL ---------------- */
+
+function openStealModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.stealUsed||me.stolenCard||enemy.discard.length===0)return;
+
+  selectedSteal=null;
+  renderStealChoices();
+  document.getElementById("confirmSteal").disabled=true;
+  document.getElementById("stealModal").classList.remove("hidden");
+}
+
+function renderStealChoices(){
+  const c=document.getElementById("stealChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card steal-choice";b.textContent=n;
+    if(n===selectedSteal)b.classList.add("selected");
+    b.onclick=()=>{selectedSteal=n;renderStealChoices();document.getElementById("confirmSteal").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmSteal(){
+  if(!canAct()||selectedSteal===null)return;
+  const thief=myRole,owner=other(thief),n=selectedSteal;
+  if(!state.players[owner].discard.includes(n))return;
+
+  state.players[owner].discard=state.players[owner].discard.filter(x=>x!==n);
+  state.players[thief].stolenCard={number:n,owner:owner};
+  state.players[thief].stealUsed=true;
+  markSpecialUsed(thief);
+
+  selectedSteal=null;
+  document.getElementById("stealModal").classList.add("hidden");
+
+  clearLockAfterTurn(thief);
+  state.notice={
+    type:"steal",
+    actor:thief,
+    number:n
+  };
+  state.message="STEAL";
+  beginTurn(owner);
+  await syncState();
+}
+
+/* ---------------- LOCK ---------------- */
+
+function openLockModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0)return;
+
+  selectedLock=null;
+  renderLockChoices();
+  document.getElementById("confirmLock").disabled=true;
+  document.getElementById("lockModal").classList.remove("hidden");
+}
+
+function renderLockChoices(){
+  const c=document.getElementById("lockChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card lock-choice";b.textContent=n;
+    if(n===selectedLock)b.classList.add("selected");
+    b.onclick=()=>{selectedLock=n;renderLockChoices();document.getElementById("confirmLock").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmLock(){
+  if(!canAct()||selectedLock===null)return;
+  const owner=myRole,victim=other(owner),n=selectedLock;
+  if(!state.players[victim].hand.includes(n))return;
+
+  state.locks[owner]={number:n,victim:victim};
+  state.players[owner].lockUsed=true;
+  markSpecialUsed(owner);
+
+  selectedLock=null;
+  document.getElementById("lockModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"lock",
+    actor:owner,
+    number:n
+  };
+  state.message="LOCK";
+  beginTurn(victim);
+  await syncState();
+}
+
+
+/* ---------------- DOUBLE ---------------- */
+
+function getLegalDoublePairs(role){
+  const p=state.players[role];
+  const cards=[...p.hand].sort((a,b)=>a-b);
+  const pairs=[];
+
+  for(let i=0;i<cards.length;i++){
+    for(let j=i+1;j<cards.length;j++){
+      if(state.total+cards[i]+cards[j]<=TARGETS[state.targetIndex]){
+        pairs.push([cards[i],cards[j]]);
+      }
+    }
+  }
+  return pairs;
+}
+
+function openDoubleModal(){
+  if(!canUseSpecial(myRole))return;
+
+  const me=state.players[myRole];
+  if(me.doubleUsed||getLegalDoublePairs(myRole).length===0)return;
+
+  selectedDouble=[];
+  renderDoubleChoices();
+  document.getElementById("confirmDouble").disabled=true;
+  document.getElementById("doubleModal").classList.remove("hidden");
+}
+
+function renderDoubleChoices(){
+  const c=document.getElementById("doubleChoices");
+  c.innerHTML="";
+
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card double-choice";
+    b.textContent=n;
+
+    if(selectedDouble.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(selectedDouble.includes(n)){
+        selectedDouble=selectedDouble.filter(x=>x!==n);
+      }else if(selectedDouble.length<2){
+        selectedDouble.push(n);
+      }
+
+      renderDoubleChoices();
+
+      const valid=
+        selectedDouble.length===2 &&
+        state.total+selectedDouble[0]+selectedDouble[1]<=TARGETS[state.targetIndex];
+
+      document.getElementById("confirmDouble").disabled=!valid;
+    };
+
+    c.appendChild(b);
+  });
+
+  if(selectedDouble.length===2){
+    document.getElementById("confirmDouble").disabled=
+      state.total+selectedDouble[0]+selectedDouble[1]>TARGETS[state.targetIndex];
+  }
+}
+
+async function confirmDouble(){
+  if(
+    !canUseSpecial(myRole) ||
+    selectedDouble.length!==2
+  ) return;
+
+  const role=myRole;
+  const p=state.players[role];
+  const [a,b]=selectedDouble;
+  const sum=a+b;
+
+  if(
+    !p.hand.includes(a) ||
+    !p.hand.includes(b) ||
+    state.total+sum>TARGETS[state.targetIndex]
+  ) return;
+
+  // DOUBLE plays two ORIGINAL cards at the same time.
+  p.hand=p.hand.filter(n=>n!==a&&n!==b);
+  p.discard.push(a,b);
+  p.sinceRecovery+=2;
+  p.doubleUsed=true;
+  markSpecialUsed(role);
+  state.consecutivePasses=0;
+
+  document.getElementById("doubleModal").classList.add("hidden");
+  selectedDouble=[];
+
+  // A trapped number inside DOUBLE still triggers the Trap.
+  const trap=trapAgainst(role);
+  if(trap && (trap.number===a || trap.number===b)){
+    const owner=other(role);
+    state.traps[owner]=null;
+    clearLockAfterTurn(role);
+    state.turnDeadline=null;
+
+    // Same robust direct transition as a normal trapped card.
+    state.message=ICON.trap+" DOUBLE TRAPPED! Both cards are discarded. TOTAL stays at "+state.total+".";
+
+    if(p.sinceRecovery>=4&&p.discard.length>=2){
+      state.pendingRecovery=makeRecovery(
+        role,
+        2,
+        "trapVictim",
+        {afterTrapOwner:owner}
+      );
+    }else{
+      beginTrapReward(owner);
+    }
+
+    await syncState();
+    return;
+  }
+
+  state.total+=sum;
+  state.notice={
+    type:"double",
+    actor:role,
+    a:a,
+    b:b
+  };
+  state.message="DOUBLE";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+window.addEventListener("beforeunload",()=>{
+  try{
+    if(heartbeatTimer)clearInterval(heartbeatTimer);
+    if(countdownTimer)clearInterval(countdownTimer);
+    if(channel)channel.untrack();
+  }catch(e){}
+});
+</script>
+</body>
+</html>
