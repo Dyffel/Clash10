@@ -1,0 +1,5492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CLASH 10 v0.9.42 VISUAL CONSISTENCY</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(circle at top,#14202c 0%,#070b10 45%,#000 100%);
+  color:white;font-family:Arial,Helvetica,sans-serif
+}
+button,input{font-family:inherit}
+.hidden{display:none!important}
+
+/* LOBBY — PROFESSIONAL MENU */
+.lobby-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:28px 16px 36px;overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(0,119,255,.14),transparent 28%),
+    radial-gradient(circle at 85% 55%,rgba(255,55,35,.08),transparent 25%),
+    linear-gradient(180deg,#02060b 0%,#04080e 45%,#010204 100%);
+}
+.lobby-wrap::before,.lobby-wrap::after{
+  content:"";position:absolute;width:250px;height:360px;
+  border:1px solid rgba(42,108,190,.15);border-radius:22px;
+  transform:rotate(-24deg);pointer-events:none;opacity:.45
+}
+.lobby-wrap::before{left:-155px;top:145px}
+.lobby-wrap::after{right:-165px;bottom:120px;transform:rotate(22deg)}
+.lobby-card{
+  width:100%;max-width:460px;position:relative;z-index:1;
+  background:transparent;border:0;padding:0;
+  filter:drop-shadow(0 22px 45px rgba(0,0,0,.48))
+}
+.brand-crown{
+  text-align:center;font-size:52px;line-height:1;margin-bottom:-2px;
+  filter:drop-shadow(0 0 14px rgba(255,181,29,.42))
+}
+.logo{
+  text-align:center;font-size:54px;line-height:.95;font-weight:1000;
+  font-style:italic;letter-spacing:-3px;margin:0 0 14px;color:#32a8ff;
+  text-shadow:0 2px 0 #06436e,0 0 18px rgba(26,153,255,.35)
+}
+.logo span{
+  color:#ff432d;
+  text-shadow:0 2px 0 #7d160d,0 0 18px rgba(255,64,38,.34)
+}
+.brand-tagline{
+  text-align:center;font-size:15px;font-weight:900;letter-spacing:.7px;
+  color:#f3f5f7;text-transform:uppercase
+}
+.brand-tagline b{color:#ffbd27}
+.brand-subline{
+  text-align:center;margin:5px 0 22px;color:#b8bec7;font-size:14px;
+  font-weight:800;letter-spacing:1.2px;text-transform:uppercase
+}
+.spark-line{
+  width:110px;height:2px;margin:-10px auto 18px;
+  background:linear-gradient(90deg,transparent,#ff9d19,transparent);
+  box-shadow:0 0 12px rgba(255,151,18,.8)
+}
+.menu-name{
+  width:100%;padding:14px 16px;border-radius:13px;font-size:17px;
+  font-weight:800;border:1px solid #2a3848;
+  background:linear-gradient(180deg,#111922,#0a1017);color:white;
+  text-align:center;margin-bottom:11px;
+  box-shadow:inset 0 0 18px rgba(255,255,255,.015)
+}
+.menu-name::placeholder{color:#66717e;letter-spacing:1.7px}
+.menu-btn{
+  position:relative;width:100%;min-height:76px;margin-top:10px;
+  padding:11px 26px 11px 82px;border-radius:13px;
+  border:1px solid rgba(255,255,255,.12);color:white;text-align:left;
+  cursor:pointer;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11),
+             inset 0 -12px 26px rgba(0,0,0,.18),
+             0 7px 18px rgba(0,0,0,.28)
+}
+.menu-btn::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(255,255,255,.09),transparent 34%);
+  pointer-events:none
+}
+.menu-btn:active{transform:scale(.985)}
+.menu-icon{
+  position:absolute;left:24px;top:50%;transform:translateY(-50%);
+  font-size:35px;filter:drop-shadow(0 0 7px rgba(255,255,255,.14))
+}
+.menu-main{display:block;font-size:21px;font-weight:1000;letter-spacing:.2px}
+.menu-sub{display:block;margin-top:3px;font-size:13px;font-weight:500;color:#d5dbe2}
+.menu-online{
+  background:linear-gradient(135deg,#0755ad,#0c2d71);border-color:#168fff;
+  box-shadow:0 0 18px rgba(22,143,255,.13),inset 0 1px 0 rgba(255,255,255,.13)
+}
+.menu-normal{
+  background:linear-gradient(135deg,#5421a8,#28105f);border-color:#9749ff;
+  box-shadow:0 0 18px rgba(151,73,255,.12),inset 0 1px 0 rgba(255,255,255,.12)
+}
+.menu-hard{
+  background:linear-gradient(135deg,#b71818,#5f0b0b);border-color:#ff3b35;
+  box-shadow:0 0 18px rgba(255,59,53,.12),inset 0 1px 0 rgba(255,255,255,.12)
+}
+.menu-create{background:linear-gradient(135deg,#b55d00,#542900);border-color:#ff981c}
+.menu-code{background:linear-gradient(135deg,#151e29,#080d13);border-color:#465363}
+.menu-join{background:linear-gradient(135deg,#078124,#064817);border-color:#19cc45}
+.menu-ranked{background:linear-gradient(135deg,#5522a9,#2d125c);border-color:#9753ff}
+.menu-ranked:disabled{opacity:.55;cursor:not-allowed}
+.menu-small-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.menu-small{
+  min-height:55px;padding:12px 10px;border-radius:12px;border:1px solid #364250;
+  background:linear-gradient(180deg,#141b24,#090e14);color:#e7ebef;
+  font-size:14px;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)
+}
+.menu-small:active{transform:scale(.985)}
+.version{text-align:center;color:#536171;font-size:12px;margin-top:20px;letter-spacing:.7px}
+.online-panel{
+  padding:18px;border:1px solid #243344;background:rgba(5,10,16,.88);
+  border-radius:20px;box-shadow:0 18px 55px rgba(0,0,0,.42);
+  backdrop-filter:blur(7px)
+}
+.online-title{display:flex;align-items:center;gap:10px;margin-bottom:4px;font-size:24px;font-weight:1000}
+.online-sub{color:#8f9aa7;line-height:1.45;font-size:14px;margin-bottom:13px}
+.back-menu{
+  width:100%;margin-top:12px;border:0;border-radius:11px;padding:13px;
+  background:#111922;color:#99a6b4;font-weight:900
+}
+.lobby-btn,.room-input{width:100%;padding:15px;border-radius:12px;font-size:17px;font-weight:900}
+.lobby-btn{border:0;color:white;margin-top:10px}
+.create{background:linear-gradient(135deg,#b55d00,#6b3200);border:1px solid #ff981c}
+.join{background:linear-gradient(135deg,#078124,#07521c);border:1px solid #19cc45}
+.start{background:#23a447}.start:disabled{opacity:.35}
+.room-input{
+  border:1px solid #465363;background:linear-gradient(180deg,#131b25,#090f16);
+  color:white;text-align:center;margin-top:12px;letter-spacing:7px;font-size:24px;
+  outline:none;box-shadow:inset 0 0 20px rgba(0,0,0,.22)
+}
+.room-input:focus{border-color:#168fff;box-shadow:0 0 0 2px rgba(22,143,255,.1)}
+.room-label{
+  margin:18px 0 6px;text-align:center;font-size:12px;letter-spacing:2px;
+  color:#8d96a1;font-weight:800
+}
+.room-code{text-align:center;font-size:42px;font-weight:900;color:#ffd23f;letter-spacing:5px}
+.presence-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.presence-box{
+  border:1px solid #33414e;border-radius:14px;padding:14px;text-align:center;background:#111820
+}
+.presence-box.online{border-color:#32d56d}
+.presence-name{font-weight:900}.presence-state{margin-top:6px;color:#8793a0;font-size:13px}
+.presence-box.online .presence-state{color:#46e679}
+.lobby-status{
+  margin-top:16px;padding:13px;border-radius:12px;background:#101820;
+  color:#aeb8c3;text-align:center;min-height:48px;line-height:1.4
+}
+.good{color:#57e47a}
+.wait{margin-top:14px;text-align:center;color:#ffc74d;font-weight:800}
+.info-modal{
+  position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.88);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.info-box{
+  width:100%;max-width:410px;background:#081019;border:1px solid #344353;
+  border-radius:20px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.55)
+}
+.info-box h2{margin:0 0 12px;font-size:26px}
+.info-box p,.info-box li{color:#aeb8c3;line-height:1.5;font-size:14px}
+.info-box ul{padding-left:20px}
+.info-close{
+  width:100%;margin-top:15px;padding:13px;border-radius:11px;border:0;
+  background:#168fff;color:white;font-weight:900
+}
+
+.settings-audio-row{
+  margin-top:10px;
+  padding:12px 13px;
+  border:1px solid #2b3948;
+  border-radius:12px;
+  background:#0d151d;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+.settings-audio-row b{display:block;font-size:14px}
+.settings-audio-row small{display:block;margin-top:3px;color:#7f8b97;font-size:11px}
+.audio-toggle{
+  min-width:72px;
+  padding:9px 11px;
+  border-radius:9px;
+  border:1px solid #384654;
+  background:#151d25;
+  color:#76818c;
+  font-weight:1000
+}
+.audio-toggle.on{
+  border-color:#2fe567;
+  background:#0b2a16;
+  color:#5df184;
+  box-shadow:0 0 11px rgba(47,229,103,.12)
+}
+.audio-test-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px
+}
+.audio-test-btn{
+  padding:10px;
+  border-radius:9px;
+  border:1px solid #344250;
+  background:#111923;
+  color:#c2cbd4;
+  font-weight:900;
+  font-size:11px
+}
+.audio-test-btn:active{transform:scale(.98)}
+
+.game-topbar{
+  height:0;
+  position:relative;
+  z-index:20
+}
+.game-audio-controls{
+  position:absolute;
+  top:-4px;
+  right:0;
+  display:flex;
+  gap:5px
+}
+.game-audio-btn{
+  min-width:31px;
+  height:29px;
+  padding:0 7px;
+  border-radius:8px;
+  border:1px solid #344250;
+  background:#0a1118;
+  color:#65717c;
+  font-size:10px;
+  font-weight:1000
+}
+.game-audio-btn.on{
+  border-color:#3da9ff;
+  color:#61bcff;
+  box-shadow:0 0 8px rgba(61,169,255,.10)
+}
+
+/* GAME */
+.game{
+  width:100%;max-width:480px;margin:auto;padding:20px 14px 45px
+}
+.player{
+  background:rgba(10,14,19,.95);border:1px solid #34404c;border-radius:18px;padding:14px
+}
+.player.opponent{border-color:#e64040}
+.player.me{border-color:#168fff;margin-top:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.name{font-size:19px;font-weight:900}
+.opponent .name{color:#ff5252}.me .name{color:#45adff}
+.crowns{font-size:19px;letter-spacing:1px}
+.mini{
+  color:#828c97;font-size:11px;letter-spacing:1px;font-weight:800;margin-top:12px
+}
+.card-backs{
+  display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:8px
+}
+.back{
+  height:48px;
+  border-radius:7px;
+  border:1px solid #aab0b6;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(195,201,207,.085),transparent 43%),
+    linear-gradient(145deg,#171b20,#050608);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#b7bdc3;
+  font-size:20px;
+  font-weight:1000;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    inset 0 -11px 16px rgba(0,0,0,.32),
+    0 3px 8px rgba(0,0,0,.3);
+  position:relative;
+  overflow:hidden
+}
+.back-frame{
+  position:absolute;
+  inset:3px;
+  border:1px solid #c7ccd1;
+  border-radius:4px;
+  opacity:.24
+}
+.back-orbit{
+  position:absolute;
+  width:28px;height:28px;
+  border:1px solid #c7ccd1;
+  border-radius:50%;
+  opacity:.11
+}
+.back-crown{
+  position:absolute;
+  top:2px;
+  left:50%;
+  width:15px;
+  height:8px;
+  transform:translateX(-50%);
+  opacity:.72
+}
+.back-corner{
+  position:absolute;
+  width:10px;height:10px;
+  color:#c7ccd1;
+  opacity:.82;
+  filter:drop-shadow(0 0 2px currentColor)
+}
+.back-corner svg{width:100%;height:100%;display:block}
+.back-corner.tl{top:2px;left:2px}
+.back-corner.tr{top:2px;right:2px;transform:scaleX(-1)}
+.back-corner.bl{bottom:2px;left:2px;transform:scaleY(-1)}
+.back-corner.br{bottom:2px;right:2px;transform:scale(-1,-1)}
+.arena{
+  margin:14px 0;padding:16px;border:1px solid #29333d;border-radius:18px;
+  background:rgba(8,12,17,.96)
+}
+.scoreboard{display:flex;justify-content:space-around;align-items:center}
+.stat{text-align:center}
+.label{color:#8d96a1;font-size:12px;font-weight:800;letter-spacing:1px}
+.target{color:#ff4c4c;font-size:44px;font-weight:900;margin-top:3px}
+.total{font-size:60px;font-weight:900}
+.turn{text-align:center;color:#43e96f;font-size:14px;font-weight:900;margin-top:7px}
+.turn.waiting{color:#ffcc43}
+.timer{
+  width:64px;height:64px;margin:10px auto 0;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;color:#55e879;
+  box-shadow:0 0 18px rgba(85,232,121,.08)
+}
+.timer.danger{color:#ff5757;border-color:#7b2d2d}
+.timer.paused{color:#7f8994}
+
+/* ============================================================
+   ARENA TABLE CARDS — neutral/stable design
+============================================================ */
+.table-play-area{
+  margin:11px auto 2px;
+  display:grid;
+  grid-template-columns:1fr 52px 1fr;
+  align-items:end;
+  gap:10px;
+  max-width:300px
+}
+
+.table-play-slot{
+  text-align:center;
+  min-width:0
+}
+
+.table-play-label{
+  margin-bottom:5px;
+  font-size:9px;
+  line-height:1;
+  letter-spacing:1.2px;
+  font-weight:900;
+  color:#747f8b;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.table-card{
+  height:73px;
+  border-radius:10px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#d8dde2;
+  border:1px solid #79838e;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(204,212,220,.08),transparent 42%),
+    linear-gradient(145deg,#141a21,#070a0e 73%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    inset 0 -18px 26px rgba(0,0,0,.38),
+    0 5px 12px rgba(0,0,0,.38)
+}
+
+.table-card-frame{
+  position:absolute;
+  inset:4px;
+  border:1px solid #98a1aa;
+  border-radius:7px;
+  opacity:.22
+}
+
+.table-card-orbit{
+  position:absolute;
+  width:47px;
+  height:47px;
+  border:1px solid #a5adb5;
+  border-radius:50%;
+  opacity:.10
+}
+
+.table-card-orbit::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1px solid #a5adb5;
+  border-radius:50%;
+  opacity:.22
+}
+
+.table-card-gem{
+  position:absolute;
+  width:11px;
+  height:11px;
+  transform:rotate(45deg);
+  border:1px solid #aeb6be;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.30),rgba(133,143,153,.12) 45%,rgba(29,35,42,.4));
+  opacity:.62
+}
+.table-card-gem.tl{top:6px;left:6px}
+.table-card-gem.tr{top:6px;right:6px}
+.table-card-gem.bl{bottom:6px;left:6px}
+.table-card-gem.br{bottom:6px;right:6px}
+
+.table-card-value{
+  position:relative;
+  z-index:4;
+  color:#f2f5f7;
+  font-size:27px;
+  font-weight:1000;
+  letter-spacing:-.5px;
+  text-shadow:0 2px 5px rgba(0,0,0,.78)
+}
+
+.table-card-value.compound{
+  font-size:20px;
+  letter-spacing:-1px
+}
+
+.table-card-value.action-value{
+  width:100%;
+  padding:0 5px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  line-height:1.02;
+  letter-spacing:.2px
+}
+.table-action-name{
+  color:#f2f5f7;
+  font-size:14px;
+  font-weight:1000;
+  letter-spacing:.5px
+}
+.table-action-detail{
+  color:#9ca7b2;
+  font-size:11px;
+  font-weight:900;
+  margin-top:4px;
+  letter-spacing:.2px
+}
+.table-action-icon{
+  width:17px;
+  height:17px;
+  margin-bottom:3px;
+  opacity:.82
+}
+.table-action-icon svg{width:100%;height:100%;display:block}
+
+.table-card-symbol{
+  position:absolute;
+  top:5px;
+  left:50%;
+  transform:translateX(-50%);
+  width:18px;
+  height:7px;
+  opacity:.34
+}
+.table-card-symbol::before,
+.table-card-symbol::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:7px;
+  height:6px;
+  background:#aab2ba;
+  clip-path:polygon(50% 0,100% 100%,0 100%)
+}
+.table-card-symbol::before{left:0}
+.table-card-symbol::after{right:0}
+.table-card-symbol span{
+  position:absolute;
+  width:8px;
+  height:7px;
+  left:5px;
+  bottom:0;
+  background:#c2c8ce;
+  clip-path:polygon(50% 0,100% 100%,0 100%)
+}
+
+/* Timer stays functional, but is no longer the giant centerpiece. */
+.table-timer-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end
+}
+.table-timer-label{
+  font-size:8px;
+  letter-spacing:1px;
+  color:#697581;
+  font-weight:900;
+  margin-bottom:5px
+}
+.table-play-area .timer{
+  width:48px;
+  height:48px;
+  margin:0;
+  border-width:2px;
+  font-size:20px;
+  box-shadow:0 0 13px rgba(85,232,121,.06)
+}
+
+.message{
+  margin-top:12px;
+  padding:11px;
+  min-height:42px;
+  border-radius:10px;
+  background:#111820;
+  color:#b7c0c9;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.15px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.message:empty{
+  min-height:10px;
+  padding:0;
+  margin-top:5px;
+  background:transparent
+}
+.warning{
+  display:none;margin-top:10px;padding:11px;border-radius:10px;font-size:12px;
+  text-align:center;font-weight:900
+}
+.warning.active{display:block}
+.trap-warning{border:1px solid #b14cff;background:rgba(87,24,120,.20);color:#e295ff}
+.lock-warning{border:1px solid #ff9d32;background:rgba(120,62,15,.20);color:#ffbd74}
+
+
+.hand{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:9px
+}
+
+/* ============================================================
+   NUMBER CARDS — SPECIAL-CARD-QUALITY FRAME
+   1–2 SHADOW | 3–4 EMBER | 5–6 NATURE | 7–8 VOID
+============================================================ */
+.card{
+  height:94px;
+  border-radius:11px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid currentColor;
+  color:#fff;
+  background:#080b10;
+  padding:0;
+  isolation:isolate;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    inset 0 -25px 36px rgba(0,0,0,.41),
+    0 7px 16px rgba(0,0,0,.46);
+}
+.card:active{transform:scale(.94)}
+.card.invalid{opacity:.22;filter:saturate(.55)}
+
+.card-inner{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* engraved circle: subtle, not a plain bright ring */
+.card-orbit{
+  position:absolute;
+  width:61px;
+  height:61px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  opacity:.13;
+  box-shadow:
+    inset 0 0 15px rgba(0,0,0,.55),
+    0 0 10px currentColor;
+}
+.card-orbit::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  opacity:.18;
+}
+.card-orbit::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:42px;
+  height:1px;
+  background:currentColor;
+  transform:translate(-50%,-50%);
+  opacity:.07;
+}
+
+/* Number remains perfectly centered */
+.card-number{
+  position:relative;
+  z-index:5;
+  font-size:34px;
+  line-height:1;
+  font-weight:1000;
+  color:#fff;
+  text-shadow:0 2px 5px rgba(0,0,0,.86);
+}
+
+/* Crown is centered and wider like the target */
+.card-crown{
+  position:absolute;
+  top:6px;
+  left:50%;
+  width:31px;
+  height:16px;
+  transform:translateX(-50%);
+  z-index:7;
+  filter:drop-shadow(0 0 4px currentColor);
+}
+
+/* Theme emblem exactly centered under number */
+.card-emblem{
+  position:absolute;
+  bottom:6px;
+  left:50%;
+  width:25px;
+  height:23px;
+  transform:translateX(-50%);
+  z-index:7;
+  filter:drop-shadow(0 0 5px currentColor);
+}
+
+.card-crown svg,.card-emblem svg,
+.special-icon svg,.back-crown svg,
+.mini-crown svg,.mini-emblem svg,
+.choice-crown svg,.choice-emblem svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* SAME visual language as the finished special cards:
+   an inset ornamental frame + four mirrored corner jewels. */
+.card-frame{
+  position:absolute;
+  inset:5px;
+  border:1px solid currentColor;
+  border-radius:7px;
+  opacity:.30;
+  z-index:2;
+}
+.card-frame::before,
+.card-frame::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:18px;
+  height:1px;
+  background:currentColor;
+  transform:translateX(-50%);
+  opacity:.42;
+}
+.card-frame::before{top:2px}
+.card-frame::after{bottom:2px}
+
+.card-corner{
+  position:absolute;
+  width:18px;
+  height:18px;
+  z-index:8;
+  opacity:.92;
+  filter:drop-shadow(0 0 3px currentColor);
+}
+.card-corner svg{width:100%;height:100%;display:block}
+.card-corner.tl{top:4px;left:4px}
+.card-corner.tr{top:4px;right:4px;transform:scaleX(-1)}
+.card-corner.bl{bottom:4px;left:4px;transform:scaleY(-1)}
+.card-corner.br{bottom:4px;right:4px;transform:scale(-1,-1)}
+
+.card-flourish{
+  position:absolute;
+  top:50%;
+  width:8px;
+  height:28px;
+  transform:translateY(-50%);
+  opacity:.09;
+  border:1px solid currentColor;
+  border-radius:50%;
+}
+.card-flourish.left{left:9px;border-right:0}
+.card-flourish.right{right:9px;border-left:0}
+
+/* SHADOW */
+.card.n1,.card.n2{
+  color:#d8dcdf;
+  border-color:#c8cdd2;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(206,212,218,.11),transparent 39%),
+    linear-gradient(145deg,#191d22,#050608 72%);
+  box-shadow:
+    inset 0 0 20px rgba(206,212,218,.035),
+    inset 0 -25px 36px rgba(0,0,0,.42),
+    0 7px 16px rgba(0,0,0,.46)
+}
+
+/* EMBER */
+.card.n3,.card.n4{
+  color:#ff4038;
+  border-color:#ff3c34;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(255,55,45,.19),transparent 40%),
+    linear-gradient(145deg,#300909,#080506 72%);
+  box-shadow:
+    inset 0 0 23px rgba(255,50,40,.07),
+    inset 0 -25px 36px rgba(0,0,0,.42),
+    0 0 9px rgba(255,45,35,.07),
+    0 7px 16px rgba(0,0,0,.46)
+}
+
+/* NATURE */
+.card.n5,.card.n6{
+  color:#2be362;
+  border-color:#2de45f;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(36,222,91,.17),transparent 40%),
+    linear-gradient(145deg,#062710,#040b07 72%);
+  box-shadow:
+    inset 0 0 23px rgba(24,210,76,.07),
+    inset 0 -25px 36px rgba(0,0,0,.42),
+    0 0 9px rgba(24,210,76,.065),
+    0 7px 16px rgba(0,0,0,.46)
+}
+
+/* VOID */
+.card.n7,.card.n8{
+  color:#ad57ff;
+  border-color:#ad57ff;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(157,69,255,.20),transparent 40%),
+    linear-gradient(145deg,#1f0b32,#07050b 72%);
+  box-shadow:
+    inset 0 0 24px rgba(152,67,255,.08),
+    inset 0 -25px 36px rgba(0,0,0,.42),
+    0 0 9px rgba(152,67,255,.075),
+    0 7px 16px rgba(0,0,0,.46)
+}
+
+.card.stolen{
+  border:2px solid #ffc72d;
+  box-shadow:0 0 18px rgba(255,199,45,.25),0 7px 16px rgba(0,0,0,.46)
+}
+.stolen-mark{
+  position:absolute;
+  top:4px;
+  right:5px;
+  z-index:10;
+  font-size:8px;
+  font-weight:1000;
+  color:#ffd55d;
+  border:1px solid #ffc72d;
+  border-radius:5px;
+  padding:2px 3px;
+  background:#241b04
+}
+
+/* ============================================================
+   DISCARD — MATCHES THE REAL CARD DESIGN
+============================================================ */
+.discard{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:8px;
+  min-height:41px
+}
+.discard-chip{
+  width:36px;
+  height:46px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  border-radius:6px;
+  color:#edf0f3;
+  font-size:16px;
+  font-weight:1000;
+  border:1px solid currentColor;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    inset 0 -11px 15px rgba(0,0,0,.35),
+    0 3px 7px rgba(0,0,0,.34)
+}
+.discard-chip::after{
+  content:"";
+  position:absolute;
+  inset:3px;
+  border:1px solid currentColor;
+  border-radius:4px;
+  opacity:.22
+}
+.discard-chip.empty{
+  width:auto;height:auto;padding:6px 9px;
+  color:#7f8994;background:#11171e;border-color:#343f4a
+}
+.discard-chip.empty::after{display:none}
+.mini-crown{
+  position:absolute;
+  top:1px;
+  left:50%;
+  width:13px;
+  height:7px;
+  transform:translateX(-50%);
+  z-index:2
+}
+.mini-emblem{
+  position:absolute;
+  bottom:2px;
+  left:50%;
+  width:11px;
+  height:11px;
+  transform:translateX(-50%);
+  z-index:2
+}
+.mini-corner{
+  position:absolute;
+  width:7px;
+  height:7px;
+  z-index:3;
+  opacity:.82;
+  filter:drop-shadow(0 0 1px currentColor)
+}
+.mini-corner svg{width:100%;height:100%;display:block}
+.mini-corner.tl{top:1px;left:1px}
+.mini-corner.tr{top:1px;right:1px;transform:scaleX(-1)}
+.mini-corner.bl{bottom:1px;left:1px;transform:scaleY(-1)}
+.mini-corner.br{bottom:1px;right:1px;transform:scale(-1,-1)}
+.discard-chip.n1,.discard-chip.n2{
+  color:#d9dde1;background:linear-gradient(145deg,#181c21,#050608)
+}
+.discard-chip.n3,.discard-chip.n4{
+  color:#ff4740;background:linear-gradient(145deg,#300909,#080506)
+}
+.discard-chip.n5,.discard-chip.n6{
+  color:#2fe567;background:linear-gradient(145deg,#062710,#040b07)
+}
+.discard-chip.n7,.discard-chip.n8{
+  color:#b05cff;background:linear-gradient(145deg,#1f0b32,#07050b)
+}
+.recovery-info{
+  margin-top:10px;
+  color:#ffc934;
+  font-size:12px;
+  font-weight:bold
+}
+
+/* ============================================================
+   SPECIAL CARDS — TARGET-STYLE ORNATE FRAMES
+============================================================ */
+.specials{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:8px
+}
+.special{
+  min-height:96px;
+  padding:10px;
+  border-radius:10px;
+  color:white;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:50px 1fr;
+  column-gap:9px;
+  align-items:center;
+  border:1px solid currentColor;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    inset 0 -20px 31px rgba(0,0,0,.29),
+    0 5px 13px rgba(0,0,0,.36);
+}
+.special::before,
+.special::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:1
+}
+/* Four ornate corners + subtle inner frame */
+.special::before{
+  inset:5px;
+  border:1px solid color-mix(in srgb,currentColor 25%,transparent);
+  border-radius:7px;
+  background:
+    linear-gradient(135deg,currentColor 0 2px,transparent 2px) top left/13px 13px no-repeat,
+    linear-gradient(225deg,currentColor 0 2px,transparent 2px) top right/13px 13px no-repeat,
+    linear-gradient(45deg,currentColor 0 2px,transparent 2px) bottom left/13px 13px no-repeat,
+    linear-gradient(315deg,currentColor 0 2px,transparent 2px) bottom right/13px 13px no-repeat;
+  opacity:.65
+}
+.special::after{
+  inset:0;
+  background:
+    radial-gradient(circle at 8px 8px,currentColor 0 1px,transparent 1.5px),
+    radial-gradient(circle at calc(100% - 8px) 8px,currentColor 0 1px,transparent 1.5px),
+    radial-gradient(circle at 8px calc(100% - 8px),currentColor 0 1px,transparent 1.5px),
+    radial-gradient(circle at calc(100% - 8px) calc(100% - 8px),currentColor 0 1px,transparent 1.5px);
+  opacity:.6
+}
+.special-icon{
+  grid-column:1;
+  grid-row:1 / span 2;
+  width:49px;
+  height:62px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,255,255,.055),transparent 45%),
+    rgba(0,0,0,.31);
+  border:1px solid currentColor;
+  box-shadow:
+    inset 0 0 17px rgba(0,0,0,.38),
+    0 0 10px color-mix(in srgb,currentColor 14%,transparent);
+  position:relative;
+  z-index:2;
+  padding:6px
+}
+.special-copy{grid-column:2;min-width:0;position:relative;z-index:2}
+.special-title{
+  display:block;
+  font-size:13px;
+  line-height:1.1;
+  font-weight:1000;
+  letter-spacing:.35px;
+  margin-bottom:5px;
+  text-shadow:0 0 8px currentColor
+}
+.special-desc{
+  display:block;
+  color:#c8cfd6;
+  font-size:10px;
+  line-height:1.3;
+  font-weight:600
+}
+.trap-button{
+  color:#ff3f3f;
+  background:
+    radial-gradient(circle at 17% 50%,rgba(230,31,31,.18),transparent 27%),
+    radial-gradient(circle at 70% 50%,rgba(160,18,18,.052),transparent 54%),
+    linear-gradient(145deg,#25090c,#080b0f 70%)
+}
+.steal-button{
+  color:#f4c12f;
+  background:
+    radial-gradient(circle at 17% 50%,rgba(226,176,35,.16),transparent 27%),
+    radial-gradient(circle at 70% 50%,rgba(214,163,29,.044),transparent 54%),
+    linear-gradient(145deg,#221a06,#080b0f 70%)
+}
+.lock-button{
+  color:#ff9b32;
+  background:
+    radial-gradient(circle at 17% 50%,rgba(240,132,28,.16),transparent 27%),
+    radial-gradient(circle at 70% 50%,rgba(211,111,23,.044),transparent 54%),
+    linear-gradient(145deg,#251407,#080b0f 70%)
+}
+.double-button{
+  color:#44d9f4;
+  background:
+    radial-gradient(circle at 17% 50%,rgba(40,196,231,.17),transparent 27%),
+    radial-gradient(circle at 70% 50%,rgba(34,180,220,.044),transparent 54%),
+    linear-gradient(145deg,#061d25,#080b0f 70%)
+}
+.special:disabled{
+  border-color:#303943;
+  color:#505861;
+  opacity:.42;
+  filter:saturate(.45)
+}
+.special:disabled .special-desc{color:#555d66}
+
+.actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}
+.action{border:0;padding:13px;border-radius:10px;font-weight:900}
+.pass{background:#5a2727;color:#ffb2b2}
+.pass:disabled{background:#1b2026;color:#555e67}
+
+/* MODALS */
+.modal{
+  position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.94);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.modal-box{
+  width:100%;max-width:390px;text-align:center;border:1px solid #3a4653;
+  background:#0b1118;border-radius:22px;padding:25px 20px
+}
+.modal-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#55e879
+}
+.modal-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.recovery-timer{
+  width:58px;height:58px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid #2d3945;background:#0d141b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#ffd45d
+}
+.recovery-timer.danger{color:#ff5757;border-color:#7b2d2d}
+.modal-title{font-size:27px;font-weight:900}
+.modal-desc{
+  color:#9ba6b1;margin:13px 0 20px;line-height:1.5;font-size:14px;white-space:pre-line
+}
+.confirm{
+  width:100%;padding:15px;border:0;border-radius:11px;background:#238f3e;
+  color:white;font-weight:900;font-size:16px;margin-top:15px
+}
+.confirm:disabled{background:#252c33;color:#5b636b}
+.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.choice-card,.recover-card{
+  height:76px;
+  border-radius:10px;
+  background:#111820;
+  border:1px solid #596674;
+  color:white;
+  font-size:25px;
+  font-weight:900;
+  position:relative;
+  overflow:hidden;
+  padding:0;
+  isolation:isolate
+}
+.choice-card.n1,.choice-card.n2,.recover-card.n1,.recover-card.n2{
+  color:#d9dde1;border-color:#c8cdd2;
+  background:radial-gradient(circle at 50% 50%,rgba(206,212,218,.10),transparent 43%),linear-gradient(145deg,#181c21,#050608)
+}
+.choice-card.n3,.choice-card.n4,.recover-card.n3,.recover-card.n4{
+  color:#ff4038;border-color:#ff3c34;
+  background:radial-gradient(circle at 50% 50%,rgba(255,55,45,.16),transparent 43%),linear-gradient(145deg,#300909,#080506)
+}
+.choice-card.n5,.choice-card.n6,.recover-card.n5,.recover-card.n6{
+  color:#2be362;border-color:#2de45f;
+  background:radial-gradient(circle at 50% 50%,rgba(36,222,91,.14),transparent 43%),linear-gradient(145deg,#062710,#040b07)
+}
+.choice-card.n7,.choice-card.n8,.recover-card.n7,.recover-card.n8{
+  color:#ad57ff;border-color:#ad57ff;
+  background:radial-gradient(circle at 50% 50%,rgba(157,69,255,.17),transparent 43%),linear-gradient(145deg,#1f0b32,#07050b)
+}
+.choice-inner{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.choice-frame{
+  position:absolute;
+  inset:4px;
+  border:1px solid currentColor;
+  border-radius:6px;
+  opacity:.24
+}
+.choice-crown{
+  position:absolute;
+  top:3px;
+  left:50%;
+  width:18px;
+  height:9px;
+  transform:translateX(-50%)
+}
+.choice-emblem{
+  position:absolute;
+  bottom:3px;
+  left:50%;
+  width:14px;
+  height:13px;
+  transform:translateX(-50%)
+}
+.choice-number{
+  position:relative;
+  z-index:3;
+  color:white;
+  font-size:25px;
+  font-weight:1000
+}
+.choice-corner{
+  position:absolute;
+  width:11px;
+  height:11px;
+  filter:drop-shadow(0 0 2px currentColor)
+}
+.choice-corner svg{width:100%;height:100%;display:block}
+.choice-corner.tl{top:3px;left:3px}
+.choice-corner.tr{top:3px;right:3px;transform:scaleX(-1)}
+.choice-corner.bl{bottom:3px;left:3px;transform:scaleY(-1)}
+.choice-corner.br{bottom:3px;right:3px;transform:scale(-1,-1)}
+
+.choice-card.selected{
+  border-width:2px;
+  box-shadow:0 0 14px currentColor,inset 0 0 16px color-mix(in srgb,currentColor 14%,transparent)
+}
+.sacrifice-choice.selected{border-color:#ff5050}
+.steal-choice.selected{border-color:#ffc72d}
+.lock-choice.selected{border-color:#ff9d32}
+.double-choice.selected{border-color:#52d9ff}
+.recover-card.selected{
+  border:2px solid #44e76c;
+  box-shadow:0 0 14px rgba(68,231,108,.25)
+}
+.event-icon{
+  width:72px;
+  height:72px;
+  margin:0 auto 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.event-icon svg{width:100%;height:100%;display:block}
+.event-title{font-size:29px;font-weight:900}
+
+.modal-title.with-custom-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px
+}
+.modal-title-icon{
+  width:32px;
+  height:32px;
+  flex:0 0 32px
+}
+.modal-title-icon svg{width:100%;height:100%;display:block}
+
+.wait-box{font-size:16px;color:#aeb8c3;line-height:1.5}
+.disconnect-box{border-color:#6d3940}
+.disconnect-count{
+  width:72px;
+  height:72px;
+  margin:15px auto;
+  border:3px solid #883840;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#140b0e;
+  color:#ff6269;
+  font-size:29px;
+  font-weight:1000;
+  box-shadow:0 0 18px rgba(255,80,90,.10)
+}
+
+/* ===== v0.9.41 SHOP REDESIGN ===== */
+.shop-mode-card{
+  border-color:#d49a2a !important;
+  background:
+    radial-gradient(circle at 12% 50%,rgba(255,197,51,.14),transparent 27%),
+    linear-gradient(135deg,#2b1c06 0%,#16130e 46%,#0c1016 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,211,100,.035),
+    inset 0 -18px 26px rgba(0,0,0,.25),
+    0 0 14px rgba(255,184,39,.06) !important;
+}
+.shop-mode-card:active{transform:scale(.985)}
+.shop-menu-icon{
+  width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex:0 0 64px;
+  filter:drop-shadow(0 0 10px rgba(255,191,39,.25))
+}
+.shop-menu-icon svg{width:55px;height:55px}
+.shop-menu-copy{display:flex;align-items:center;min-width:0}
+.shop-menu-copy b{font-size:22px;font-weight:1000;letter-spacing:.5px}
+
+.crown-shop-coming{
+  margin:5px 0 18px;color:#f4bf34;font-size:13px;font-weight:1000;letter-spacing:2px
+}
+.crown-shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.crown-shop-card{
+  position:relative;min-height:190px;border-radius:16px;padding:14px 8px 13px;
+  background:radial-gradient(circle at 50% 24%,var(--shop-glow),transparent 47%),linear-gradient(180deg,#101821,#080d13 75%);
+  border:1px solid var(--shop-edge);text-align:center;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),inset 0 -22px 30px rgba(0,0,0,.25)
+}
+.crown-shop-card::after{
+  content:"";position:absolute;inset:6px;border:1px solid rgba(255,255,255,.035);border-radius:11px;pointer-events:none
+}
+.crown-shop-crown{
+  position:relative;z-index:2;height:100px;display:flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 0 12px var(--shop-glow))
+}
+.crown-shop-crown svg{width:112px;height:92px;overflow:visible}
+.crown-shop-name{position:relative;z-index:2;margin-top:2px;font-size:14px;font-weight:1000;letter-spacing:1.2px;color:#fff}
+.crown-shop-lock{
+  position:relative;z-index:2;margin-top:10px;display:inline-flex;align-items:center;justify-content:center;
+  min-width:72px;height:30px;border-radius:8px;border:1px solid #34414e;background:#0a1017;color:#7d8995;font-size:16px
+}
+.shop-basic{--shop-glow:rgba(255,190,28,.26);--shop-edge:#8f6a20}
+.shop-shadow{--shop-glow:rgba(54,156,255,.31);--shop-edge:#246da8}
+.shop-nature{--shop-glow:rgba(35,224,97,.30);--shop-edge:#21894a}
+.shop-ember{--shop-glow:rgba(255,61,43,.31);--shop-edge:#a22d25}
+.shop-void{--shop-glow:rgba(165,72,255,.34);--shop-edge:#6d2ba0}
+.shop-legendary{--shop-glow:rgba(255,208,67,.33);--shop-edge:#9b7a2c}
+@media(max-width:390px){
+  .crown-shop-grid{gap:9px}
+  .crown-shop-card{min-height:181px;padding-left:6px;padding-right:6px}
+  .crown-shop-crown svg{width:104px;height:86px}
+}
+
+/* ===== v0.9.42 VISUAL CONSISTENCY PASS ===== */
+.menu-art-icon{
+  width:66px;
+  height:66px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 66px;
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.10));
+}
+.menu-art-icon svg{width:58px;height:58px;display:block}
+.menu-art-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.menu-art-copy b{font-size:22px;font-weight:1000;letter-spacing:.4px}
+.menu-art-copy span{font-size:13px;color:#c7d0d8;margin-top:3px}
+
+.online-choice-art{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 58px;
+}
+.online-choice-art svg{width:54px;height:54px;display:block}
+
+.basic-crown-inline{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  vertical-align:middle;
+  width:29px;
+  height:24px;
+  margin:0 1px;
+  filter:drop-shadow(0 0 4px rgba(255,194,44,.25));
+}
+.basic-crown-inline svg{width:100%;height:100%;display:block}
+.basic-crown-inline.small{width:23px;height:19px}
+.basic-crown-inline.large{width:68px;height:56px}
+
+.crown-score-wrap{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  white-space:nowrap;
+}
+.crown-empty-star{
+  color:#e7edf2;
+  font-size:27px;
+  line-height:1;
+  text-shadow:0 0 3px rgba(255,255,255,.08);
+}
+
+.modal-title-icon.basic-crown-modal{
+  width:42px;
+  height:36px;
+  flex:0 0 42px;
+}
+.modal-title-icon.basic-crown-modal svg{width:100%;height:100%;display:block}
+
+/* make SHOP align exactly like other main menu rows */
+.shop-mode-card{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:20px !important;
+  text-align:left !important;
+}
+.shop-menu-icon{
+  width:66px !important;
+  height:66px !important;
+  flex:0 0 66px !important;
+}
+.shop-menu-icon svg{width:58px!important;height:58px!important}
+.shop-menu-copy b{font-size:22px!important}
+</style>
+</head>
+
+<body>
+
+<!-- LOBBY -->
+<div class="lobby-wrap" id="lobbyScreen">
+  <div class="lobby-card">
+
+    <div id="mainMenu">
+      <div class="brand-crown">👑</div>
+      <div class="logo">CLASH <span>10</span></div>
+      <div class="brand-tagline">THE ULTIMATE <b>1v1</b> CARD BATTLE</div>
+      <div class="brand-subline">IQ. STRATEGY. TIMING.</div>
+      <div class="spark-line"></div>
+
+      <input
+        class="menu-name"
+        id="nameInput"
+        maxlength="12"
+        placeholder="YOUR NICKNAME"
+        autocomplete="off"
+        autocapitalize="words"
+      >
+
+      <button class="menu-btn menu-online" onclick="openOnlineMenu()">
+        <div class="menu-art-icon"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mOnline" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe9ff"/><stop offset=".55" stop-color="#4aa8f7"/><stop offset="1" stop-color="#1465b7"/></linearGradient></defs><circle cx="26" cy="27" r="10" fill="url(#mOnline)" stroke="#d9f4ff" stroke-width="1.5"/><circle cx="47" cy="27" r="10" fill="url(#mOnline)" stroke="#d9f4ff" stroke-width="1.5"/><path d="M9 58 C11 45 18 40 27 40 C35 40 41 45 43 58 Z" fill="url(#mOnline)"/><path d="M31 58 C33 45 40 40 48 40 C57 40 64 45 66 58 Z" fill="url(#mOnline)" opacity=".82"/><path d="M31 35 L41 35" stroke="#dff7ff" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <div class="menu-art-copy"><b>PLAY ONLINE</b><span>Play vs real players</span></div>
+      </button>
+
+      
+      <button class="menu-btn menu-normal shop-mode-card" onclick="openCrownShop()">
+        <div class="menu-art-icon"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mShop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a5"/><stop offset=".38" stop-color="#ffc83a"/><stop offset="1" stop-color="#9d6100"/></linearGradient></defs><path d="M20 25 H52 L56 59 H16 Z" fill="url(#mShop)" stroke="#ffe27a" stroke-width="2.3"/><path d="M26 27 C26 14 46 14 46 27" fill="none" stroke="#ffe27a" stroke-width="4" stroke-linecap="round"/><path d="M25 40 H47 M29 49 H43" stroke="#7d4a00" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+        <div class="menu-art-copy"><b>SHOP</b></div>
+      </button>
+<button class="menu-btn menu-normal" onclick="startBotGame('normal')">
+        <div class="menu-art-icon"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mBotN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be8ff"/><stop offset=".55" stop-color="#4c8fff"/><stop offset="1" stop-color="#7648d8"/></linearGradient></defs><rect x="13" y="19" width="46" height="39" rx="10" fill="url(#mBotN)" stroke="#c7efff" stroke-width="2"/><path d="M36 19 V10 M31 9 H41" stroke="#c7efff" stroke-width="3" stroke-linecap="round"/><circle cx="27" cy="36" r="5" fill="#07131e"/><circle cx="45" cy="36" r="5" fill="#07131e"/><circle cx="27" cy="36" r="2" fill="#8ef3ff"/><circle cx="45" cy="36" r="2" fill="#8ef3ff"/><path d="M25 48 H47" stroke="#07131e" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <div class="menu-art-copy"><b>PLAY VS NORMAL BOT</b><span>Test your skills</span></div>
+      </button>
+
+      <button class="menu-btn menu-hard" onclick="startBotGame('hard')">
+        <div class="menu-art-icon"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mBotH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff845d"/><stop offset=".48" stop-color="#ff3b34"/><stop offset="1" stop-color="#811016"/></linearGradient></defs><path d="M14 25 L22 12 L30 21 H42 L50 12 L58 25 V54 Q58 61 50 61 H22 Q14 61 14 54Z" fill="url(#mBotH)" stroke="#ffb09b" stroke-width="2"/><path d="M24 36 L31 39 L24 42 M48 36 L41 39 L48 42" fill="none" stroke="#25070a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 51 H46" stroke="#25070a" stroke-width="3" stroke-linecap="round"/><circle cx="36" cy="8" r="3" fill="#ffd35a"/></svg></div>
+        <div class="menu-art-copy"><b>PLAY VS HARD BOT</b><span>Are you ready?</span></div>
+      </button>
+
+      <div class="menu-small-row">
+        <button class="menu-small" onclick="openComingSoonInstructions()">📖 &nbsp; HOW TO PLAY</button>
+        <button class="menu-small" onclick="openInfoModal('settings')">⚙️ &nbsp; SETTINGS</button>
+      </div>
+
+      <div class="version">v0.9.42</div>
+    </div>
+
+    <div id="lobbyForm" class="hidden online-panel">
+      <div class="online-title">🌐 PLAY ONLINE</div>
+      <div class="online-sub">Create a private room or enter your friend's 6-digit room code.</div>
+
+      <button class="menu-btn menu-ranked" disabled>
+        <div class="online-choice-art"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mRank" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a7"/><stop offset=".45" stop-color="#ffc936"/><stop offset="1" stop-color="#a15f00"/></linearGradient></defs><path d="M22 14 H50 V29 Q50 43 36 48 Q22 43 22 29Z" fill="url(#mRank)" stroke="#ffe17a" stroke-width="2"/><path d="M22 19 H13 V25 Q13 35 24 37 M50 19 H59 V25 Q59 35 48 37" fill="none" stroke="#ffd85d" stroke-width="4" stroke-linecap="round"/><path d="M36 48 V57 M26 60 H46" stroke="#ffd85d" stroke-width="4" stroke-linecap="round"/><path d="M36 21 L39 28 L47 29 L41 34 L43 42 L36 38 L29 42 L31 34 L25 29 L33 28Z" fill="#fff1a3"/></svg></div>
+        <div><b>RANKED</b><span>🏆</span></div>
+      </button>
+
+      <button class="menu-btn menu-create" onclick="createRoom()">
+        <div class="online-choice-art"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mCreate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9de7ff"/><stop offset=".5" stop-color="#3a9fe4"/><stop offset="1" stop-color="#195b97"/></linearGradient></defs><path d="M18 10 H48 Q52 10 52 14 V61 H18Z" fill="url(#mCreate)" stroke="#d1f3ff" stroke-width="2"/><path d="M29 17 H44 V54 H29Z" fill="#0b1824" opacity=".55"/><circle cx="42" cy="36" r="2.4" fill="#e7fbff"/><path d="M52 23 H62 M57 18 V28" stroke="#8ce8ff" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <div><b>CREATE ROOM</b><span>🚪</span></div>
+      </button>
+
+      <input class="room-input" id="roomInput" maxlength="6" inputmode="numeric" placeholder="000000">
+
+      <button class="menu-btn menu-join" onclick="joinRoom()">
+        <div class="online-choice-art"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="mJoin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9b8ff"/><stop offset=".5" stop-color="#7f65ff"/><stop offset="1" stop-color="#4930ae"/></linearGradient></defs><path d="M20 11 H50 Q54 11 54 15 V60 H20Z" fill="url(#mJoin)" stroke="#e8e1ff" stroke-width="2"/><path d="M31 18 H46 V53 H31Z" fill="#0b1020" opacity=".55"/><circle cx="44" cy="36" r="2.4" fill="#f2eeff"/><path d="M7 36 H35 M27 28 L35 36 L27 44" fill="none" stroke="#e6dcff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><b>JOIN GAME</b><span>↪️</span></div>
+      </button>
+
+      <button class="back-menu" onclick="backToMainMenu()">← BACK TO MAIN MENU</button>
+    </div>
+
+    <div id="roomPanel" class="hidden online-panel">
+      <div class="online-title">⚔️ GAME LOBBY</div>
+      <div class="room-label">ROOM CODE</div>
+      <div class="room-code" id="roomCode">------</div>
+
+      <div class="presence-grid">
+        <div class="presence-box" id="p1Box">
+          <div class="presence-name" id="p1Name">PLAYER 1</div>
+          <div class="presence-state" id="p1State">Waiting...</div>
+        </div>
+        <div class="presence-box" id="p2Box">
+          <div class="presence-name" id="p2Name">PLAYER 2</div>
+          <div class="presence-state" id="p2State">Waiting...</div>
+        </div>
+      </div>
+
+      <div class="wait" id="waitText">Waiting for second player...</div>
+
+      <button class="lobby-btn start" id="startButton" onclick="startGame()" disabled>
+        START CLASH 10
+      </button>
+
+      <div class="lobby-status" id="lobbyStatus">Connecting...</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="info-modal hidden" id="infoModal">
+  <div class="info-box">
+    <div id="infoContent"></div>
+    <button class="info-close" onclick="closeInfoModal()">CLOSE</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="game hidden" id="gameScreen">
+  <div class="game-topbar">
+    <div class="game-audio-controls">
+      <button class="game-audio-btn" id="gameMusicBtn" onclick="toggleMusic()" aria-label="Toggle music">M</button>
+      <button class="game-audio-btn" id="gameSfxBtn" onclick="toggleSfx()" aria-label="Toggle sound effects">SFX</button>
+    </div>
+  </div>
+  <div class="logo">CLASH <span>10</span></div>
+
+  <div class="player opponent">
+    <div class="row">
+      <div class="name" id="opponentName">OPPONENT</div>
+      <div class="crowns" id="opponentCrowns">☆☆☆</div>
+    </div>
+    <div class="mini">AVAILABLE CARDS</div>
+    <div class="card-backs" id="opponentCards"></div>
+  </div>
+
+  <div class="arena">
+    <div class="scoreboard">
+      <div class="stat">
+        <div class="label">TARGET</div>
+        <div class="target" id="target">18</div>
+      </div>
+      <div class="stat">
+        <div class="label">TOTAL</div>
+        <div class="total" id="total">0</div>
+      </div>
+    </div>
+
+    <div class="turn" id="turnText">YOUR TURN</div>
+
+    <div class="table-play-area">
+      <div class="table-play-slot">
+        <div class="table-play-label">YOU PLAYED</div>
+        <div class="table-card">
+          <span class="table-card-frame"></span>
+          <span class="table-card-orbit"></span>
+          <span class="table-card-symbol"><span></span></span>
+          <span class="table-card-gem tl"></span>
+          <span class="table-card-gem tr"></span>
+          <span class="table-card-gem bl"></span>
+          <span class="table-card-gem br"></span>
+          <span id="myLastPlay">—</span>
+        </div>
+      </div>
+
+      <div class="table-timer-wrap">
+        <div class="table-timer-label">TIME</div>
+        <div class="timer" id="turnTimer">20</div>
+      </div>
+
+      <div class="table-play-slot">
+        <div class="table-play-label" id="enemyPlayLabel">OPPONENT</div>
+        <div class="table-card">
+          <span class="table-card-frame"></span>
+          <span class="table-card-orbit"></span>
+          <span class="table-card-symbol"><span></span></span>
+          <span class="table-card-gem tl"></span>
+          <span class="table-card-gem tr"></span>
+          <span class="table-card-gem bl"></span>
+          <span class="table-card-gem br"></span>
+          <span id="enemyLastPlay">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning trap-warning" id="trapWarning">
+      ACTIVE TRAP — one of your ORIGINAL cards is trapped.
+    </div>
+
+    <div class="warning lock-warning" id="lockWarning">
+      ACTIVE LOCK — one ORIGINAL card is locked this turn.
+    </div>
+
+    <div class="message" id="message">Choose a number card.</div>
+  </div>
+
+  <div class="player me">
+    <div class="row">
+      <div class="name">YOU</div>
+      <div class="crowns" id="myCrowns">☆☆☆</div>
+    </div>
+
+    <div class="mini">NUMBER CARDS</div>
+    <div class="hand" id="hand"></div>
+
+    <div class="mini">DISCARD</div>
+    <div class="discard" id="discard"></div>
+
+    <div class="recovery-info" id="recoveryInfo"></div>
+
+    <div class="mini">SPECIAL CARDS</div>
+    <div class="specials">
+      <button class="special trap-button" id="trapButton" onclick="openTrapModal()">
+        <span class="special-icon">
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <defs><radialGradient id="trapGlow"><stop offset="0" stop-color="#ff5252" stop-opacity=".45"/><stop offset="1" stop-color="#ff2525" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="36" cy="36" r="30" fill="url(#trapGlow)" opacity=".35"/>
+    <g fill="none" stroke="#ff3a3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 36 C18 21 28 17 36 17 C44 17 54 21 64 36 C54 51 44 55 36 55 C28 55 18 51 8 36Z"/>
+      <circle cx="36" cy="36" r="12"/>
+      <path d="M36 4V12 M36 60V68 M4 36H12 M60 36H68 M13 13L19 19 M53 53L59 59 M59 13L53 19 M19 53L13 59"/>
+    </g>
+    <circle cx="36" cy="36" r="5" fill="#ff3a3a"/>
+    <circle cx="33.5" cy="33.5" r="1.8" fill="#fff" opacity=".8"/>
+  </svg>
+</span>
+        <span class="special-copy">
+          <span class="special-title" id="trapTitle">TRAP</span>
+          <span class="special-desc">Trap an opponent's card.<br>If triggered, recover 1 card.</span>
+        </span>
+      </button>
+
+      <button class="special steal-button" id="stealButton" onclick="openStealModal()">
+        <span class="special-icon">
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <defs>
+      <linearGradient id="catGold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffe064"/><stop offset=".52" stop-color="#e7ad23"/><stop offset="1" stop-color="#8f5e08"/>
+      </linearGradient>
+    </defs>
+    <path d="M13 25 L23 9 L30 23 Q36 20 42 23 L49 9 L59 25 L58 46 Q56 59 36 63 Q16 59 14 46Z"
+          fill="url(#catGold)" stroke="#ffd65a" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M22 18 L25 27 M50 18 L47 27" stroke="#fff1a0" stroke-opacity=".55" stroke-width="1.5"/>
+    <ellipse cx="27" cy="39" rx="3.2" ry="4.3" fill="#120e07"/>
+    <ellipse cx="45" cy="39" rx="3.2" ry="4.3" fill="#120e07"/>
+    <path d="M33 46 Q36 48 39 46 Q38 52 36 53 Q34 52 33 46Z" fill="#5d3304"/>
+    <path d="M31 53 Q36 57 41 53" fill="none" stroke="#5d3304" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+</span>
+        <span class="special-copy">
+          <span class="special-title" id="stealTitle">STEAL</span>
+          <span class="special-desc">Take 1 card from your opponent's discard.</span>
+        </span>
+      </button>
+
+      <button class="special lock-button" id="lockButton" onclick="openLockModal()">
+        <span class="special-icon">
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <defs>
+      <linearGradient id="lockGold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffd75f"/><stop offset=".55" stop-color="#f09a20"/><stop offset="1" stop-color="#8c4705"/>
+      </linearGradient>
+    </defs>
+    <path d="M23 32V23 C23 13 28 8 36 8 C44 8 49 13 49 23V32"
+          fill="none" stroke="#ffb742" stroke-width="7" stroke-linecap="round"/>
+    <rect x="14" y="29" width="44" height="34" rx="5" fill="url(#lockGold)" stroke="#ffd56b" stroke-width="2"/>
+    <rect x="19" y="34" width="34" height="23" rx="3" fill="none" stroke="#ffe090" stroke-opacity=".32"/>
+    <circle cx="36" cy="43" r="4.5" fill="#1a1005"/>
+    <path d="M33.8 46 H38.2 L40 54 H32Z" fill="#1a1005"/>
+  </svg>
+</span>
+        <span class="special-copy">
+          <span class="special-title" id="lockTitle">LOCK</span>
+          <span class="special-desc">Lock 1 of your opponent's cards for their next turn.</span>
+        </span>
+      </button>
+
+      <button class="special double-button" id="doubleButton" onclick="openDoubleModal()">
+        <span class="special-icon">
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <defs>
+      <linearGradient id="boltCyan" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#b5f8ff"/><stop offset=".38" stop-color="#39d9f8"/><stop offset="1" stop-color="#0794d7"/>
+      </linearGradient>
+    </defs>
+    <path d="M42 5 L14 39 H31 L25 67 L58 29 H40 Z"
+          fill="url(#boltCyan)" stroke="#8ff1ff" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M39 13 L22 35 H35" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"/>
+  </svg>
+</span>
+        <span class="special-copy">
+          <span class="special-title" id="doubleTitle">DOUBLE</span>
+          <span class="special-desc">Play 2 number cards together.</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="actions">
+      <button class="action pass" id="passButton" onclick="passTurn()">PASS</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRAP TARGET -->
+<div class="modal hidden" id="trapModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title with-custom-icon" style="color:#dc83ff">
+  <span class="modal-title-icon" id="trapModalIcon"></span>
+  <span>PLACE TRAP</span>
+</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.</div>
+    <div class="choice-grid" id="trapChoices"></div>
+    <button class="confirm" id="confirmTrap" onclick="goToTrapSacrifice()" disabled>NEXT</button>
+  </div>
+</div>
+
+<!-- TRAP SACRIFICE -->
+<div class="modal hidden" id="sacrificeModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title with-custom-icon" style="color:#ff6666">
+  <span class="modal-title-icon" id="trapSacrificeIcon"></span>
+  <span>PAY THE PRICE</span>
+</div>
+    <div class="modal-desc">Sacrifice one of your own ORIGINAL number cards.
+It goes to your discard and does not count toward Recovery.</div>
+    <div class="choice-grid" id="sacrificeChoices"></div>
+    <button class="confirm" id="confirmSacrifice" onclick="confirmTrapAndSacrifice()" disabled>
+      SACRIFICE & PLACE TRAP
+    </button>
+  </div>
+</div>
+
+<!-- STEAL -->
+<div class="modal hidden" id="stealModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title with-custom-icon" style="color:#ffd24d">
+  <span class="modal-title-icon" id="stealModalIcon"></span>
+  <span>STEAL</span>
+</div>
+    <div class="modal-desc">Take one number from the opponent's discard.
+It costs your whole turn and returns after you play it or when the round ends.</div>
+    <div class="choice-grid" id="stealChoices"></div>
+    <button class="confirm" id="confirmSteal" onclick="confirmSteal()" disabled>STEAL CARD</button>
+  </div>
+</div>
+
+<!-- LOCK -->
+<div class="modal hidden" id="lockModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title with-custom-icon" style="color:#ffbd74">
+  <span class="modal-title-icon" id="lockModalIcon"></span>
+  <span>LOCK</span>
+</div>
+    <div class="modal-desc">Choose one currently available ORIGINAL opponent number.
+It cannot be played on their next turn. LOCK uses your whole turn.</div>
+    <div class="choice-grid" id="lockChoices"></div>
+    <button class="confirm" id="confirmLock" onclick="confirmLock()" disabled>LOCK CARD</button>
+  </div>
+</div>
+
+<!-- DOUBLE -->
+<div class="modal hidden" id="doubleModal">
+  <div class="modal-box">
+    <div class="modal-timer action-timer">20</div>
+    <div class="modal-title with-custom-icon" style="color:#7ee7ff">
+  <span class="modal-title-icon" id="doubleModalIcon"></span>
+  <span>DOUBLE</span>
+</div>
+    <div class="modal-desc">Choose TWO of your ORIGINAL number cards and play them together.
+
+Their combined value must not go above the Target.
+DOUBLE is permanently gone after use.</div>
+    <div class="choice-grid" id="doubleChoices"></div>
+    <button class="confirm" id="confirmDouble" onclick="confirmDouble()" disabled>PLAY BOTH</button>
+  </div>
+</div>
+
+<!-- RECOVERY -->
+<div class="modal hidden" id="recoveryModal">
+  <div class="modal-box">
+    <div class="recovery-timer" id="recoveryTimer">10</div>
+    <div class="modal-title with-custom-icon" id="recoveryTitle">RECOVERY</div>
+    <div class="modal-desc" id="recoveryDesc"></div>
+    <div class="choice-grid" id="recoveryCards"></div>
+    <button class="confirm" id="confirmRecovery" onclick="confirmRecovery()" disabled>CONFIRM</button>
+  </div>
+</div>
+
+<!-- EVENT / WAIT -->
+<div class="modal hidden" id="eventModal">
+  <div class="modal-box">
+    <div class="recovery-timer hidden" id="crownEventTimer">5</div>
+    <div class="event-icon" id="eventIcon"></div>
+    <div class="event-title" id="eventTitle">EVENT</div>
+    <div class="modal-desc" id="eventText"></div>
+    <button class="confirm" id="eventContinueButton" onclick="closeEvent()">CONTINUE</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="disconnectModal">
+  <div class="modal-box disconnect-box">
+    <div class="event-icon" id="disconnectIcon"></div>
+    <div class="event-title">CONNECTION LOST</div>
+    <div class="modal-desc" id="disconnectText">Opponent disconnected.</div>
+    <div class="disconnect-count" id="disconnectCount">25</div>
+    <div class="wait-box">Waiting for opponent to reconnect…</div>
+  </div>
+</div>
+
+<div class="modal hidden" id="waitingModal">
+  <div class="modal-box">
+    <div class="event-icon" id="waitingIcon"></div>
+    <div class="event-title">WAITING</div>
+    <div class="modal-desc wait-box" id="waitingText">Opponent is choosing...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://ukuacndhnuiulknidpbz.supabase.co";
+const SUPABASE_KEY="sb_publishable_jK1ib58XWRsOD3E2bxc04Q_YuYZVdrF";
+const client=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const TARGETS=[18,21,24,27,30];
+const TURN_SECONDS=20;
+const TURN_MS=TURN_SECONDS*1000;
+const MATCH_CROWNS=3;
+const DISCONNECT_GRACE_SECONDS=25;
+const DISCONNECT_GRACE_MS=DISCONNECT_GRACE_SECONDS*1000;
+const RECOVERY_SECONDS=10;
+const RECOVERY_MS=RECOVERY_SECONDS*1000;
+const CROWN_EVENT_SECONDS=5;
+const CROWN_EVENT_MS=CROWN_EVENT_SECONDS*1000;
+const DEADLOCK_EVENT_SECONDS=5;
+const DEADLOCK_EVENT_MS=DEADLOCK_EVENT_SECONDS*1000;
+const TRAP_EVENT_SECONDS=5;
+const TRAP_EVENT_MS=TRAP_EVENT_SECONDS*1000;
+const ICON={
+  crown:String.fromCodePoint(0x1F451),
+  trap:String.fromCodePoint(0x1F480),
+  cat:String.fromCodePoint(0x1F431),
+  fire:String.fromCodePoint(0x1F525),
+  lock:String.fromCodePoint(0x1F512),
+  recycle:String.fromCodePoint(0x267B),
+  trophy:String.fromCodePoint(0x1F3C6),
+  double:String.fromCodePoint(0x26A1)
+};
+
+let channel=null;
+let roomCode=null;
+let myRole=null;
+let myName=null;
+let myId=(crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random());
+let state=null;
+let gameStarted=false;
+
+// Local single-player bot mode.
+let botMode=false;
+const BOT_ROLE="p2";
+let botDifficulty="normal";
+
+function botName(){
+  return botDifficulty==="hard" ? "HARD BOT" : "NORMAL BOT";
+}
+
+let botThinking=false;
+let botActionTimer=null;
+
+let selectedTrap=null;
+let selectedSacrifice=null;
+let selectedSteal=null;
+let selectedLock=null;
+let selectedDouble=[];
+let recoverySelected=[];
+let eventAckNeeded=false;
+let processingEvent=false;
+let timeoutProcessing=false;
+let recoveryTimeoutProcessing=false;
+let crownEventProcessing=false;
+let heartbeatTimer=null;
+let countdownTimer=null;
+
+// AUDIO
+let musicEnabled=localStorage.getItem("clash10_music")!=="off";
+let sfxEnabled=localStorage.getItem("clash10_sfx")!=="off";
+let audioCtx=null;
+let musicTimer=null;
+let musicStep=0;
+let lastSfxSignature=null;
+
+// ONLINE DISCONNECT WATCH
+let disconnectRole=null;
+let disconnectDeadline=null;
+let disconnectForfeitProcessing=false;
+
+function other(role){return role==="p1"?"p2":"p1"}
+
+
+
+function ensureAudio(){
+  if(audioCtx)return audioCtx;
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return null;
+  audioCtx=new AC();
+  return audioCtx;
+}
+
+function resumeAudio(){
+  const ctx=ensureAudio();
+  if(ctx&&ctx.state==="suspended")ctx.resume().catch(()=>{});
+  if(musicEnabled)startMusic();
+}
+
+function synthTone(freq,duration=0.12,type="sine",gainValue=0.04,delay=0,category="sfx"){
+  if(category==="sfx"&&!sfxEnabled)return;
+  if(category==="music"&&!musicEnabled)return;
+
+  const ctx=ensureAudio();
+  if(!ctx)return;
+
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+
+  // iPhone/Safari needed much stronger output than the first audio build.
+  const categoryBoost=category==="music" ? 1.0 : 1.0;
+  const peak=Math.min(.42,Math.max(.0002,gainValue*categoryBoost));
+
+  osc.type=type;
+  osc.frequency.value=freq;
+
+  const start=ctx.currentTime+delay;
+  const end=start+duration;
+
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(peak,start+.012);
+  gain.gain.exponentialRampToValueAtTime(.0001,end);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(start);
+  osc.stop(end+.025);
+}
+
+function playSfx(kind){
+  if(!sfxEnabled)return;
+  resumeAudioContextOnly();
+
+  // Routine actions are intentionally louder in this pass.
+  // Crown/win volume was already good on iPhone, so those stay near v0.9.38.
+  if(kind==="card"){
+    synthTone(210,.085,"triangle",.418,0,"sfx");
+    synthTone(122,.12,"sine",.326,.018,"sfx");
+    synthTone(330,.055,"triangle",.155,.020,"sfx");
+
+  }else if(kind==="trap"){
+    synthTone(155,.18,"sawtooth",.341,0,"sfx");
+    synthTone(93,.25,"sine",.372,.045,"sfx");
+    synthTone(310,.09,"square",.186,.025,"sfx");
+
+  }else if(kind==="steal"){
+    synthTone(430,.095,"triangle",.341,0,"sfx");
+    synthTone(640,.11,"triangle",.372,.055,"sfx");
+    synthTone(820,.08,"sine",.217,.115,"sfx");
+
+  }else if(kind==="lock"){
+    synthTone(255,.095,"square",.279,0,"sfx");
+    synthTone(128,.17,"triangle",.388,.065,"sfx");
+
+  }else if(kind==="double"){
+    synthTone(395,.09,"sawtooth",.279,0,"sfx");
+    synthTone(635,.11,"triangle",.341,.05,"sfx");
+    synthTone(835,.12,"triangle",.310,.115,"sfx");
+
+  }else if(kind==="recovery"){
+    synthTone(330,.12,"sine",.279,0,"sfx");
+    synthTone(440,.12,"sine",.310,.065,"sfx");
+    synthTone(555,.16,"sine",.341,.13,"sfx");
+
+  }else if(kind==="crown"){
+    // Keep crown volume basically where it was in v0.9.38.
+    synthTone(523.25,.14,"triangle",.14,0,"sfx");
+    synthTone(659.25,.15,"triangle",.15,.09,"sfx");
+    synthTone(783.99,.25,"triangle",.18,.18,"sfx");
+    synthTone(1046.5,.16,"sine",.09,.25,"sfx");
+
+  }else if(kind==="deadlock"){
+    synthTone(175,.19,"sawtooth",.326,0,"sfx");
+    synthTone(145,.21,"sawtooth",.341,.105,"sfx");
+
+  }else if(kind==="timeout"){
+    synthTone(190,.13,"square",.310,0,"sfx");
+    synthTone(135,.17,"square",.341,.105,"sfx");
+
+  }else if(kind==="win"){
+    // Keep final win fanfare close to the crown level.
+    synthTone(523.25,.13,"triangle",.15,0,"sfx");
+    synthTone(659.25,.13,"triangle",.15,.08,"sfx");
+    synthTone(783.99,.14,"triangle",.17,.16,"sfx");
+    synthTone(1046.5,.30,"triangle",.18,.25,"sfx");
+  }
+}
+
+function musicNote(){
+  if(!musicEnabled||document.hidden)return;
+
+  const ctx=ensureAudio();
+  if(!ctx||ctx.state!=="running")return;
+
+  // Louder than v0.9.38, but still clearly below the Crown fanfare.
+  const bass=[110,110,130.81,98,110,146.83,130.81,98];
+  const top =[220,261.63,293.66,196,220,293.66,261.63,196];
+  const i=musicStep%bass.length;
+
+  synthTone(bass[i],.48,"sine",.195,0,"music");
+  synthTone(top[i],.23,"triangle",.105,.07,"music");
+
+  if(musicStep%2===0){
+    synthTone(bass[i]/2,.18,"triangle",.075,0,"music");
+  }
+
+  musicStep++;
+}
+
+function startMusic(){
+  if(!musicEnabled)return;
+  resumeAudioContextOnly();
+  if(musicTimer)return;
+  musicNote();
+  musicTimer=setInterval(musicNote,700);
+}
+
+function resumeAudioContextOnly(){
+  const ctx=ensureAudio();
+  if(ctx&&ctx.state==="suspended")ctx.resume().catch(()=>{});
+}
+
+function stopMusic(){
+  if(musicTimer){
+    clearInterval(musicTimer);
+    musicTimer=null;
+  }
+}
+
+function testSfx(){
+  resumeAudioContextOnly();
+  if(!sfxEnabled){
+    sfxEnabled=true;
+    localStorage.setItem("clash10_sfx","on");
+    updateAudioButtons();
+  }
+  playSfx("crown");
+}
+
+function testMusic(){
+  resumeAudioContextOnly();
+  if(!musicEnabled){
+    musicEnabled=true;
+    localStorage.setItem("clash10_music","on");
+    updateAudioButtons();
+  }
+
+  // Play an immediate louder preview so the user knows music works.
+  const preview=[
+    [110,0],[130.81,.20],[146.83,.40],[196,.60]
+  ];
+  preview.forEach(([f,d])=>{
+    synthTone(f,.37,"sine",.15,d,"music");
+    synthTone(f*2,.20,"triangle",.080,d+.05,"music");
+  });
+  startMusic();
+}
+
+function updateAudioButtons(){
+  const pairs=[
+    ["settingsMusicBtn",musicEnabled,"MUSIC"],
+    ["settingsSfxBtn",sfxEnabled,"SFX"],
+    ["gameMusicBtn",musicEnabled,"M"],
+    ["gameSfxBtn",sfxEnabled,"SFX"]
+  ];
+  pairs.forEach(([id,on,label])=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.classList.toggle("on",on);
+    if(id.startsWith("settings"))el.textContent=on?"ON":"OFF";
+    else el.textContent=label+(on?" ✓":"");
+  });
+}
+
+function toggleMusic(){
+  musicEnabled=!musicEnabled;
+  localStorage.setItem("clash10_music",musicEnabled?"on":"off");
+  if(musicEnabled){
+    resumeAudio();
+    startMusic();
+  }else{
+    stopMusic();
+  }
+  updateAudioButtons();
+}
+
+function toggleSfx(){
+  sfxEnabled=!sfxEnabled;
+  localStorage.setItem("clash10_sfx",sfxEnabled?"on":"off");
+  resumeAudioContextOnly();
+  updateAudioButtons();
+  if(sfxEnabled)playSfx("card");
+}
+
+function stateSfxSignature(){
+  if(!state)return "";
+  if(state.winner)return "winner:"+state.winner+":"+(state.winReason||"normal");
+  if(state.event)return "event:"+(state.event.kind||"")+":"+(state.event.title||"")+":"+(state.event.deadline||"");
+  if(state.pendingRecovery)return "recovery:"+state.pendingRecovery.player+":"+state.pendingRecovery.type+":"+state.pendingRecovery.deadline;
+  if(state.notice){
+    const n=state.notice;
+    return "notice:"+(n.type||"")+":"+(n.actor||"")+":"+(n.number||"")+":"+(state.version||0);
+  }
+  return "play:"+JSON.stringify(state.lastPlayed||{})+":"+state.total;
+}
+
+function maybePlayStateSfx(){
+  const sig=stateSfxSignature();
+  if(!sig||sig===lastSfxSignature)return;
+
+  // First render establishes baseline without making a random sound.
+  if(lastSfxSignature===null){
+    lastSfxSignature=sig;
+    return;
+  }
+  lastSfxSignature=sig;
+
+  if(state.winner){
+    playSfx("win");
+    return;
+  }
+  if(state.event){
+    if(state.event.kind==="crown-won")playSfx("crown");
+    else if(state.event.kind==="deadlock")playSfx("deadlock");
+    else if(state.event.kind==="trap-hit")playSfx("trap");
+    return;
+  }
+  if(state.pendingRecovery){
+    playSfx("recovery");
+    return;
+  }
+  if(state.notice){
+    const t=state.notice.type;
+    if(t==="trap-place")playSfx("trap");
+    else if(t==="steal")playSfx("steal");
+    else if(t==="lock")playSfx("lock");
+    else if(t==="double")playSfx("double");
+    else if(t==="timeout"||t==="timeout-empty")playSfx("timeout");
+    return;
+  }
+
+  playSfx("card");
+}
+
+// iPhone/Safari unlocks audio only after a user gesture.
+document.addEventListener("pointerdown",()=>{
+  resumeAudioContextOnly();
+  if(musicEnabled)startMusic();
+},{once:true});
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden)stopMusic();
+  else if(musicEnabled)startMusic();
+});
+
+function openOnlineMenu(){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){
+    alert("Enter your nickname first.");
+    return;
+  }
+  document.getElementById("mainMenu").classList.add("hidden");
+  document.getElementById("lobbyForm").classList.remove("hidden");
+}
+
+function backToMainMenu(){
+  document.getElementById("lobbyForm").classList.add("hidden");
+  document.getElementById("mainMenu").classList.remove("hidden");
+}
+
+function openInfoModal(type){
+  const modal=document.getElementById("infoModal");
+  const content=document.getElementById("infoContent");
+
+  if(type==="how"){
+    content.innerHTML=`
+      <h2>📖 HOW TO PLAY</h2>
+      <p>Reach the exact TARGET to earn a Crown. First player to 3 Crowns wins.</p>
+      <ul>
+        <li>Play number cards without exceeding the TARGET.</li>
+        <li>Only successfully played ORIGINAL cards count toward Recovery.</li>
+        <li>Use TRAP, STEAL, LOCK and DOUBLE to outplay your opponent.</li>
+        <li>PASS is available only when no legal number card can be played.</li>
+        <li>Pay attention: hidden information, Recovery and specials matter.</li>
+      </ul>
+    `;
+  }else{
+    content.innerHTML=`
+      <h2>⚙️ SETTINGS</h2>
+      <p>Audio settings are saved on this device.</p>
+
+      <div class="settings-audio-row">
+        <div>
+          <b>MUSIC</b>
+          <small>Background music</small>
+        </div>
+        <button class="audio-toggle" id="settingsMusicBtn" onclick="toggleMusic()"></button>
+      </div>
+
+      <div class="settings-audio-row">
+        <div>
+          <b>SOUND EFFECTS</b>
+          <small>Cards, specials, Crowns and events</small>
+        </div>
+        <button class="audio-toggle" id="settingsSfxBtn" onclick="toggleSfx()"></button>
+      </div>
+
+      <div class="audio-test-row">
+        <button class="audio-test-btn" onclick="testMusic()">TEST MUSIC</button>
+        <button class="audio-test-btn" onclick="testSfx()">TEST SFX</button>
+      </div>
+    `;
+    updateAudioButtons();
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeInfoModal(){
+  document.getElementById("infoModal").classList.add("hidden");
+}
+
+function sanitizeName(value){
+  return String(value||"")
+    .replace(/[<>]/g,"")
+    .replace(/\s+/g," ")
+    .trim()
+    .slice(0,12);
+}
+
+function displayName(role){
+  if(state&&state.names&&state.names[role]) return state.names[role];
+  if(role===myRole&&myName) return myName;
+  return role==="p1"?"PLAYER 1":"PLAYER 2";
+}
+
+function nameOf(role){
+  return displayName(role);
+}
+
+function freshPlayer(){
+  return {
+    hand:[1,2,3,4,5,6,7,8],
+    discard:[],
+    crowns:0,
+    sinceRecovery:0,
+    trapUsed:false,
+    stealUsed:false,
+    lockUsed:false,
+    doubleUsed:false,
+    specialUsedTarget:null,
+    passUsedTarget:null,
+    stolenCard:null
+  };
+}
+
+function freshState(){
+  return {
+    version:1,
+    updatedAt:Date.now(),
+    current:"p1",
+    turnId:1,
+    turnDeadline:Date.now()+TURN_MS,
+    roundStarter:"p1",
+    targetIndex:0,
+    total:0,
+    lastPlayed:{p1:null,p2:null},
+    consecutivePasses:0,
+    message:"Choose a number card.",
+    phase:"playing",
+    winner:null,
+    winReason:null,
+    names:{p1:"PLAYER 1",p2:"PLAYER 2"},
+    players:{p1:freshPlayer(),p2:freshPlayer()},
+    traps:{p1:null,p2:null},
+    locks:{p1:null,p2:null},
+    pendingRecovery:null,
+    recoveryQueue:[],
+    event:null
+  };
+}
+
+/* ---------------- LOBBY ---------------- */
+
+function setLobbyStatus(text,good=false){
+  const el=document.getElementById("lobbyStatus");
+  el.textContent=text;
+  el.className="lobby-status"+(good?" good":"");
+}
+
+function randomCode(){
+  return String(Math.floor(100000+Math.random()*900000));
+}
+
+function flattenPresence(presenceState){
+  const list=[];
+  Object.values(presenceState).forEach(entries=>entries.forEach(x=>list.push(x)));
+  return list;
+}
+
+function renderPresence(){
+  if(!channel)return;
+  const list=flattenPresence(channel.presenceState());
+  const roles={};
+  list.forEach(p=>{if(p.role)roles[p.role]=p});
+
+  const p1Data=roles.p1||null;
+  const p2Data=roles.p2||null;
+  const p1=!!p1Data,p2=!!p2Data;
+
+  document.getElementById("p1Name").textContent=p1Data&&p1Data.name?p1Data.name:"PLAYER 1";
+  document.getElementById("p2Name").textContent=p2Data&&p2Data.name?p2Data.name:"PLAYER 2";
+
+  document.getElementById("p1State").textContent=p1?"CONNECTED":"Waiting...";
+  document.getElementById("p2State").textContent=p2?"CONNECTED":"Waiting...";
+  document.getElementById("p1Box").classList.toggle("online",p1);
+  document.getElementById("p2Box").classList.toggle("online",p2);
+
+  const both=p1&&p2;
+  document.getElementById("waitText").textContent=
+    both?"Both players connected!":"Waiting for second player...";
+  document.getElementById("startButton").disabled=!(both&&myRole==="p1");
+
+  if(both){
+    setLobbyStatus(
+      myRole==="p1"?"Both players are here. Start when ready.":"Both players are here. Waiting for Player 1.",
+      true
+    );
+  }
+}
+
+async function connectRoom(code,role){
+  roomCode=code;
+  myRole=role;
+
+  document.getElementById("lobbyForm").classList.add("hidden");
+  document.getElementById("roomPanel").classList.remove("hidden");
+  document.getElementById("roomCode").textContent=code;
+
+  channel=client.channel("clash10-live-"+code,{
+    config:{
+      presence:{key:myId},
+      broadcast:{self:false}
+    }
+  });
+
+  channel
+    .on("presence",{event:"sync"},handlePresenceChange)
+    .on("presence",{event:"join"},handlePresenceChange)
+    .on("presence",{event:"leave"},handlePresenceChange)
+    .on("broadcast",{event:"game-start"},packet=>{
+      if(gameStarted)return;
+      state=packet.payload.state;
+      gameStarted=true;
+      enterGame();
+    })
+    .on("broadcast",{event:"state-sync"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    })
+    .on("broadcast",{event:"state-heartbeat"},packet=>{
+      acceptIncomingState(packet.payload.state);
+    });
+
+  channel.subscribe(async status=>{
+    if(status==="SUBSCRIBED"){
+      await channel.track({
+        id:myId,
+        role:myRole,
+        name:myName,
+        joinedAt:Date.now()
+      });
+      setLobbyStatus(role==="p1"?"Room created. Send the code to your friend.":"Joined room "+code+".",true);
+      renderPresence();
+    }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
+      setLobbyStatus("Connection error. Refresh and try again.");
+    }
+  });
+}
+
+function startBotGame(difficulty="normal"){
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+
+  if(!chosen){
+    alert("Enter your nickname first.");
+    return;
+  }
+
+  botMode=true;
+  botDifficulty=difficulty==="hard" ? "hard" : "normal";
+  botThinking=false;
+
+  if(botActionTimer){
+    clearTimeout(botActionTimer);
+    botActionTimer=null;
+  }
+
+  myName=chosen;
+  myRole="p1";
+  roomCode=null;
+  channel=null;
+
+  state=freshState();
+  state.names={
+    p1:chosen,
+    p2:botName()
+  };
+
+  gameStarted=true;
+  enterGame();
+  scheduleBotAction();
+}
+
+async function createRoom(){
+  botMode=false;
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+  myName=chosen;
+  await connectRoom(randomCode(),"p1");
+}
+
+async function joinRoom(){
+  botMode=false;
+  const chosen=sanitizeName(document.getElementById("nameInput").value);
+  if(!chosen){alert("Enter your nickname first.");return}
+
+  const code=document.getElementById("roomInput").value.trim();
+  if(!/^\d{6}$/.test(code)){alert("Enter a 6-digit room code.");return}
+
+  myName=chosen;
+  await connectRoom(code,"p2");
+}
+
+async function startGame(){
+  if(myRole!=="p1")return;
+  const roles=new Set(flattenPresence(channel.presenceState()).map(x=>x.role));
+  if(!roles.has("p1")||!roles.has("p2")){setLobbyStatus("Both players must be connected.");return}
+
+  const presence=flattenPresence(channel.presenceState());
+  const p1Presence=presence.find(x=>x.role==="p1");
+  const p2Presence=presence.find(x=>x.role==="p2");
+
+  state=freshState();
+  state.names={
+    p1:sanitizeName(p1Presence&&p1Presence.name)||"PLAYER 1",
+    p2:sanitizeName(p2Presence&&p2Presence.name)||"PLAYER 2"
+  };
+
+  gameStarted=true;
+
+  await channel.send({
+    type:"broadcast",
+    event:"game-start",
+    payload:{state}
+  });
+
+  enterGame();
+}
+
+function enterGame(){
+  document.getElementById("lobbyScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+  updateAudioButtons();
+  renderGame();
+  startRealtimeSafetyLoops();
+  if(musicEnabled)startMusic();
+}
+
+function acceptIncomingState(incoming){
+  if(!incoming)return;
+
+  const incomingVersion=incoming.version||0;
+  const localVersion=state ? (state.version||0) : -1;
+  const incomingUpdated=incoming.updatedAt||0;
+  const localUpdated=state ? (state.updatedAt||0) : -1;
+
+  // Never allow an older phone state to roll the match backwards.
+  if(
+    !state ||
+    incomingVersion>localVersion ||
+    (incomingVersion===localVersion && incomingUpdated>localUpdated)
+  ){
+    state=incoming;
+    processingEvent=false;
+    timeoutProcessing=false;
+    renderGame();
+  }
+}
+
+function startRealtimeSafetyLoops(){
+  if(heartbeatTimer)clearInterval(heartbeatTimer);
+  if(countdownTimer)clearInterval(countdownTimer);
+
+  // Re-broadcast the newest known state regularly.
+  // If iPhone/Safari misses one Realtime message, the other phone repairs it automatically.
+  heartbeatTimer=setInterval(()=>{
+    if(!gameStarted||!state||!channel)return;
+    channel.send({
+      type:"broadcast",
+      event:"state-heartbeat",
+      payload:{state}
+    }).catch(()=>{});
+  },1200);
+
+  countdownTimer=setInterval(()=>{
+    updateTurnTimer();
+    updateRecoveryTimer();
+    updateCrownEventTimer();
+    checkTurnTimeout();
+    checkRecoveryTimeout();
+    checkCrownEventTimeout();
+    updateDisconnectWatch();
+  },200);
+}
+
+async function syncState(){
+  state.version=(state.version||0)+1;
+  state.updatedAt=Date.now();
+  renderGame();
+
+  if(botMode){
+    scheduleBotAction();
+    return;
+  }
+
+  const packet={
+    type:"broadcast",
+    event:"state-sync",
+    payload:{state}
+  };
+
+  // Send twice a fraction apart; heartbeat remains the long-term backup.
+  await channel.send(packet);
+  setTimeout(()=>{
+    if(channel&&state){
+      channel.send({
+        type:"broadcast",
+        event:"state-sync",
+        payload:{state}
+      }).catch(()=>{});
+    }
+  },180);
+}
+
+/* ---------------- GAME HELPERS ---------------- */
+
+function crownHTML(amount){
+  return renderCrownScore(amount);
+}
+
+function trapAgainst(role){
+  const owner=other(role);
+  const trap=state.traps[owner];
+  return trap&&trap.victim===role?trap:null;
+}
+
+function lockAgainst(role){
+  const owner=other(role);
+  const lock=state.locks[owner];
+  return lock&&lock.victim===role?lock:null;
+}
+
+function clearLockAfterTurn(role){
+  const owner=other(role);
+  if(state.locks[owner]&&state.locks[owner].victim===role){
+    state.locks[owner]=null;
+  }
+}
+
+function beginTurn(role){
+  state.current=role;
+  state.turnId=(state.turnId||0)+1;
+  state.turnDeadline=Date.now()+TURN_MS;
+  setTurnMessage();
+}
+
+function updateTurnTimer(){
+  const el=document.getElementById("turnTimer");
+  if(!el||!state)return;
+
+  const timerActive=
+    state.phase==="playing" &&
+    !state.event &&
+    !state.pendingRecovery &&
+    !!state.turnDeadline;
+
+  const modalTimers=[...document.querySelectorAll(".action-timer")];
+
+  if(!timerActive){
+    el.textContent="--";
+    el.classList.add("paused");
+    el.classList.remove("danger");
+
+    modalTimers.forEach(timer=>{
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    });
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((state.turnDeadline-Date.now())/1000));
+  el.textContent=left;
+  el.classList.remove("paused");
+  el.classList.toggle("danger",left<=5);
+
+  // Same live countdown is visible while choosing TRAP / sacrifice / STEAL / LOCK.
+  modalTimers.forEach(timer=>{
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=5);
+  });
+}
+
+function closeActionModals(){
+  ["trapModal","sacrificeModal","stealModal","lockModal","doubleModal"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.add("hidden");
+  });
+  selectedTrap=null;
+  selectedSacrifice=null;
+  selectedSteal=null;
+  selectedLock=null;
+  selectedDouble=[];
+}
+
+async function checkTurnTimeout(){
+  if(
+    timeoutProcessing ||
+    !state ||
+    state.phase!=="playing" ||
+    state.current!==myRole ||
+    state.pendingRecovery ||
+    state.event ||
+    !state.turnDeadline ||
+    Date.now()<state.turnDeadline
+  ) return;
+
+  timeoutProcessing=true;
+
+  try{
+    const role=myRole;
+    const p=state.players[role];
+
+    closeActionModals();
+
+    // TIME OUT is always a penalty:
+    // discard the lowest ORIGINAL number card still owned by the player.
+    const available=[...(p.hand||[])].sort((a,b)=>a-b);
+
+    state.turnDeadline=null;
+    state.consecutivePasses=0;
+
+    if(available.length>0){
+      const lost=available[0];
+
+      p.hand=p.hand.filter(n=>n!==lost);
+
+      if(!p.discard.includes(lost)){
+        p.discard.push(lost);
+        p.discard.sort((a,b)=>a-b);
+      }
+
+      // Timeout is a penalty discard, NOT a successful play.
+      // Recovery meter intentionally stays unchanged.
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout",
+        actor:role,
+        number:lost
+      };
+
+      state.message="TIME OUT";
+
+    }else{
+      clearLockAfterTurn(role);
+
+      state.notice={
+        type:"timeout-empty",
+        actor:role
+      };
+
+      state.message="TIME OUT";
+    }
+
+    beginTurn(other(role));
+    await syncState();
+
+  }finally{
+    timeoutProcessing=false;
+  }
+}
+
+function playableEntries(role){
+  const p=state.players[role];
+  const activeLock=lockAgainst(role);
+
+  let entries=p.hand
+    .filter(n=>!activeLock||n!==activeLock.number)
+    .map(n=>({number:n,type:"own"}));
+
+  if(p.stolenCard)entries.push({number:p.stolenCard.number,type:"stolen"});
+
+  return entries.filter(x=>state.total+x.number<=TARGETS[state.targetIndex]);
+}
+
+function returnStolen(holder){
+  const item=state.players[holder].stolenCard;
+  if(!item)return;
+  const owner=item.owner,n=item.number;
+  if(!state.players[owner].discard.includes(n)&&!state.players[owner].hand.includes(n)){
+    state.players[owner].discard.push(n);
+  }
+  state.players[holder].stolenCard=null;
+}
+
+function returnAllStolen(){
+  returnStolen("p1");
+  returnStolen("p2");
+}
+
+function canAct(){
+  return state&&state.phase==="playing"&&state.current===myRole&&!state.event&&!state.pendingRecovery;
+}
+
+function canUseSpecial(role){
+  const p=state.players[role];
+  return canAct() && p.specialUsedTarget!==state.targetIndex;
+}
+
+function markSpecialUsed(role){
+  state.players[role].specialUsedTarget=state.targetIndex;
+}
+
+function canPass(role){
+  return playableEntries(role).length===0;
+}
+
+function markPassUsed(role){
+  // PASS is unlimited in v0.9.9.
+  // Kept as a no-op for compatibility with older code paths.
+}
+
+
+function makeRecovery(player,amount,type,extra={}){
+  return {
+    player,
+    amount,
+    type,
+    deadline:Date.now()+RECOVERY_MS,
+    ...extra
+  };
+}
+
+function updateRecoveryTimer(){
+  const rec=state&&state.pendingRecovery;
+  const timer=document.getElementById("recoveryTimer");
+
+  if(!rec||!rec.deadline){
+    if(timer){
+      timer.textContent="--";
+      timer.classList.remove("danger");
+    }
+    return;
+  }
+
+  const left=Math.max(0,Math.ceil((rec.deadline-Date.now())/1000));
+
+  if(timer){
+    timer.textContent=left;
+    timer.classList.toggle("danger",left<=3);
+  }
+
+  // The waiting player can also see how much time the opponent has left.
+  if(rec.player!==myRole){
+    const waiting=document.getElementById("waitingText");
+    if(waiting){
+      waiting.textContent="Opponent is choosing Recovery cards... "+left+"s";
+    }
+  }
+}
+
+
+function updateCrownEventTimer(){
+  const timer=document.getElementById("crownEventTimer");
+  const e=state&&state.event;
+
+  if(
+    !timer ||
+    !e ||
+    (e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit")
+  ){
+    if(timer)timer.classList.add("hidden");
+    return;
+  }
+
+  timer.classList.remove("hidden");
+
+  const left=Math.max(0,Math.ceil(((e.deadline||0)-Date.now())/1000));
+  timer.textContent=left;
+  timer.classList.toggle("danger",left<=2);
+}
+
+async function checkCrownEventTimeout(){
+  const e=state&&state.event;
+
+  if(
+    crownEventProcessing ||
+    !e ||
+    (e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit") ||
+    e.resolveBy!==myRole ||
+    !e.deadline ||
+    Date.now()<e.deadline
+  ) return;
+
+  crownEventProcessing=true;
+
+  try{
+    state.event=null;
+
+    if(e.kind==="crown-won"){
+      // Same single-authority transition as pressing CONTINUE.
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+
+    }else if(e.kind==="deadlock"){
+      // Same exact order as the manual DEADLOCK continue.
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="trap-hit"){
+      // Same exact Trap flow as manual CONTINUE.
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+    }
+
+    await syncState();
+
+  }finally{
+    crownEventProcessing=false;
+  }
+}
+
+async function checkRecoveryTimeout(){
+  const rec=state&&state.pendingRecovery;
+
+  if(
+    recoveryTimeoutProcessing ||
+    !rec ||
+    rec.player!==myRole ||
+    !rec.deadline ||
+    Date.now()<rec.deadline
+  ) return;
+
+  recoveryTimeoutProcessing=true;
+
+  try{
+    document.getElementById("recoveryModal").classList.add("hidden");
+    recoverySelected=[];
+    await finishRecovery(rec,[],true);
+  }finally{
+    recoveryTimeoutProcessing=false;
+  }
+}
+
+async function finishRecovery(rec,selectedCards,timedOut=false){
+  if(!state.pendingRecovery)return;
+
+  const role=rec.player;
+  const p=state.players[role];
+
+  selectedCards.forEach(n=>{
+    p.discard=p.discard.filter(x=>x!==n);
+    if(!p.hand.includes(n))p.hand.push(n);
+  });
+  p.hand.sort((a,b)=>a-b);
+
+  state.pendingRecovery=null;
+
+  if(rec.type==="normal"){
+    p.sinceRecovery=0;
+    clearLockAfterTurn(role);
+    beginTurn(other(role));
+    if(timedOut){
+      state.message="Recovery timed out. No card was recovered.";
+    }
+
+  }else if(rec.type==="crown"){
+    queueNextRecovery("crown");
+
+  }else if(rec.type==="deadlock"){
+    queueNextRecovery("deadlock");
+
+  }else if(rec.type==="trapVictim"){
+    p.sinceRecovery=0;
+    beginTrapReward(rec.afterTrapOwner);
+
+  }else if(rec.type==="trapReward"){
+    beginTurn(role);
+    state.message=timedOut
+      ? ICON.trap+" Trap reward timed out. No card recovered; your normal turn begins."
+      : ICON.trap+" Trap reward recovered a card. You keep your normal turn.";
+  }
+
+  await syncState();
+}
+
+
+/* ---------------- RENDER ---------------- */
+
+function getDisplayMessage(){
+  if(!state)return "";
+
+  const n=state.notice;
+
+  // Timeout is the only action detail that belongs in the lower status bar,
+  // because it is a penalty and is NOT represented by a normal successful play.
+  if(n&&n.type==="timeout"){
+    if(n.actor===myRole){
+      return "Time out — penalty: you lost card "+n.number+".";
+    }
+    return "Time out — "+displayName(n.actor)+" penalty: card "+n.number+" discarded.";
+  }
+
+  if(n&&n.type==="timeout-empty"){
+    if(n.actor===myRole){
+      return "Time out — no card available. Your turn was lost.";
+    }
+    return "Time out — "+displayName(n.actor)+" had no card to discard.";
+  }
+
+  // Event / Recovery information is already shown in its own modal.
+  // The shared arena bar should not repeat it.
+  if(state.event||state.pendingRecovery){
+    return "";
+  }
+
+  if(state.phase==="playing"){
+    if(state.current===myRole){
+      return "Your turn.";
+    }
+    return displayName(state.current)+"'s turn.";
+  }
+
+  return "";
+}
+
+function clearNotice(){
+  state.notice=null;
+}
+
+
+function trapLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <radialGradient id="popupTrapGlow">
+          <stop offset="0" stop-color="#ff5252" stop-opacity=".42"/>
+          <stop offset="1" stop-color="#ff2525" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="36" cy="36" r="30" fill="url(#popupTrapGlow)" opacity=".34"/>
+      <g fill="none" stroke="#ff3a3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 36 C17 21 28 17 36 17 C44 17 55 21 65 36 C55 51 44 55 36 55 C28 55 17 51 7 36Z"/>
+        <circle cx="36" cy="36" r="12"/>
+        <path d="M36 4V12 M36 60V68 M4 36H12 M60 36H68 M13 13L19 19 M53 53L59 59 M59 13L53 19 M19 53L13 59"/>
+      </g>
+      <circle cx="36" cy="36" r="5" fill="#ff3a3a"/>
+      <circle cx="33.5" cy="33.5" r="1.8" fill="#fff" opacity=".8"/>
+    </svg>`;
+}
+
+function stealLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="historyCatGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffe064"/>
+          <stop offset=".52" stop-color="#e7ad23"/>
+          <stop offset="1" stop-color="#8f5e08"/>
+        </linearGradient>
+      </defs>
+      <path d="M13 25 L23 9 L30 23 Q36 20 42 23 L49 9 L59 25 L58 46 Q56 59 36 63 Q16 59 14 46Z"
+            fill="url(#historyCatGold)" stroke="#ffd65a" stroke-width="2.2" stroke-linejoin="round"/>
+      <ellipse cx="27" cy="39" rx="3.2" ry="4.3" fill="#120e07"/>
+      <ellipse cx="45" cy="39" rx="3.2" ry="4.3" fill="#120e07"/>
+      <path d="M33 46 Q36 48 39 46 Q38 52 36 53 Q34 52 33 46Z" fill="#5d3304"/>
+      <path d="M31 53 Q36 57 41 53" fill="none" stroke="#5d3304" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>`;
+}
+
+function lockLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="historyLockGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffd75f"/>
+          <stop offset=".55" stop-color="#f09a20"/>
+          <stop offset="1" stop-color="#8c4705"/>
+        </linearGradient>
+      </defs>
+      <path d="M23 32V23 C23 13 28 8 36 8 C44 8 49 13 49 23V32"
+            fill="none" stroke="#ffb742" stroke-width="7" stroke-linecap="round"/>
+      <rect x="14" y="29" width="44" height="34" rx="5"
+            fill="url(#historyLockGold)" stroke="#ffd56b" stroke-width="2"/>
+      <circle cx="36" cy="43" r="4.5" fill="#1a1005"/>
+      <path d="M33.8 46 H38.2 L40 54 H32Z" fill="#1a1005"/>
+    </svg>`;
+}
+
+function doubleLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="historyBoltCyan" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#b5f8ff"/>
+          <stop offset=".38" stop-color="#39d9f8"/>
+          <stop offset="1" stop-color="#0794d7"/>
+        </linearGradient>
+      </defs>
+      <path d="M42 5 L14 39 H31 L25 67 L58 29 H40 Z"
+            fill="url(#historyBoltCyan)" stroke="#8ff1ff" stroke-width="2.2" stroke-linejoin="round"/>
+    </svg>`;
+}
+
+function recoveryLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="recoveryGreen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#79ff9b"/>
+          <stop offset=".5" stop-color="#2edb61"/>
+          <stop offset="1" stop-color="#118b39"/>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#recoveryGreen)" stroke-width="6" stroke-linecap="round">
+        <path d="M18 29 C21 17 32 11 44 15 C50 17 55 21 58 27"/>
+        <path d="M54 18 L59 28 L48 29"/>
+        <path d="M54 43 C50 55 39 61 27 57 C21 55 16 51 13 45"/>
+        <path d="M18 54 L12 44 L23 43"/>
+      </g>
+      <rect x="29" y="25" width="14" height="22" rx="3" fill="#1b2a20" stroke="#5bf07d" stroke-width="2"/>
+      <path d="M36 29V43 M30 36H42" stroke="#5bf07d" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+}
+
+function deadlockLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="deadlockRed" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff6b45"/>
+          <stop offset=".5" stop-color="#ff3b32"/>
+          <stop offset="1" stop-color="#a91818"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="17" width="22" height="38" rx="5" fill="#161b21" stroke="url(#deadlockRed)" stroke-width="2.5"/>
+      <rect x="40" y="17" width="22" height="38" rx="5" fill="#161b21" stroke="url(#deadlockRed)" stroke-width="2.5"/>
+      <path d="M24 27 L48 45 M48 27 L24 45" stroke="#ff4b37" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="36" cy="36" r="27" fill="none" stroke="#ff4b37" stroke-opacity=".22" stroke-width="2"/>
+    </svg>`;
+}
+
+function crownLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="eventCrownGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff09b"/>
+          <stop offset=".35" stop-color="#ffc932"/>
+          <stop offset="1" stop-color="#b66b00"/>
+        </linearGradient>
+      </defs>
+      <path d="M10 50 L15 22 L28 36 L36 12 L44 36 L57 22 L62 50 Z"
+            fill="url(#eventCrownGold)" stroke="#ffe26c" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="11" y="49" width="50" height="10" rx="3" fill="url(#eventCrownGold)" stroke="#ffe26c" stroke-width="2"/>
+      <circle cx="15" cy="21" r="3" fill="#ffd33c"/>
+      <circle cx="36" cy="11" r="3.5" fill="#ffd33c"/>
+      <circle cx="57" cy="21" r="3" fill="#ffd33c"/>
+    </svg>`;
+}
+
+function waitingLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <g fill="none" stroke="#bac3cc" stroke-width="3">
+        <path d="M20 10 H52 M20 62 H52"/>
+        <path d="M24 11 C24 23 31 28 36 34 C41 28 48 23 48 11"/>
+        <path d="M24 61 C24 49 31 44 36 38 C41 44 48 49 48 61"/>
+      </g>
+      <path d="M29 18 H43 C42 25 38 28 36 31 C34 28 30 25 29 18Z" fill="#e2b94b"/>
+      <path d="M28 55 H44 C43 49 39 46 36 42 C33 46 29 49 28 55Z" fill="#e2b94b"/>
+    </svg>`;
+}
+
+function renderStaticModalArtwork(){
+  const pairs=[
+    ["trapModalIcon",trapLogoSVG()],
+    ["trapSacrificeIcon",trapLogoSVG()],
+    ["stealModalIcon",stealLogoSVG()],
+    ["lockModalIcon",lockLogoSVG()],
+    ["doubleModalIcon",doubleLogoSVG()]
+  ];
+  pairs.forEach(([id,art])=>{
+    const el=document.getElementById(id);
+    if(el&&!el.dataset.artReady){
+      el.innerHTML=art;
+      el.dataset.artReady="1";
+    }
+  });
+}
+
+
+function disconnectLogoSVG(){
+  return `
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <g fill="none" stroke="#ff5b63" stroke-width="5" stroke-linecap="round">
+        <path d="M16 30 C27 19 45 19 56 30"/>
+        <path d="M23 39 C30 32 42 32 49 39"/>
+        <path d="M32 48 C34 46 38 46 40 48"/>
+        <path d="M13 13 L59 59"/>
+      </g>
+      <circle cx="36" cy="55" r="3" fill="#ff5b63"/>
+    </svg>`;
+}
+
+function onlineOpponentPresent(){
+  if(botMode||!channel||!myRole)return true;
+  const list=flattenPresence(channel.presenceState());
+  return list.some(p=>p.role===other(myRole));
+}
+
+function cancelDisconnectWatch(){
+  disconnectRole=null;
+  disconnectDeadline=null;
+  disconnectForfeitProcessing=false;
+  const modal=document.getElementById("disconnectModal");
+  if(modal)modal.classList.add("hidden");
+}
+
+function beginDisconnectWatch(){
+  if(botMode||!gameStarted||!state||state.winner||!channel)return;
+  if(onlineOpponentPresent()){
+    cancelDisconnectWatch();
+    return;
+  }
+  if(disconnectDeadline)return;
+
+  disconnectRole=other(myRole);
+  disconnectDeadline=Date.now()+DISCONNECT_GRACE_MS;
+
+  const icon=document.getElementById("disconnectIcon");
+  if(icon)icon.innerHTML=disconnectLogoSVG();
+
+  const name=displayName(disconnectRole);
+  const txt=document.getElementById("disconnectText");
+  if(txt)txt.textContent=name+" disconnected. They have "+DISCONNECT_GRACE_SECONDS+" seconds to reconnect.";
+
+  document.getElementById("disconnectModal").classList.remove("hidden");
+  updateDisconnectWatch();
+}
+
+async function updateDisconnectWatch(){
+  if(botMode||!gameStarted||!state||state.winner||!channel){
+    cancelDisconnectWatch();
+    return;
+  }
+
+  if(onlineOpponentPresent()){
+    cancelDisconnectWatch();
+    return;
+  }
+
+  if(!disconnectDeadline){
+    beginDisconnectWatch();
+    return;
+  }
+
+  const remain=Math.max(0,Math.ceil((disconnectDeadline-Date.now())/1000));
+  const count=document.getElementById("disconnectCount");
+  if(count)count.textContent=remain;
+
+  if(remain>0||disconnectForfeitProcessing)return;
+
+  disconnectForfeitProcessing=true;
+  try{
+    state.winner=myRole;
+    state.winReason="disconnect";
+    state.phase="finished";
+    state.turnDeadline=null;
+    state.event=null;
+    state.pendingRecovery=null;
+    state.recoveryQueue=[];
+    state.message=displayName(other(myRole))+" disconnected.";
+    cancelDisconnectWatch();
+    await syncState();
+  }finally{
+    disconnectForfeitProcessing=false;
+  }
+}
+
+function handlePresenceChange(){
+  renderPresence();
+  if(gameStarted&&!botMode){
+    if(onlineOpponentPresent())cancelDisconnectWatch();
+    else beginDisconnectWatch();
+  }
+}
+
+function eventVisualSVG(kind){
+  if(kind==="trap-hit"||kind==="trap")return trapLogoSVG();
+  if(kind==="deadlock")return deadlockLogoSVG();
+  if(kind==="crown-won"||kind==="crown")return canonicalCrownSvg("basic");
+  if(kind==="recovery"||kind==="deadlockRecovery"||kind==="trapReward")return recoveryLogoSVG();
+  if(kind==="waiting")return waitingLogoSVG();
+  return deadlockLogoSVG();
+}
+
+function historyActionSVG(kind){
+  if(kind==="TRAP")return trapLogoSVG();
+  if(kind==="STEAL"||kind==="STOLEN")return stealLogoSVG();
+  if(kind==="LOCK")return lockLogoSVG();
+  if(kind==="DOUBLE")return doubleLogoSVG();
+  return "";
+}
+
+function setLastPlay(role,value){
+  if(!state.lastPlayed)state.lastPlayed={p1:null,p2:null};
+  state.lastPlayed[role]=value;
+}
+
+function parseHistoryValue(value){
+  if(value===null||value===undefined||value===""){
+    return {kind:"EMPTY",detail:"—"};
+  }
+  const raw=String(value);
+  const pipe=raw.indexOf("|");
+  if(pipe>-1){
+    return {
+      kind:raw.slice(0,pipe).toUpperCase(),
+      detail:raw.slice(pipe+1)
+    };
+  }
+  if(raw==="PASS")return {kind:"PASS",detail:""};
+  return {kind:"NUMBER",detail:raw};
+}
+
+function historyValueHTML(value){
+  const item=parseHistoryValue(value);
+
+  if(item.kind==="EMPTY"){
+    return `<span class="table-card-value">—</span>`;
+  }
+
+  if(item.kind==="NUMBER"){
+    return `<span class="table-card-value ${item.detail.length>2?"compound":""}">${item.detail}</span>`;
+  }
+
+  if(item.kind==="PASS"){
+    return `<span class="table-card-value action-value">
+      <span class="table-action-name">PASS</span>
+    </span>`;
+  }
+
+  const icon=historyActionSVG(item.kind);
+  const label=item.kind==="STOLEN" ? "STOLEN CARD" : item.kind;
+  return `<span class="table-card-value action-value">
+    ${icon?`<span class="table-action-icon">${icon}</span>`:""}
+    <span class="table-action-name">${label}</span>
+    ${item.detail?`<span class="table-action-detail">${
+      (item.kind==="STEAL"||item.kind==="LOCK"||item.kind==="STOLEN")
+        ? "CARD "+item.detail
+        : item.detail
+    }</span>`:""}
+  </span>`;
+}
+
+function displayTablePlay(role){
+  const plays=state.lastPlayed||{};
+  return plays[role];
+}
+
+function renderTablePlays(){
+  const mine=document.getElementById("myLastPlay");
+  const enemy=document.getElementById("enemyLastPlay");
+  const enemyLabel=document.getElementById("enemyPlayLabel");
+  if(!mine||!enemy)return;
+
+  mine.outerHTML=mine.outerHTML; // reset prior text-only node state safely
+  enemy.outerHTML=enemy.outerHTML;
+
+  const mine2=document.getElementById("myLastPlay");
+  const enemy2=document.getElementById("enemyLastPlay");
+
+  mine2.innerHTML=historyValueHTML(displayTablePlay(myRole));
+  enemy2.innerHTML=historyValueHTML(displayTablePlay(other(myRole)));
+
+  if(enemyLabel){
+    enemyLabel.textContent=displayName(other(myRole)).toUpperCase()+" PLAYED";
+  }
+}
+
+function renderGame(){
+  if(!state||!myRole)return;
+
+  renderStaticModalArtwork();
+
+  // Backward compatibility with older room state.
+  if(!state.lastPlayed)state.lastPlayed={p1:null,p2:null};
+
+  const me=state.players[myRole];
+  const enemyRole=other(myRole);
+  const enemy=state.players[enemyRole];
+
+  document.getElementById("opponentName").textContent=displayName(other(myRole));
+  const myNameNode=document.querySelector(".player.me .name");
+  if(myNameNode)myNameNode.textContent=displayName(myRole);
+  document.getElementById("myCrowns").innerHTML=crownHTML(me.crowns);
+  document.getElementById("opponentCrowns").innerHTML=crownHTML(enemy.crowns);
+  document.getElementById("target").textContent=TARGETS[state.targetIndex];
+  document.getElementById("total").textContent=state.total;
+  renderTablePlays();
+
+  const myTurn=state.current===myRole&&state.phase==="playing";
+  const turnEl=document.getElementById("turnText");
+  turnEl.textContent=myTurn?"YOUR TURN":displayName(other(myRole)).toUpperCase()+"'S TURN";
+  turnEl.classList.toggle("waiting",!myTurn);
+
+  document.getElementById("message").textContent=getDisplayMessage();
+  document.getElementById("recoveryInfo").textContent=
+    ICON.recycle+" Recovery meter: "+me.sinceRecovery+" / 4 number cards";
+
+  document.getElementById("trapWarning").classList.toggle("active",!!trapAgainst(myRole));
+  document.getElementById("lockWarning").classList.toggle("active",!!lockAgainst(myRole));
+
+  renderOpponentCards();
+  renderHand();
+  renderDiscard();
+  renderSpecials();
+  renderPass();
+  renderPending();
+  updateTurnTimer();
+  updateRecoveryTimer();
+  updateAudioButtons();
+  maybePlayStateSfx();
+
+}
+
+
+function crownSVG(color){
+  // Clean, perfectly symmetric 3-point crown.
+  return `
+    <svg viewBox="0 0 48 24" aria-hidden="true">
+      <path d="M5 17.8
+               L8.5 8.7
+               L17 14.2
+               L24 3.4
+               L31 14.2
+               L39.5 8.7
+               L43 17.8
+               Z"
+            fill="${color}"
+            stroke="${color}"
+            stroke-width="1.2"
+            stroke-linejoin="round"/>
+      <circle cx="8.5" cy="8.4" r="1.55" fill="${color}"/>
+      <circle cx="24" cy="3.2" r="1.75" fill="${color}"/>
+      <circle cx="39.5" cy="8.4" r="1.55" fill="${color}"/>
+      <rect x="5" y="17.7" width="38" height="3.7" rx="1.2" fill="${color}"/>
+    </svg>`;
+}
+
+function cornerSVG(color){
+  // Faceted gemstone corner. Identical SVG is mirrored in all 4 corners.
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <defs>
+        <linearGradient id="gem-${color.replace('#','')}" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/>
+          <stop offset=".22" stop-color="${color}" stop-opacity=".96"/>
+          <stop offset=".72" stop-color="${color}" stop-opacity=".58"/>
+          <stop offset="1" stop-color="#000000" stop-opacity=".30"/>
+        </linearGradient>
+      </defs>
+
+      <!-- outer corner line -->
+      <path d="M2 13 V2 H13"
+            fill="none"
+            stroke="${color}"
+            stroke-width="1.25"
+            stroke-linecap="round"
+            opacity=".78"/>
+
+      <!-- main faceted gem -->
+      <path d="M5 5 L11 3 L17 7 L15 14 L8 17 L3 11 Z"
+            fill="url(#gem-${color.replace('#','')})"
+            stroke="${color}"
+            stroke-width="1.1"
+            stroke-linejoin="round"/>
+
+      <!-- crystal facets -->
+      <path d="M5 5 L10 9 L17 7
+               M10 9 L8 17
+               M10 9 L15 14"
+            fill="none"
+            stroke="#ffffff"
+            stroke-opacity=".30"
+            stroke-width=".9"/>
+
+      <!-- tiny accent shard -->
+      <path d="M17.5 4 L21 7.5 L18.5 10.5 L15.5 7.5 Z"
+            fill="${color}"
+            opacity=".55"/>
+    </svg>`;
+}
+
+function emblemSVG(n){
+  if(n<=2){
+    // SHADOW: grey crystal cluster
+    return `<svg viewBox="0 0 36 30" aria-hidden="true">
+      <g stroke="#e6e9ec" stroke-opacity=".36" stroke-width="1">
+        <path d="M18 2 L29 13 L20 28 L7 14 Z" fill="#9da4ab"/>
+        <path d="M18 2 L20 28 L29 13 Z" fill="#c6cbd0" opacity=".54"/>
+        <path d="M7 14 L20 28 L18 2 Z" fill="#787f86" opacity=".75"/>
+        <path d="M3 17 L8 13 L12 24 L7 27 Z" fill="#7e858c"/>
+        <path d="M33 17 L28 13 L24 24 L29 27 Z" fill="#aeb4ba"/>
+      </g>
+      <path d="M18 5 L23 13 L19 21" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.2"/>
+    </svg>`;
+  }
+  if(n<=4){
+    // EMBER: stylized fire crystal / flame
+    return `<svg viewBox="0 0 36 32" aria-hidden="true">
+      <defs>
+        <linearGradient id="fireG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff332b"/>
+          <stop offset=".55" stop-color="#ff5b24"/>
+          <stop offset="1" stop-color="#ffba2e"/>
+        </linearGradient>
+      </defs>
+      <path d="M19 2 C23 8 18 11 24 15 C30 19 29 27 23 30 C16 34 7 29 7 21 C7 15 12 12 13 7 C15 11 18 10 19 2Z"
+            fill="url(#fireG)" stroke="#ff4b35" stroke-width="1"/>
+      <path d="M18 12 C20 17 16 18 20 21 C22 23 21 27 18 28 C14 27 13 24 14 22 C15 19 17 18 18 12Z"
+            fill="#ffd151"/>
+    </svg>`;
+  }
+  if(n<=6){
+    // NATURE: exactly two mirrored leaves
+    return `<svg viewBox="0 0 40 28" aria-hidden="true">
+      <path d="M20 24
+               C14 21 7 17 4 8
+               C12 7 18 11 20 17
+               C22 11 28 7 36 8
+               C33 17 26 21 20 24Z"
+            fill="#27df59" stroke="#6dff92" stroke-opacity=".35" stroke-width="1"/>
+      <path d="M20 14 V25
+               M8 11 C13 13 17 17 20 21
+               M32 11 C27 13 23 17 20 21"
+            fill="none" stroke="#d9ffe3" stroke-opacity=".34" stroke-width="1.1"/>
+    </svg>`;
+  }
+  // VOID: faceted amethyst crystal
+  return `<svg viewBox="0 0 36 32" aria-hidden="true">
+    <defs>
+      <linearGradient id="voidG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#d88cff"/>
+        <stop offset=".45" stop-color="#a94cff"/>
+        <stop offset="1" stop-color="#5b1592"/>
+      </linearGradient>
+    </defs>
+    <path d="M18 2 L31 13 L21 30 L6 15 Z"
+          fill="url(#voidG)" stroke="#d791ff" stroke-width="1"/>
+    <path d="M18 2 L21 30 L31 13 Z" fill="#fff" fill-opacity=".10"/>
+    <path d="M6 15 L21 30 L18 2 Z" fill="#6d1cac" fill-opacity=".45"/>
+    <path d="M18 5 L25 13 L19 23" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>
+  </svg>`;
+}
+
+function themeColor(n){
+  if(n<=2)return "#d9dde1";
+  if(n<=4)return "#ff3d34";
+  if(n<=6)return "#2de45f";
+  return "#b05cff";
+}
+
+function cardFaceHTML(n, extra=""){
+  const color=themeColor(n);
+  const corner=cornerSVG(color);
+  return `
+    <span class="card-inner">
+      <span class="card-frame"></span>
+      <span class="card-orbit"></span>
+      <span class="card-flourish left"></span>
+      <span class="card-flourish right"></span>
+      <span class="card-corner tl">${corner}</span>
+      <span class="card-corner tr">${corner}</span>
+      <span class="card-corner bl">${corner}</span>
+      <span class="card-corner br">${corner}</span>
+      <span class="card-crown">${crownSVG(color)}</span>
+      <span class="card-number">${n}</span>
+      <span class="card-emblem">${emblemSVG(n)}</span>
+      ${extra}
+    </span>`;
+}
+
+function renderOpponentCards(){
+  const c=document.getElementById("opponentCards");
+  c.innerHTML="";
+  const enemy=state.players[other(myRole)];
+  const count=enemy.hand.length+(enemy.stolenCard?1:0);
+  const corner=cornerSVG("#d9dde1");
+
+  for(let i=0;i<8;i++){
+    const d=document.createElement("div");
+    d.className="back";
+    d.innerHTML=`
+      <span class="back-frame"></span>
+      <span class="back-orbit"></span>
+      <span class="back-corner tl">${corner}</span>
+      <span class="back-corner tr">${corner}</span>
+      <span class="back-corner bl">${corner}</span>
+      <span class="back-corner br">${corner}</span>
+      <span class="back-crown">${crownSVG("#d9dde1")}</span>
+      <span style="position:relative;z-index:3">${i<count?"?":"x"}</span>
+    `;
+    if(i>=count)d.style.opacity=".2";
+    c.appendChild(d);
+  }
+}
+
+function renderHand(){
+  const c=document.getElementById("hand");
+  c.innerHTML="";
+  const p=state.players[myRole];
+  const activeLock=lockAgainst(myRole);
+
+  for(let n=1;n<=8;n++){
+    const b=document.createElement("button");
+    b.className="card n"+n;
+
+    const owned=p.hand.includes(n);
+    const locked=!!activeLock&&activeLock.number===n;
+    const legal=owned&&!locked&&state.total+n<=TARGETS[state.targetIndex]&&canAct();
+
+    const lockMark=locked?`<span class="stolen-mark">LOCK</span>`:"";
+    b.innerHTML=cardFaceHTML(n,lockMark);
+
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"own");
+
+    c.appendChild(b);
+  }
+
+  if(p.stolenCard){
+    const n=p.stolenCard.number;
+    const b=document.createElement("button");
+    b.className="card stolen n"+n;
+    b.innerHTML=cardFaceHTML(n,`<span class="stolen-mark">STEAL</span>`);
+    const legal=state.total+n<=TARGETS[state.targetIndex]&&canAct();
+    if(!legal){b.classList.add("invalid");b.disabled=true}
+    else b.onclick=()=>playCard(n,"stolen");
+    c.appendChild(b);
+  }
+}
+
+function renderDiscard(){
+  const c=document.getElementById("discard");
+  c.innerHTML="";
+  const cards=[...state.players[myRole].discard].sort((a,b)=>a-b);
+
+  if(cards.length===0){
+    const x=document.createElement("span");
+    x.className="discard-chip empty";
+    x.textContent="EMPTY";
+    c.appendChild(x);
+    return;
+  }
+
+  cards.forEach(n=>{
+    const x=document.createElement("span");
+    const color=themeColor(n);
+    const corner=cornerSVG(color);
+    x.className="discard-chip n"+n;
+    x.innerHTML=`
+      <span class="mini-corner tl">${corner}</span>
+      <span class="mini-corner tr">${corner}</span>
+      <span class="mini-corner bl">${corner}</span>
+      <span class="mini-corner br">${corner}</span>
+      <span class="mini-crown">${crownSVG(color)}</span>
+      <span>${n}</span>
+      <span class="mini-emblem">${emblemSVG(n)}</span>`;
+    c.appendChild(x);
+  });
+}
+
+function renderSpecials(){
+  const me=state.players[myRole];
+  const enemy=state.players[other(myRole)];
+  const specialAllowed=canUseSpecial(myRole);
+
+  const trap=document.getElementById("trapButton");
+  trap.disabled=!specialAllowed||me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0;
+  document.getElementById("trapTitle").textContent=me.trapUsed?"TRAP x":"TRAP";
+
+  const steal=document.getElementById("stealButton");
+  steal.disabled=!specialAllowed||me.stealUsed||!!me.stolenCard||enemy.discard.length===0;
+  document.getElementById("stealTitle").textContent=me.stealUsed?"STEAL x":"STEAL";
+
+  const lock=document.getElementById("lockButton");
+  lock.disabled=!specialAllowed||me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0;
+  document.getElementById("lockTitle").textContent=me.lockUsed?"LOCK x":"LOCK";
+
+  const doubleButton=document.getElementById("doubleButton");
+  const doublePairs=getLegalDoublePairs(myRole);
+  doubleButton.disabled=!specialAllowed||me.doubleUsed||doublePairs.length===0;
+  document.getElementById("doubleTitle").textContent=me.doubleUsed?"DOUBLE x":"DOUBLE";
+}
+
+function renderPass(){
+  const b=document.getElementById("passButton");
+  const noLegal=playableEntries(myRole).length===0;
+
+  b.disabled=!canAct() || !noLegal;
+  b.textContent="PASS";
+}
+
+function renderPending(){
+  const rec=state.pendingRecovery;
+
+  if(rec){
+    // A Recovery state always replaces any previous shared event popup.
+    // This is especially important after DEADLOCK: the player who pressed
+    // PASS first may still have the DEADLOCK modal visible locally.
+    document.getElementById("eventModal").classList.add("hidden");
+
+    const eventButton=document.getElementById("eventContinueButton");
+    if(eventButton){
+      eventButton.disabled=false;
+      eventButton.textContent="CONTINUE";
+    }
+
+    if(rec.player===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      openRecoveryModalFromState();
+    }else{
+      document.getElementById("recoveryModal").classList.add("hidden");
+      updateRecoveryTimer();
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("recoveryModal").classList.add("hidden");
+
+  if(state.event){
+    if(state.event.visibleTo==="both"||state.event.visibleTo===myRole){
+      document.getElementById("waitingModal").classList.add("hidden");
+      showEventFromState();
+    }else{
+      document.getElementById("eventModal").classList.add("hidden");
+      document.getElementById("waitingText").textContent="Opponent is resolving an event...";
+      document.getElementById("waitingModal").classList.remove("hidden");
+    }
+    return;
+  }
+
+  document.getElementById("eventModal").classList.add("hidden");
+  const crownTimer=document.getElementById("crownEventTimer");
+  if(crownTimer)crownTimer.classList.add("hidden");
+  document.getElementById("waitingModal").classList.add("hidden");
+  const waitingIcon=document.getElementById("waitingIcon");
+  if(waitingIcon)waitingIcon.innerHTML=waitingLogoSVG();
+
+  if(state.winner){
+    const winnerName=displayName(state.winner);
+    const iWon=state.winner===myRole;
+
+    document.getElementById("eventIcon").innerHTML=canonicalCrownSvg("basic");
+    document.getElementById("eventTitle").textContent=iWon?"YOU WIN!":"YOU LOSE!";
+    let gameOverText=winnerName+" WON CLASH 10!";
+    if(state.winReason==="disconnect"){
+      gameOverText=iWon
+        ? "VICTORY — "+displayName(other(myRole))+" disconnected."
+        : "DEFEAT — disconnected from the match.";
+    }
+    document.getElementById("eventText").textContent=gameOverText;
+
+    const button=document.getElementById("eventContinueButton");
+    button.disabled=true;
+    button.textContent="GAME OVER";
+
+    document.getElementById("waitingModal").classList.add("hidden");
+    document.getElementById("eventModal").classList.remove("hidden");
+  }
+}
+
+
+/* ============================================================
+   BOT MODE
+============================================================ */
+
+function botCanAct(){
+  return (
+    botMode &&
+    state &&
+    state.phase==="playing" &&
+    state.current===BOT_ROLE &&
+    !state.event &&
+    !state.pendingRecovery
+  );
+}
+
+function botCanUseSpecial(){
+  return (
+    botCanAct() &&
+    state.players[BOT_ROLE].specialUsedTarget!==state.targetIndex
+  );
+}
+
+function botDelay(min=700,max=1400){
+  return Math.floor(min+Math.random()*(max-min));
+}
+
+function scheduleBotAction(){
+  if(!botMode||!gameStarted||!state)return;
+
+  if(botActionTimer){
+    clearTimeout(botActionTimer);
+    botActionTimer=null;
+  }
+
+  if(state.pendingRecovery&&state.pendingRecovery.player===BOT_ROLE){
+    // Bot still completes Recovery automatically, but not instantly.
+    botActionTimer=setTimeout(botHandleRecovery,botDelay(1800,2600));
+    return;
+  }
+
+  if(state.event&&state.event.resolveBy===BOT_ROLE){
+    const e=state.event;
+
+    // In VS BOT, do not instantly skip important information screens.
+    // Let the full Crown / Deadlock / Trap timer remain visible so a
+    // new player has time to read it.
+    const remaining=Math.max(
+      0,
+      (e.deadline||Date.now()+5000)-Date.now()
+    );
+
+    botActionTimer=setTimeout(
+      botResolveEvent,
+      remaining+150
+    );
+    return;
+  }
+
+  if(botCanAct()){
+    // Make the bot feel like a real opponent and give the human
+    // time to see/react to the previous move.
+    botActionTimer=setTimeout(botTakeTurn,botDelay(3000,5000));
+  }
+}
+
+function botChooseNormalEntry(){
+  const entries=playableEntries(BOT_ROLE);
+  if(entries.length===0)return null;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const exact=entries.find(e=>e.number===remaining);
+  if(exact)return exact;
+
+  const sorted=[...entries].sort((a,b)=>b.number-a.number);
+  const pool=sorted.slice(0,Math.min(3,sorted.length));
+
+  if(Math.random()<0.72)return pool[0];
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function botUseTrap(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.trapUsed ||
+    state.traps[BOT_ROLE]!==null ||
+    human.hand.length===0 ||
+    bot.hand.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const candidates=[...human.hand].sort((a,b)=>{
+    const av=(a===remaining?100:0)+a;
+    const bv=(b===remaining?100:0)+b;
+    return bv-av;
+  });
+
+  const target=candidates[0];
+  const sacrifice=[...bot.hand].sort((a,b)=>a-b)[0];
+
+  if(target==null||sacrifice==null)return false;
+
+  bot.hand=bot.hand.filter(n=>n!==sacrifice);
+  bot.discard.push(sacrifice);
+  bot.trapUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  // Bot special action breaks the consecutive-PASS chain too.
+  state.consecutivePasses=0;
+
+  state.traps[BOT_ROLE]={
+    number:target,
+    victim:myRole
+  };
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"trap-place",
+    actor:BOT_ROLE
+  };
+  setLastPlay(BOT_ROLE,"TRAP|PLACED");
+  state.message="TRAP";
+  beginTurn(myRole);
+  return true;
+}
+
+function botUseSteal(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.stealUsed ||
+    bot.stolenCard ||
+    human.discard.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  const cards=[...human.discard].sort((a,b)=>b-a);
+
+  const chosen=
+    cards.find(n=>n===remaining) ??
+    cards.find(n=>n<=remaining) ??
+    cards[0];
+
+  if(chosen==null)return false;
+
+  human.discard=human.discard.filter(n=>n!==chosen);
+  bot.stolenCard={number:chosen,owner:myRole};
+  bot.stealUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  state.consecutivePasses=0;
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"steal",
+    actor:BOT_ROLE,
+    number:chosen
+  };
+  setLastPlay(BOT_ROLE,"STEAL|"+chosen);
+  state.message="STEAL";
+  beginTurn(myRole);
+  return true;
+}
+
+function botUseLock(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+
+  if(
+    !botCanUseSpecial() ||
+    bot.lockUsed ||
+    state.locks[BOT_ROLE]!==null ||
+    human.hand.length===0
+  ) return false;
+
+  const remaining=TARGETS[state.targetIndex]-state.total;
+  let chosen=human.hand.find(n=>n===remaining);
+
+  if(chosen==null){
+    const useful=human.hand.filter(n=>n<=remaining).sort((a,b)=>b-a);
+    chosen=useful[0] ?? [...human.hand].sort((a,b)=>b-a)[0];
+  }
+
+  if(chosen==null)return false;
+
+  state.locks[BOT_ROLE]={
+    number:chosen,
+    victim:myRole
+  };
+  bot.lockUsed=true;
+  markSpecialUsed(BOT_ROLE);
+
+  state.consecutivePasses=0;
+
+  clearLockAfterTurn(BOT_ROLE);
+  state.notice={
+    type:"lock",
+    actor:BOT_ROLE,
+    number:chosen
+  };
+  setLastPlay(BOT_ROLE,"LOCK|"+chosen);
+  state.message="LOCK";
+  beginTurn(myRole);
+  return true;
+}
+
+async function botPlayDouble(pair){
+  if(!pair||pair.length!==2||!botCanAct())return false;
+
+  const role=BOT_ROLE;
+  const p=state.players[role];
+  const [a,b]=pair;
+  const sum=a+b;
+
+  if(
+    !botCanUseSpecial() ||
+    p.doubleUsed ||
+    !p.hand.includes(a) ||
+    !p.hand.includes(b) ||
+    state.total+sum>TARGETS[state.targetIndex]
+  ) return false;
+
+  p.hand=p.hand.filter(n=>n!==a&&n!==b);
+  p.discard.push(a,b);
+  p.doubleUsed=true;
+  markSpecialUsed(role);
+  state.consecutivePasses=0;
+
+  const trap=trapAgainst(role);
+
+  if(trap&&(trap.number===a||trap.number===b)){
+    const owner=other(role);
+    state.traps[owner]=null;
+    clearLockAfterTurn(role);
+    state.turnDeadline=null;
+    state.notice=null;
+    state.message=ICON.trap+" DOUBLE TRAPPED! Both cards are discarded. TOTAL stays at "+state.total+".";
+
+    if(p.sinceRecovery>=4&&p.discard.length>=2){
+      state.pendingRecovery=makeRecovery(
+        role,
+        2,
+        "trapVictim",
+        {afterTrapOwner:owner}
+      );
+    }else{
+      beginTrapReward(owner);
+    }
+
+    await syncState();
+    return true;
+  }
+
+  // A successful DOUBLE places two ORIGINAL cards into TOTAL.
+  // If DOUBLE is trapped above, this line is never reached and meter stays unchanged.
+  p.sinceRecovery=(p.sinceRecovery||0)+2;
+
+  if(!state.lastPlayed)state.lastPlayed={p1:null,p2:null};
+  setLastPlay(role,"DOUBLE|"+String(a)+"+"+String(b));
+  state.total+=sum;
+  state.notice={
+    type:"double",
+    actor:role,
+    a:a,
+    b:b
+  };
+  state.message="DOUBLE";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return true;
+  }
+
+  if(p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return true;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+async function botPlayCard(entry){
+  if(!entry||!botCanAct())return false;
+
+  const role=BOT_ROLE;
+  const p=state.players[role];
+  const number=entry.number;
+  const type=entry.type;
+
+  if(state.total+number>TARGETS[state.targetIndex])return false;
+
+  if(type==="own"){
+    if(!p.hand.includes(number))return false;
+
+    const activeLock=lockAgainst(role);
+    if(activeLock&&activeLock.number===number)return false;
+
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+
+    const trap=trapAgainst(role);
+
+    if(trap&&trap.number===number){
+      const owner=other(role);
+
+      state.traps[owner]=null;
+      state.consecutivePasses=0;
+      clearLockAfterTurn(role);
+      state.turnDeadline=null;
+      state.notice=null;
+      setLastPlay(role,String(number));
+      setLastPlay(owner,"TRAP|HIT "+number);
+      state.message="TRAP ACTIVATED";
+
+      state.event={
+        icon:ICON.trap,
+        title:"TRAP ACTIVATED!",
+        text:displayName(owner)+"'s Trap caught "+displayName(role)+"!\n\n"+
+             displayName(role)+" played the trapped "+number+
+             ". The card is discarded. TOTAL stays at "+state.total+".",
+        visibleTo:"both",
+        kind:"trap-hit",
+        victim:role,
+        owner:owner,
+        number:number,
+        resolveBy:role,
+        deadline:Date.now()+TRAP_EVENT_MS
+      };
+
+      await syncState();
+      return true;
+    }
+
+  }else{
+    if(!p.stolenCard||p.stolenCard.number!==number)return false;
+
+    const owner=p.stolenCard.owner;
+    p.stolenCard=null;
+
+    if(!state.players[owner].discard.includes(number)){
+      state.players[owner].discard.push(number);
+    }
+  }
+
+  state.consecutivePasses=0;
+  clearNotice();
+
+  // Same Recovery rule for bots: only an ORIGINAL card that actually
+  // enters TOTAL advances the meter.
+  if(type==="own"){
+    p.sinceRecovery=(p.sinceRecovery||0)+1;
+  }
+
+  if(type==="stolen")setLastPlay(role,"STOLEN|"+number);
+  else setLastPlay(role,String(number));
+  state.total+=number;
+
+  state.message=
+    displayName(role)+" played "+
+    (type==="stolen"?"stolen ":"")+
+    number+". Total = "+state.total+".";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return true;
+  }
+
+  if(type==="own"&&p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return true;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+async function botPass(){
+  if(!botCanAct()||playableEntries(BOT_ROLE).length>0)return false;
+
+  const passer=BOT_ROLE;
+
+  clearLockAfterTurn(passer);
+  state.consecutivePasses=(state.consecutivePasses||0)+1;
+
+  state.notice={
+    type:"pass",
+    actor:passer
+  };
+  if(!state.lastPlayed)state.lastPlayed={p1:null,p2:null};
+  setLastPlay(passer,"PASS");
+  state.message="PASS";
+
+  if(state.consecutivePasses>=2){
+    state.consecutivePasses=0;
+    returnAllStolen();
+    state.turnDeadline=null;
+
+    state.event={
+      icon:ICON.fire,
+      title:"DEADLOCK!",
+      text:"Both players passed consecutively. Nobody earns a Crown. Each player may recover 1 discarded card.",
+      visibleTo:"both",
+      kind:"deadlock",
+      resolveBy:passer,
+      deadline:Date.now()+DEADLOCK_EVENT_MS
+    };
+
+    await syncState();
+    return true;
+  }
+
+  beginTurn(myRole);
+  await syncState();
+  return true;
+}
+
+
+function hardBotRemaining(){
+  return TARGETS[state.targetIndex]-state.total;
+}
+
+function hardBotPossibleHumanNumbers(){
+  // Public-information estimate only: numbers visibly in discard are less likely
+  // to be available; recovered cards remain uncertain.
+  const human=state.players[myRole];
+  const discarded=new Set(human.discard||[]);
+  const result=[];
+  for(let n=1;n<=8;n++){
+    if(!discarded.has(n))result.push(n);
+  }
+  return result;
+}
+
+function hardBotHumanCanHitAfter(nextTotal){
+  const need=TARGETS[state.targetIndex]-nextTotal;
+  return hardBotPossibleHumanNumbers().includes(need);
+}
+
+function hardBotHumanDoubleThreatAfter(nextTotal){
+  const human=state.players[myRole];
+  if(human.doubleUsed)return false;
+
+  const need=TARGETS[state.targetIndex]-nextTotal;
+  const nums=hardBotPossibleHumanNumbers();
+
+  for(let i=0;i<nums.length;i++){
+    for(let j=i+1;j<nums.length;j++){
+      if(nums[i]+nums[j]===need)return true;
+    }
+  }
+  return false;
+}
+
+function hardBotScoreEntry(entry){
+  const n=entry.number;
+  const remaining=hardBotRemaining();
+
+  if(n===remaining)return 10000;
+
+  const next=state.total+n;
+  let score=n*5;
+
+  if(hardBotHumanCanHitAfter(next))score-=120;
+  if(hardBotHumanDoubleThreatAfter(next))score-=30;
+
+  const rem=TARGETS[state.targetIndex]-next;
+  if(rem>8)score+=15;
+  if(rem>=1&&rem<=3)score-=10;
+
+  // Preserve high cards a little.
+  score-=n*0.7;
+
+  // Stolen cards go back to the opponent after use.
+  if(entry.type==="stolen")score-=5;
+
+  return score;
+}
+
+function hardBotBestNormal(){
+  const entries=playableEntries(BOT_ROLE);
+  if(!entries.length)return null;
+  return entries
+    .map(entry=>({entry,score:hardBotScoreEntry(entry)}))
+    .sort((a,b)=>b.score-a.score)[0];
+}
+
+function hardBotUrgency(){
+  const bot=state.players[BOT_ROLE];
+  const human=state.players[myRole];
+  return (human.crowns-bot.crowns)*18 + (human.crowns>=2?30:0);
+}
+
+function hardBotShouldSpend(value){
+  return value + hardBotUrgency() + state.targetIndex*5 >= 60;
+}
+
+function hardBotBestDouble(){
+  const bot=state.players[BOT_ROLE];
+  if(bot.doubleUsed||!botCanUseSpecial())return null;
+
+  const remaining=hardBotRemaining();
+  const pairs=getLegalDoublePairs(BOT_ROLE);
+  if(!pairs.length)return null;
+
+  return pairs.map(pair=>{
+    const sum=pair[0]+pair[1];
+    if(sum===remaining)return {pair,score:10000};
+
+    const next=state.total+sum;
+    let score=sum*4-70; // permanent-special conservation cost
+    if(hardBotHumanCanHitAfter(next))score-=120;
+    if(hardBotHumanDoubleThreatAfter(next))score-=25;
+    if((bot.sinceRecovery||0)+2>=4)score+=18;
+    return {pair,score};
+  }).sort((a,b)=>b.score-a.score)[0];
+}
+
+function hardBotBestLockValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.lockUsed||state.locks[BOT_ROLE]!==null||!human.hand.length)return 0;
+
+  const remaining=hardBotRemaining();
+  if(human.hand.includes(remaining))return 100;
+
+  const useful=human.hand.filter(n=>n<=remaining);
+  if(!useful.length)return 0;
+  return 30+Math.max(...useful)*2;
+}
+
+function hardBotBestTrapValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.trapUsed||state.traps[BOT_ROLE]!==null||!human.hand.length||!bot.hand.length)return 0;
+
+  const remaining=hardBotRemaining();
+  if(human.hand.includes(remaining))return 95;
+  return 35 + Math.max(...human.hand);
+}
+
+function hardBotBestStealValue(){
+  const human=state.players[myRole];
+  const bot=state.players[BOT_ROLE];
+  if(!botCanUseSpecial()||bot.stealUsed||bot.stolenCard||!human.discard.length)return 0;
+
+  const remaining=hardBotRemaining();
+  let best=0;
+  for(const n of human.discard){
+    let value=n*2;
+    if(n===remaining)value+=70;
+    else if(n<remaining)value+=15;
+    best=Math.max(best,value);
+  }
+  return best;
+}
+
+function hardBotRecoveryChoice(rec){
+  const discard=[...state.players[BOT_ROLE].discard];
+  const remaining=hardBotRemaining();
+
+  return discard
+    .map(n=>{
+      let score=n*2;
+      if(n===remaining)score+=80;
+      else if(n<remaining)score+=15;
+      return {n,score};
+    })
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,Math.min(rec.amount,discard.length))
+    .map(x=>x.n);
+}
+
+
+async function normalBotTakeTurn(){
+  if(botThinking||!botCanAct())return;
+
+  botThinking=true;
+
+  try{
+    const remaining=TARGETS[state.targetIndex]-state.total;
+    const bot=state.players[BOT_ROLE];
+    const human=state.players[myRole];
+
+    const exact=playableEntries(BOT_ROLE).find(e=>e.number===remaining);
+    if(exact){
+      await botPlayCard(exact);
+      return;
+    }
+
+    if(botCanUseSpecial()&&!bot.doubleUsed){
+      const exactPair=getLegalDoublePairs(BOT_ROLE)
+        .find(pair=>pair[0]+pair[1]===remaining);
+
+      if(exactPair){
+        await botPlayDouble(exactPair);
+        return;
+      }
+    }
+
+    if(playableEntries(BOT_ROLE).length===0){
+      await botPass();
+      return;
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.lockUsed &&
+      human.hand.includes(remaining) &&
+      Math.random()<0.75
+    ){
+      if(botUseLock()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.trapUsed &&
+      human.hand.length>=3 &&
+      bot.hand.length>=3 &&
+      Math.random()<0.20
+    ){
+      if(botUseTrap()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.stealUsed &&
+      !bot.stolenCard &&
+      human.discard.some(n=>n<=remaining) &&
+      Math.random()<0.15
+    ){
+      if(botUseSteal()){
+        await syncState();
+        return;
+      }
+    }
+
+    if(
+      botCanUseSpecial() &&
+      !bot.doubleUsed &&
+      getLegalDoublePairs(BOT_ROLE).length>0 &&
+      Math.random()<0.12
+    ){
+      const pairs=getLegalDoublePairs(BOT_ROLE)
+        .sort((a,b)=>(b[0]+b[1])-(a[0]+a[1]));
+
+      await botPlayDouble(pairs[0]);
+      return;
+    }
+
+    const entry=botChooseNormalEntry();
+    if(entry){
+      await botPlayCard(entry);
+      return;
+    }
+
+    await botPass();
+
+  }catch(error){
+    console.error("NORMAL BOT turn failed:",error);
+
+    if(botCanAct()){
+      const entry=playableEntries(BOT_ROLE)[0];
+      if(entry)await botPlayCard(entry);
+      else await botPass();
+    }
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botTakeTurn(){
+  return botDifficulty==="hard"
+    ? hardBotTakeTurn()
+    : normalBotTakeTurn();
+}
+
+async function hardBotTakeTurn(){
+  if(botThinking||!botCanAct())return;
+  botThinking=true;
+
+  try{
+    const remaining=hardBotRemaining();
+    const bot=state.players[BOT_ROLE];
+    const human=state.players[myRole];
+
+    // 1) Never waste DOUBLE if a normal card already wins.
+    const exactNormal=playableEntries(BOT_ROLE).find(e=>e.number===remaining);
+    if(exactNormal){
+      await botPlayCard(exactNormal);
+      return;
+    }
+
+    const bestNormal=hardBotBestNormal();
+
+    // 2) DOUBLE only when it is worth permanently spending.
+    const bestDouble=hardBotBestDouble();
+    if(bestDouble){
+      if(bestDouble.score>=10000){
+        const behind=bot.crowns<human.crowns;
+        const late=human.crowns>=2 || state.targetIndex>=2;
+
+        if(behind || late || Math.random()<0.20){
+          await botPlayDouble(bestDouble.pair);
+          return;
+        }
+      }else if(
+        bestNormal &&
+        bestDouble.score>bestNormal.score+25 &&
+        hardBotShouldSpend(bestDouble.score)
+      ){
+        await botPlayDouble(bestDouble.pair);
+        return;
+      }
+    }
+
+    // 3) Forced PASS.
+    if(!bestNormal){
+      await botPass();
+      return;
+    }
+
+    // 4) LOCK dangerous human cards.
+    const lockValue=hardBotBestLockValue();
+    if(lockValue>=90 || (lockValue>0&&hardBotShouldSpend(lockValue))){
+      if(botUseLock()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 5) TRAP only when the predicted value is high.
+    const trapValue=hardBotBestTrapValue();
+    if(trapValue>=90 || (trapValue>0&&hardBotShouldSpend(trapValue))){
+      if(botUseTrap()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 6) STEAL only when it has real denial/offensive value.
+    const stealValue=hardBotBestStealValue();
+    if(stealValue>=75 || (stealValue>0&&hardBotShouldSpend(stealValue))){
+      if(botUseSteal()){
+        await syncState();
+        return;
+      }
+    }
+
+    // 7) Best calculated normal move.
+    await botPlayCard(bestNormal.entry);
+
+  }catch(error){
+    console.error("HARD BOT turn failed:",error);
+
+    if(botCanAct()){
+      const entry=playableEntries(BOT_ROLE)[0];
+      if(entry)await botPlayCard(entry);
+      else await botPass();
+    }
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botHandleRecovery(){
+  if(
+    botThinking ||
+    !botMode ||
+    !state ||
+    !state.pendingRecovery ||
+    state.pendingRecovery.player!==BOT_ROLE
+  ) return;
+
+  botThinking=true;
+
+  try{
+    const rec=state.pendingRecovery;
+    const discard=[...state.players[BOT_ROLE].discard];
+
+    const chosen=botDifficulty==="hard"
+      ? hardBotRecoveryChoice(rec)
+      : discard
+          .sort((a,b)=>b-a)
+          .slice(0,Math.min(rec.amount,discard.length));
+
+    if(chosen.length===rec.amount){
+      await finishRecovery(rec,chosen,false);
+    }else{
+      await finishRecovery(rec,[],true);
+    }
+
+  }catch(error){
+    console.error("BOT recovery failed:",error);
+  }finally{
+    botThinking=false;
+  }
+}
+
+async function botResolveEvent(){
+  if(
+    botThinking ||
+    !botMode ||
+    !state ||
+    !state.event ||
+    state.event.resolveBy!==BOT_ROLE
+  ) return;
+
+  botThinking=true;
+
+  try{
+    const e=state.event;
+    state.event=null;
+
+    if(e.kind==="trap-hit"){
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+    }else if(e.kind==="deadlock"){
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="crown-won"){
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+    }
+
+    await syncState();
+
+  }catch(error){
+    console.error("BOT event resolution failed:",error);
+  }finally{
+    botThinking=false;
+  }
+}
+
+/* ---------------- NUMBER PLAY ---------------- */
+
+async function playCard(number,type){
+  if(!canAct())return;
+
+  const role=myRole;
+  const p=state.players[role];
+  if(state.total+number>TARGETS[state.targetIndex])return;
+
+  if(type==="own"){
+    if(!p.hand.includes(number))return;
+
+    const activeLock=lockAgainst(role);
+    if(activeLock&&activeLock.number===number)return;
+
+    p.hand=p.hand.filter(x=>x!==number);
+    p.discard.push(number);
+
+    const trap=trapAgainst(role);
+
+    if(trap&&trap.number===number){
+      const owner=other(role);
+
+      // The Trap has now been consumed.
+      state.traps[owner]=null;
+      state.consecutivePasses=0;
+      clearLockAfterTurn(role);
+      state.turnDeadline=null;
+
+      // Clear the old "X placed a Trap" notice immediately.
+      // Otherwise that stale placement message can remain visible after activation.
+      state.notice=null;
+      state.message="TRAP ACTIVATED";
+
+      // Synchronized information screen for BOTH players.
+      // The trapped player's phone is the only authority allowed to advance it,
+      // because that phone initiated this state transition by playing the card.
+      state.event={
+        icon:ICON.trap,
+        title:"TRAP ACTIVATED!",
+        text:displayName(owner)+"'s Trap caught "+displayName(role)+"!\n\n"+
+             displayName(role)+" played the trapped "+number+
+             ". The card is discarded. TOTAL stays at "+state.total+".",
+        visibleTo:"both",
+        kind:"trap-hit",
+        victim:role,
+        owner:owner,
+        number:number,
+        resolveBy:role,
+        deadline:Date.now()+TRAP_EVENT_MS
+      };
+
+      await syncState();
+      return;
+    }
+
+  }else{
+    if(!p.stolenCard||p.stolenCard.number!==number)return;
+    const owner=p.stolenCard.owner;
+    p.stolenCard=null;
+    if(!state.players[owner].discard.includes(number)){
+      state.players[owner].discard.push(number);
+    }
+  }
+
+  state.consecutivePasses=0;
+  clearNotice();
+
+  // Recovery meter only counts successfully played ORIGINAL cards.
+  // Stolen cards and cards caught by Trap do not count.
+  if(type==="own"){
+    p.sinceRecovery=(p.sinceRecovery||0)+1;
+  }
+
+  if(type==="stolen")setLastPlay(role,"STOLEN|"+number);
+  else setLastPlay(role,String(number));
+  state.total+=number;
+  state.message=displayName(role)+" played "+(type==="stolen"?"stolen ":"")+number+". Total = "+state.total+".";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(type==="own"&&p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+/* ---------------- PASS / DEADLOCK ---------------- */
+
+async function passTurn(){
+  if(!canAct())return;
+
+  // PASS is only legal when you genuinely cannot play any number card.
+  if(playableEntries(myRole).length>0)return;
+
+  const passer=myRole;
+
+  clearLockAfterTurn(passer);
+  state.consecutivePasses=(state.consecutivePasses||0)+1;
+
+  state.notice={
+    type:"pass",
+    actor:passer
+  };
+  state.message="PASS";
+
+  // If BOTH players consecutively have no legal play and pass,
+  // the Target ends as a Deadlock.
+  if(state.consecutivePasses>=2){
+    state.consecutivePasses=0;
+    returnAllStolen();
+    state.turnDeadline=null;
+
+    state.event={
+      icon:ICON.fire,
+      title:"DEADLOCK!",
+      text:"Both players passed consecutively. Nobody earns a Crown. Each player may recover 1 discarded card.",
+      visibleTo:"both",
+      kind:"deadlock",
+      resolveBy:passer,
+      deadline:Date.now()+DEADLOCK_EVENT_MS
+    };
+
+    await syncState();
+    return;
+  }
+
+  beginTurn(other(passer));
+  await syncState();
+}
+
+function setTurnMessage(){
+  // Keep shared state neutral. Whether PASS is available is private hand info
+  // and is added locally by getDisplayMessage() only on the current player's phone.
+  state.message="Choose a number card.";
+}
+
+/* ---------------- CROWNS / ROUNDS ---------------- */
+
+function scoreCrown(scorer){
+  state.players[scorer].crowns++;
+  returnAllStolen();
+
+  const winnerName=displayName(scorer);
+  const hitTarget=TARGETS[state.targetIndex];
+
+  state.message=ICON.crown+" "+winnerName+" HIT THE TARGET!";
+  state.turnDeadline=null;
+
+  // Third Crown ends the whole match immediately.
+  if(state.players[scorer].crowns>=MATCH_CROWNS){
+    state.winner=scorer;
+    state.phase="finished";
+    return;
+  }
+
+  // Clear any Recovery state first. Crown Recovery begins ONLY after
+  // the Crown winner presses CONTINUE on the synchronized result screen.
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+
+  const winningMoveRaw=(state.lastPlayed&&state.lastPlayed[scorer])||"";
+  const winningMove=parseHistoryValue(winningMoveRaw);
+  let winningMoveText="";
+  if(winningMove.kind==="DOUBLE")winningMoveText="\n\nWINNING MOVE: DOUBLE "+winningMove.detail;
+  else if(winningMove.kind==="STOLEN")winningMoveText="\n\nWINNING MOVE: STOLEN "+winningMove.detail;
+  else if(winningMove.kind==="NUMBER")winningMoveText="\n\nWINNING MOVE: "+winningMove.detail;
+
+  state.event={
+    icon:ICON.crown,
+    title:"CROWN WON!",
+    text:winnerName+" HIT "+hitTarget+"!\n\n"+winnerName+" EARNS A CROWN!"+winningMoveText,
+    visibleTo:"both",
+    kind:"crown-won",
+    scorer:scorer,
+    target:hitTarget,
+    deadline:Date.now()+CROWN_EVENT_MS,
+
+    // IMPORTANT: only the Crown winner advances the shared game state.
+    // The other phone only observes the synchronized transition.
+    resolveBy:scorer
+  };
+}
+
+function queueNextRecovery(type){
+  while(state.recoveryQueue.length){
+    const role=state.recoveryQueue.shift();
+    if(state.players[role].discard.length>0){
+      state.turnDeadline=null;
+      state.pendingRecovery=makeRecovery(role,1,type);
+      return;
+    }
+  }
+  startNextRound();
+}
+
+function startNextRound(){
+  returnAllStolen();
+
+  // LOCK lasts only for its intended turn.
+  state.locks.p1=null;
+  state.locks.p2=null;
+
+  // TRAP now lasts for ONE ROUND only.
+  // If it was not triggered before the round ended, it expires.
+  state.traps.p1=null;
+  state.traps.p2=null;
+
+  state.total=0;
+  state.lastPlayed={p1:null,p2:null};
+  state.targetIndex=(state.targetIndex+1)%TARGETS.length;
+  state.consecutivePasses=0;
+  state.roundStarter=other(state.roundStarter);
+  state.phase="playing";
+  state.pendingRecovery=null;
+  state.recoveryQueue=[];
+  clearNotice();
+
+  beginTurn(state.roundStarter);
+  state.message=ICON.fire+" New round. Choose a number card.";
+}
+
+/* ---------------- RECOVERY ---------------- */
+
+function openRecoveryModalFromState(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole)return;
+
+  recoverySelected=[];
+
+  const title=document.getElementById("recoveryTitle");
+  let recoveryLabel="RECOVERY";
+  let recoveryArt=recoveryLogoSVG();
+
+  if(rec.type==="crown"){
+    recoveryLabel="CROWN RECOVERY";
+    recoveryArt=canonicalCrownSvg("basic");
+  }else if(rec.type==="deadlock"){
+    recoveryLabel="DEADLOCK RECOVERY";
+    recoveryArt=deadlockLogoSVG();
+  }else if(rec.type==="trapReward"){
+    recoveryLabel="TRAP REWARD";
+    recoveryArt=trapLogoSVG();
+  }else if(rec.type==="trapVictim"){
+    recoveryLabel="RECOVERY";
+    recoveryArt=recoveryLogoSVG();
+  }
+
+  title.innerHTML=`<span class="modal-title-icon">${recoveryArt}</span><span>${recoveryLabel}</span>`;
+
+  document.getElementById("recoveryDesc").textContent=
+    "Choose "+rec.amount+" discarded card"+(rec.amount>1?"s":"")+" to recover.\n\nYou have 10 seconds. If time runs out, this Recovery is skipped.";
+
+  renderRecoveryChoices();
+  document.getElementById("recoveryModal").classList.remove("hidden");
+}
+
+function renderRecoveryChoices(){
+  const c=document.getElementById("recoveryCards");
+  c.innerHTML="";
+  const rec=state.pendingRecovery;
+  if(!rec)return;
+
+  [...state.players[myRole].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="recover-card n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+    if(recoverySelected.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(rec.amount===1){
+        // Single-card rewards: tapping another card instantly moves selection.
+        recoverySelected=[n];
+      }else{
+        // Two-card Recovery stays deliberate: deselect one before replacing it.
+        if(recoverySelected.includes(n)){
+          recoverySelected=recoverySelected.filter(x=>x!==n);
+        }else if(recoverySelected.length<rec.amount){
+          recoverySelected.push(n);
+        }
+      }
+      renderRecoveryChoices();
+    };
+    c.appendChild(b);
+  });
+
+  document.getElementById("confirmRecovery").disabled=
+    recoverySelected.length!==rec.amount;
+}
+
+async function confirmRecovery(){
+  const rec=state.pendingRecovery;
+  if(!rec||rec.player!==myRole||recoverySelected.length!==rec.amount)return;
+
+  const chosen=[...recoverySelected];
+  recoverySelected=[];
+  document.getElementById("recoveryModal").classList.add("hidden");
+  await finishRecovery(rec,chosen,false);
+}
+
+/* ---------------- EVENTS ---------------- */
+
+function showEventFromState(){
+  const e=state.event;
+  if(!e)return;
+
+  const crownTimer=document.getElementById("crownEventTimer");
+  if(crownTimer){
+    crownTimer.classList.toggle(
+      "hidden",
+      e.kind!=="crown-won" && e.kind!=="deadlock" && e.kind!=="trap-hit"
+    );
+  }
+
+  document.getElementById("eventIcon").innerHTML=eventVisualSVG(e.kind);
+  document.getElementById("eventTitle").textContent=e.title||"EVENT";
+  document.getElementById("eventText").textContent=e.text||"";
+
+  const button=document.getElementById("eventContinueButton");
+  const canResolve=!e.resolveBy||e.resolveBy===myRole;
+
+  button.disabled=!canResolve||processingEvent;
+  if(canResolve){
+    button.textContent="CONTINUE";
+  }else if(
+    e.kind==="crown-won" ||
+    e.kind==="deadlock" ||
+    e.kind==="trap-hit"
+  ){
+    button.textContent="WAITING FOR "+displayName(e.resolveBy).toUpperCase()+"...";
+  }else{
+    button.textContent="WAITING FOR OPPONENT...";
+  }
+
+  document.getElementById("eventModal").classList.remove("hidden");
+}
+
+async function closeEvent(){
+  if(!state||!state.event||processingEvent)return;
+
+  const e=state.event;
+
+  // Only one phone is allowed to resolve a shared event.
+  // This prevents both phones from sending conflicting copies of the state.
+  if(e.resolveBy&&e.resolveBy!==myRole)return;
+  if(e.kind==="gameover")return;
+
+  processingEvent=true;
+  if(
+    e.kind==="crown-won" ||
+    e.kind==="deadlock" ||
+    e.kind==="trap-hit"
+  )crownEventProcessing=true;
+
+  const button=document.getElementById("eventContinueButton");
+  if(button){
+    button.disabled=true;
+    button.textContent="CONTINUING...";
+  }
+
+  // Hide immediately so the button always feels responsive on iPhone.
+  document.getElementById("eventModal").classList.add("hidden");
+
+  try{
+    state.event=null;
+
+    if(e.kind==="trap-hit"){
+      // Compatibility for an older state received during an update.
+      const victim=e.victim;
+      const owner=e.owner;
+      const vp=state.players[victim];
+
+      if(vp.sinceRecovery>=4&&vp.discard.length>=2){
+        state.pendingRecovery=makeRecovery(
+          victim,
+          2,
+          "trapVictim",
+          {afterTrapOwner:owner}
+        );
+      }else{
+        beginTrapReward(owner);
+      }
+
+    }else if(e.kind==="deadlock"){
+      const secondPasser=e.resolveBy;
+      const firstPasser=other(secondPasser);
+      state.recoveryQueue=[firstPasser,secondPasser];
+      queueNextRecovery("deadlock");
+
+    }else if(e.kind==="crown-won"){
+      // Crown winner is the single authority for this transition.
+      // After CONTINUE we enter the already-tested Crown Recovery flow.
+      state.recoveryQueue=["p1","p2"];
+      queueNextRecovery("crown");
+    }
+
+    await syncState();
+
+  }catch(error){
+    console.error("Could not continue event:",error);
+
+    // Restore the event locally so the player can retry instead of getting stuck.
+    state.event=e;
+    renderGame();
+    alert("Connection hiccup. Tap CONTINUE again.");
+
+  }finally{
+    processingEvent=false;
+    crownEventProcessing=false;
+    if(state&&state.event)showEventFromState();
+  }
+}
+
+function beginTrapReward(owner){
+  if(state.players[owner].discard.length>0){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(owner,1,"trapReward");
+  }else{
+    beginTurn(owner);
+    state.message=ICON.trap+" Trap hit, but there was no discarded card to recover. You still get your normal turn.";
+  }
+}
+
+/* ---------------- TRAP ---------------- */
+
+function openTrapModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.trapUsed||state.traps[myRole]!==null||enemy.hand.length===0||me.hand.length===0)return;
+
+  selectedTrap=null;selectedSacrifice=null;
+  renderTrapChoices();
+  document.getElementById("confirmTrap").disabled=true;
+  document.getElementById("trapModal").classList.remove("hidden");
+}
+
+function choiceFaceHTML(n){
+  const color=themeColor(n);
+  const corner=cornerSVG(color);
+  return `
+    <span class="choice-inner">
+      <span class="choice-frame"></span>
+      <span class="choice-corner tl">${corner}</span>
+      <span class="choice-corner tr">${corner}</span>
+      <span class="choice-corner bl">${corner}</span>
+      <span class="choice-corner br">${corner}</span>
+      <span class="choice-crown">${crownSVG(color)}</span>
+      <span class="choice-number">${n}</span>
+      <span class="choice-emblem">${emblemSVG(n)}</span>
+    </span>`;
+}
+
+function renderTrapChoices(){
+  const c=document.getElementById("trapChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+    if(n===selectedTrap)b.classList.add("selected");
+    b.onclick=()=>{selectedTrap=n;renderTrapChoices();document.getElementById("confirmTrap").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+function goToTrapSacrifice(){
+  if(selectedTrap===null)return;
+  document.getElementById("trapModal").classList.add("hidden");
+  renderSacrificeChoices();
+  document.getElementById("confirmSacrifice").disabled=true;
+  document.getElementById("sacrificeModal").classList.remove("hidden");
+}
+
+function renderSacrificeChoices(){
+  const c=document.getElementById("sacrificeChoices");
+  c.innerHTML="";
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card sacrifice-choice n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+    if(n===selectedSacrifice)b.classList.add("selected");
+    b.onclick=()=>{selectedSacrifice=n;renderSacrificeChoices();document.getElementById("confirmSacrifice").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmTrapAndSacrifice(){
+  if(!canAct()||selectedTrap===null||selectedSacrifice===null)return;
+  const owner=myRole,victim=other(owner),p=state.players[owner];
+
+  p.hand=p.hand.filter(n=>n!==selectedSacrifice);
+  p.discard.push(selectedSacrifice);
+  p.trapUsed=true;
+  markSpecialUsed(owner);
+
+  // A special action breaks the consecutive-PASS chain.
+  state.consecutivePasses=0;
+
+  state.traps[owner]={number:selectedTrap,victim:victim};
+
+  selectedTrap=null;selectedSacrifice=null;
+  document.getElementById("sacrificeModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"trap-place",
+    actor:owner
+  };
+  setLastPlay(owner,"TRAP|PLACED");
+  state.message="TRAP";
+  beginTurn(victim);
+  await syncState();
+}
+
+/* ---------------- STEAL ---------------- */
+
+function openStealModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.stealUsed||me.stolenCard||enemy.discard.length===0)return;
+
+  selectedSteal=null;
+  renderStealChoices();
+  document.getElementById("confirmSteal").disabled=true;
+  document.getElementById("stealModal").classList.remove("hidden");
+}
+
+function renderStealChoices(){
+  const c=document.getElementById("stealChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].discard].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card steal-choice n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+    if(n===selectedSteal)b.classList.add("selected");
+    b.onclick=()=>{selectedSteal=n;renderStealChoices();document.getElementById("confirmSteal").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmSteal(){
+  if(!canAct()||selectedSteal===null)return;
+  const thief=myRole,owner=other(thief),n=selectedSteal;
+  if(!state.players[owner].discard.includes(n))return;
+
+  state.players[owner].discard=state.players[owner].discard.filter(x=>x!==n);
+  state.players[thief].stolenCard={number:n,owner:owner};
+  state.players[thief].stealUsed=true;
+  markSpecialUsed(thief);
+
+  // STEAL changes the game state, so a previous PASS no longer counts.
+  state.consecutivePasses=0;
+
+  selectedSteal=null;
+  document.getElementById("stealModal").classList.add("hidden");
+
+  clearLockAfterTurn(thief);
+  state.notice={
+    type:"steal",
+    actor:thief,
+    number:n
+  };
+  setLastPlay(thief,"STEAL|"+n);
+  state.message="STEAL";
+  beginTurn(owner);
+  await syncState();
+}
+
+/* ---------------- LOCK ---------------- */
+
+function openLockModal(){
+  if(!canUseSpecial(myRole))return;
+  const me=state.players[myRole],enemy=state.players[other(myRole)];
+  if(me.lockUsed||state.locks[myRole]!==null||enemy.hand.length===0)return;
+
+  selectedLock=null;
+  renderLockChoices();
+  document.getElementById("confirmLock").disabled=true;
+  document.getElementById("lockModal").classList.remove("hidden");
+}
+
+function renderLockChoices(){
+  const c=document.getElementById("lockChoices");
+  c.innerHTML="";
+  [...state.players[other(myRole)].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card lock-choice n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+    if(n===selectedLock)b.classList.add("selected");
+    b.onclick=()=>{selectedLock=n;renderLockChoices();document.getElementById("confirmLock").disabled=false};
+    c.appendChild(b);
+  });
+}
+
+async function confirmLock(){
+  if(!canAct()||selectedLock===null)return;
+  const owner=myRole,victim=other(owner),n=selectedLock;
+  if(!state.players[victim].hand.includes(n))return;
+
+  state.locks[owner]={number:n,victim:victim};
+  state.players[owner].lockUsed=true;
+  markSpecialUsed(owner);
+
+  // LOCK breaks the consecutive-PASS chain.
+  state.consecutivePasses=0;
+
+  selectedLock=null;
+  document.getElementById("lockModal").classList.add("hidden");
+
+  clearLockAfterTurn(owner);
+  state.notice={
+    type:"lock",
+    actor:owner,
+    number:n
+  };
+  setLastPlay(owner,"LOCK|"+n);
+  state.message="LOCK";
+  beginTurn(victim);
+  await syncState();
+}
+
+
+/* ---------------- DOUBLE ---------------- */
+
+function getLegalDoublePairs(role){
+  const p=state.players[role];
+  const cards=[...p.hand].sort((a,b)=>a-b);
+  const pairs=[];
+
+  for(let i=0;i<cards.length;i++){
+    for(let j=i+1;j<cards.length;j++){
+      if(state.total+cards[i]+cards[j]<=TARGETS[state.targetIndex]){
+        pairs.push([cards[i],cards[j]]);
+      }
+    }
+  }
+  return pairs;
+}
+
+function openDoubleModal(){
+  if(!canUseSpecial(myRole))return;
+
+  const me=state.players[myRole];
+  if(me.doubleUsed||getLegalDoublePairs(myRole).length===0)return;
+
+  selectedDouble=[];
+  renderDoubleChoices();
+  document.getElementById("confirmDouble").disabled=true;
+  document.getElementById("doubleModal").classList.remove("hidden");
+}
+
+function renderDoubleChoices(){
+  const c=document.getElementById("doubleChoices");
+  c.innerHTML="";
+
+  [...state.players[myRole].hand].sort((a,b)=>a-b).forEach(n=>{
+    const b=document.createElement("button");
+    b.className="choice-card double-choice n"+n;
+    b.innerHTML=choiceFaceHTML(n);
+
+    if(selectedDouble.includes(n))b.classList.add("selected");
+
+    b.onclick=()=>{
+      if(selectedDouble.includes(n)){
+        selectedDouble=selectedDouble.filter(x=>x!==n);
+      }else if(selectedDouble.length<2){
+        selectedDouble.push(n);
+      }
+
+      renderDoubleChoices();
+
+      const valid=
+        selectedDouble.length===2 &&
+        state.total+selectedDouble[0]+selectedDouble[1]<=TARGETS[state.targetIndex];
+
+      document.getElementById("confirmDouble").disabled=!valid;
+    };
+
+    c.appendChild(b);
+  });
+}
+
+async function confirmDouble(){
+  if(
+    !canUseSpecial(myRole) ||
+    selectedDouble.length!==2
+  ) return;
+
+  const role=myRole;
+  const p=state.players[role];
+  const [a,b]=selectedDouble;
+  const sum=a+b;
+
+  if(
+    !p.hand.includes(a) ||
+    !p.hand.includes(b) ||
+    state.total+sum>TARGETS[state.targetIndex]
+  ) return;
+
+  // DOUBLE plays two ORIGINAL cards at the same time.
+  p.hand=p.hand.filter(n=>n!==a&&n!==b);
+  p.discard.push(a,b);
+  p.doubleUsed=true;
+  markSpecialUsed(role);
+  state.consecutivePasses=0;
+
+  document.getElementById("doubleModal").classList.add("hidden");
+  selectedDouble=[];
+
+  // A trapped number inside DOUBLE still triggers the Trap.
+  const trap=trapAgainst(role);
+  if(trap && (trap.number===a || trap.number===b)){
+    const owner=other(role);
+    state.traps[owner]=null;
+    clearLockAfterTurn(role);
+    state.turnDeadline=null;
+
+    // Same robust direct transition as a normal trapped card.
+    setLastPlay(role,"DOUBLE|"+String(a)+"+"+String(b)+" TRAPPED");
+    setLastPlay(owner,"TRAP|HIT DOUBLE");
+    state.message=ICON.trap+" DOUBLE TRAPPED! Both cards are discarded. TOTAL stays at "+state.total+".";
+
+    if(p.sinceRecovery>=4&&p.discard.length>=2){
+      state.pendingRecovery=makeRecovery(
+        role,
+        2,
+        "trapVictim",
+        {afterTrapOwner:owner}
+      );
+    }else{
+      beginTrapReward(owner);
+    }
+
+    await syncState();
+    return;
+  }
+
+  // DOUBLE advances Recovery only when both original cards
+  // successfully enter TOTAL. A trapped DOUBLE gives +0.
+  p.sinceRecovery=(p.sinceRecovery||0)+2;
+
+  if(!state.lastPlayed)state.lastPlayed={p1:null,p2:null};
+  setLastPlay(role,"DOUBLE|"+String(a)+"+"+String(b));
+  state.total+=sum;
+  state.notice={
+    type:"double",
+    actor:role,
+    a:a,
+    b:b
+  };
+  state.message="DOUBLE";
+
+  if(state.total===TARGETS[state.targetIndex]){
+    scoreCrown(role);
+    await syncState();
+    return;
+  }
+
+  if(p.sinceRecovery>=4&&p.discard.length>=2){
+    state.turnDeadline=null;
+    state.pendingRecovery=makeRecovery(role,2,"normal");
+    await syncState();
+    return;
+  }
+
+  clearLockAfterTurn(role);
+  beginTurn(other(role));
+  await syncState();
+}
+
+window.addEventListener("beforeunload",()=>{
+  try{
+    if(heartbeatTimer)clearInterval(heartbeatTimer);
+    if(countdownTimer)clearInterval(countdownTimer);
+    if(botActionTimer)clearTimeout(botActionTimer);
+    if(channel)channel.untrack();
+  }catch(e){}
+});
+
+
+function canonicalCrownSvg(kind="basic"){
+  const themes={
+    basic:{
+      metal1:"#fff1a6",metal2:"#ffc534",metal3:"#9f6400",
+      edge:"#ffe16f",gem1:"#e63a3a",gem2:"#20c9bd",gem3:"#ffd348"
+    },
+    shadow:{
+      metal1:"#f0f3f6",metal2:"#9ea7b0",metal3:"#424950",
+      edge:"#ffffff",gem1:"#dfe5eb",gem2:"#8d98a3",gem3:"#c7cdd3"
+    },
+    nature:{
+      metal1:"#b9ffc9",metal2:"#27dd69",metal3:"#087635",
+      edge:"#cbffd5",gem1:"#e5ff71",gem2:"#20d97d",gem3:"#76ff9d"
+    },
+    ember:{
+      metal1:"#ffc08a",metal2:"#ff4a32",metal3:"#7d0b0b",
+      edge:"#ffd0aa",gem1:"#ffda4e",gem2:"#ff352a",gem3:"#c51c17"
+    },
+    void:{
+      metal1:"#e4b9ff",metal2:"#a549ff",metal3:"#43106f",
+      edge:"#efd2ff",gem1:"#5fd6ff",gem2:"#d05cff",gem3:"#7c38ff"
+    },
+    legendary:{
+      metal1:"#fff8c7",metal2:"#f2c643",metal3:"#8a5b00",
+      edge:"#fff0a0",gem1:"#61e8ff",gem2:"#bc5cff",gem3:"#ffffff"
+    }
+  };
+  const t=themes[kind]||themes.basic;
+  const id="canon_"+kind+"_"+Math.random().toString(36).slice(2,7);
+
+  const legendaryExtra=kind==="legendary" ? `
+    <path d="M24 49 L50 17 L76 49 L50 66 Z" fill="none" stroke="#62e8ff" stroke-width="2.1" opacity=".82"/>
+    <path d="M32 54 L50 31 L68 54" fill="none" stroke="#c95cff" stroke-width="2" opacity=".85"/>
+    <circle cx="50" cy="43" r="5.2" fill="#fff" stroke="#84efff" stroke-width="1.5"/>` : "";
+
+  return `<svg viewBox="0 0 100 82" aria-hidden="true">
+    <defs>
+      <linearGradient id="${id}_metal" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="${t.metal1}"/>
+        <stop offset=".38" stop-color="${t.metal2}"/>
+        <stop offset="1" stop-color="${t.metal3}"/>
+      </linearGradient>
+    </defs>
+    <path d="M12 56 L17 25 L31 43 L38 14 L50 39 L62 14 L69 43 L83 25 L88 56 Z"
+          fill="url(#${id}_metal)" stroke="${t.edge}" stroke-width="2.1" stroke-linejoin="round"/>
+    <path d="M17 29 L31 46 L38 18 L50 42 L62 18 L69 46 L83 29"
+          fill="none" stroke="#fff" stroke-width="1.8" stroke-opacity=".24"/>
+    <path d="M13 55 H87 L82 70 Q81 73 77 73 H23 Q19 73 18 70 Z"
+          fill="url(#${id}_metal)" stroke="${t.edge}" stroke-width="2.1"/>
+    <circle cx="17" cy="24" r="2.6" fill="${t.gem3}" stroke="${t.edge}" stroke-width=".8"/>
+    <circle cx="38" cy="13" r="2.8" fill="${t.gem1}" stroke="${t.edge}" stroke-width=".8"/>
+    <circle cx="62" cy="13" r="2.8" fill="${t.gem2}" stroke="${t.edge}" stroke-width=".8"/>
+    <circle cx="83" cy="24" r="2.6" fill="${t.gem3}" stroke="${t.edge}" stroke-width=".8"/>
+    <path d="M25 58 L31 53 L37 58 L31 64 Z" fill="${t.gem1}" stroke="#fff" stroke-opacity=".35" stroke-width=".7"/>
+    <circle cx="50" cy="59" r="5.2" fill="${t.gem2}" stroke="#fff" stroke-opacity=".38" stroke-width=".9"/>
+    <path d="M63 58 L69 53 L75 58 L69 64 Z" fill="${t.gem3}" stroke="#fff" stroke-opacity=".35" stroke-width=".7"/>
+    <path d="M22 67 H78" stroke="#fff" stroke-opacity=".25" stroke-width="1.3" stroke-linecap="round"/>
+    ${legendaryExtra}
+  </svg>`;
+}
+
+function menuArtSvg(kind){
+  if(kind==="online"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="onlineG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe9ff"/><stop offset=".55" stop-color="#4aa8f7"/><stop offset="1" stop-color="#1465b7"/></linearGradient></defs>
+      <circle cx="26" cy="27" r="10" fill="url(#onlineG)" stroke="#d9f4ff" stroke-width="1.5"/>
+      <circle cx="47" cy="27" r="10" fill="url(#onlineG)" stroke="#d9f4ff" stroke-width="1.5"/>
+      <path d="M9 58 C11 45 18 40 27 40 C35 40 41 45 43 58 Z" fill="url(#onlineG)" opacity=".95"/>
+      <path d="M31 58 C33 45 40 40 48 40 C57 40 64 45 66 58 Z" fill="url(#onlineG)" opacity=".82"/>
+      <path d="M31 35 L41 35" stroke="#dff7ff" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+  }
+  if(kind==="normalbot"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="botN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8be8ff"/><stop offset=".55" stop-color="#4c8fff"/><stop offset="1" stop-color="#7648d8"/></linearGradient></defs>
+      <rect x="13" y="19" width="46" height="39" rx="10" fill="url(#botN)" stroke="#c7efff" stroke-width="2"/>
+      <path d="M36 19 V10 M31 9 H41" stroke="#c7efff" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="27" cy="36" r="5" fill="#07131e"/><circle cx="45" cy="36" r="5" fill="#07131e"/>
+      <circle cx="27" cy="36" r="2" fill="#8ef3ff"/><circle cx="45" cy="36" r="2" fill="#8ef3ff"/>
+      <path d="M25 48 H47" stroke="#07131e" stroke-width="3" stroke-linecap="round"/>
+      <path d="M18 27 H8 M64 27 H54" stroke="#9fdfff" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+  }
+  if(kind==="hardbot"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="botH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff845d"/><stop offset=".48" stop-color="#ff3b34"/><stop offset="1" stop-color="#811016"/></linearGradient></defs>
+      <path d="M14 25 L22 12 L30 21 H42 L50 12 L58 25 V54 Q58 61 50 61 H22 Q14 61 14 54Z" fill="url(#botH)" stroke="#ffb09b" stroke-width="2"/>
+      <path d="M24 36 L31 39 L24 42 M48 36 L41 39 L48 42" fill="none" stroke="#25070a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M26 51 H46" stroke="#25070a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M36 20 V11" stroke="#ffb09b" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="36" cy="8" r="3" fill="#ffd35a"/>
+    </svg>`;
+  }
+  if(kind==="shop"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="shopG2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a5"/><stop offset=".38" stop-color="#ffc83a"/><stop offset="1" stop-color="#9d6100"/></linearGradient></defs>
+      <path d="M20 25 H52 L56 59 H16 Z" fill="url(#shopG2)" stroke="#ffe27a" stroke-width="2.3" stroke-linejoin="round"/>
+      <path d="M26 27 C26 14 46 14 46 27" fill="none" stroke="#ffe27a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M25 40 H47 M29 49 H43" stroke="#7d4a00" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>`;
+  }
+  if(kind==="ranked"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="trophyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a7"/><stop offset=".45" stop-color="#ffc936"/><stop offset="1" stop-color="#a15f00"/></linearGradient></defs>
+      <path d="M22 14 H50 V29 Q50 43 36 48 Q22 43 22 29Z" fill="url(#trophyG)" stroke="#ffe17a" stroke-width="2"/>
+      <path d="M22 19 H13 V25 Q13 35 24 37 M50 19 H59 V25 Q59 35 48 37" fill="none" stroke="#ffd85d" stroke-width="4" stroke-linecap="round"/>
+      <path d="M36 48 V57 M26 60 H46" stroke="#ffd85d" stroke-width="4" stroke-linecap="round"/>
+      <path d="M36 21 L39 28 L47 29 L41 34 L43 42 L36 38 L29 42 L31 34 L25 29 L33 28Z" fill="#fff1a3"/>
+    </svg>`;
+  }
+  if(kind==="create"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="doorG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9de7ff"/><stop offset=".5" stop-color="#3a9fe4"/><stop offset="1" stop-color="#195b97"/></linearGradient></defs>
+      <path d="M18 10 H48 Q52 10 52 14 V61 H18Z" fill="url(#doorG)" stroke="#d1f3ff" stroke-width="2"/>
+      <path d="M29 17 H44 V54 H29Z" fill="#0b1824" opacity=".55"/>
+      <circle cx="42" cy="36" r="2.4" fill="#e7fbff"/>
+      <path d="M52 23 H62 M57 18 V28" stroke="#8ce8ff" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+  }
+  if(kind==="join"){
+    return `<svg viewBox="0 0 72 72" aria-hidden="true">
+      <defs><linearGradient id="joinG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9b8ff"/><stop offset=".5" stop-color="#7f65ff"/><stop offset="1" stop-color="#4930ae"/></linearGradient></defs>
+      <path d="M20 11 H50 Q54 11 54 15 V60 H20Z" fill="url(#joinG)" stroke="#e8e1ff" stroke-width="2"/>
+      <path d="M31 18 H46 V53 H31Z" fill="#0b1020" opacity=".55"/>
+      <circle cx="44" cy="36" r="2.4" fill="#f2eeff"/>
+      <path d="M7 36 H35 M27 28 L35 36 L27 44" fill="none" stroke="#e6dcff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+  return "";
+}
+
+function renderCrownScore(amount){
+  let s='<span class="crown-score-wrap">';
+  for(let i=0;i<MATCH_CROWNS;i++){
+    s += i<amount
+      ? `<span class="basic-crown-inline small">${canonicalCrownSvg("basic")}</span>`
+      : `<span class="crown-empty-star">☆</span>`;
+  }
+  s+='</span>';
+  return s;
+}
+
+function crownShopSvg(kind){
+  return canonicalCrownSvg(kind);
+}
+
+function openCrownShop(){
+  resumeAudioContextOnly();
+  const items=[
+    ["basic","BASIC"],
+    ["shadow","SHADOW"],
+    ["nature","NATURE"],
+    ["ember","EMBER"],
+    ["void","VOID"],
+    ["legendary","LEGENDARY"]
+  ];
+
+  const body=`<div class="crown-shop-coming">COMING SOON!</div>
+  <div class="crown-shop-grid">${items.map(([k,n])=>`
+    <div class="crown-shop-card shop-${k}">
+      <div class="crown-shop-crown">${crownShopSvg(k)}</div>
+      <div class="crown-shop-name">${n}</div>
+      <div class="crown-shop-lock">🔒</div>
+    </div>`).join("")}</div>`;
+
+  let overlay=document.getElementById("v0940ShopOverlay");
+  if(!overlay){
+    overlay=document.createElement("div");
+    overlay.id="v0940ShopOverlay";
+    overlay.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.84);display:flex;align-items:center;justify-content:center;padding:22px";
+    document.body.appendChild(overlay);
+  }
+  overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
+  overlay.innerHTML=`<div style="width:min(620px,100%);max-height:86vh;overflow:auto;background:#08111a;border:1px solid #405163;border-radius:22px;padding:22px;color:white">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <b style="font-size:24px">SHOP</b>
+      <button onclick="document.getElementById('v0940ShopOverlay').remove()" style="border:1px solid #465463;background:#111923;color:white;border-radius:9px;padding:8px 12px">✕</button>
+    </div>
+    ${body}
+  </div>`;
+}
+
+function openComingSoonInstructions(){
+  let overlay=document.getElementById("v0940Instructions");
+  if(!overlay){overlay=document.createElement("div");overlay.id="v0940Instructions";overlay.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.84);display:flex;align-items:center;justify-content:center;padding:22px";document.body.appendChild(overlay)}
+  overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
+  overlay.innerHTML=`<div style="width:min(520px,100%);background:#08111a;border:1px solid #405163;border-radius:22px;padding:30px 22px;text-align:center;color:white"><div style="font-size:48px">📖</div><div style="font-size:25px;font-weight:1000;margin-top:10px">INSTRUCTIONS</div><div style="color:#f0bc2f;font-weight:1000;letter-spacing:2px;margin-top:12px">COMING SOON</div><button onclick="document.getElementById('v0940Instructions').remove()" style="margin-top:24px;width:100%;padding:13px;border-radius:10px;border:1px solid #405163;background:#111923;color:white;font-weight:900">CLOSE</button></div>`;
+}
+</script>
+</body>
+</html>
